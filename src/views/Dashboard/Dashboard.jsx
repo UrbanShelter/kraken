@@ -4,12 +4,10 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Tooltip from "@material-ui/core/Tooltip";
 import AccessTime from "@material-ui/icons/AccessTime";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import ArtTrack from "@material-ui/icons/ArtTrack";
 import DateRange from "@material-ui/icons/DateRange";
 import Edit from "@material-ui/icons/Edit";
 import Language from "@material-ui/icons/Language";
 import LocalOffer from "@material-ui/icons/LocalOffer";
-import Place from "@material-ui/icons/Place";
 import Refresh from "@material-ui/icons/Refresh";
 // @material-ui/icons
 // import ContentCopy from "@material-ui/icons/ContentCopy";
@@ -17,8 +15,6 @@ import Store from "@material-ui/icons/Store";
 import Update from "@material-ui/icons/Update";
 // import InfoOutline from "@material-ui/icons/InfoOutline";
 import Warning from "@material-ui/icons/Warning";
-import priceImage3 from "assets/img/card-1.jpeg";
-import priceImage2 from "assets/img/card-3.jpeg";
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
@@ -42,7 +38,6 @@ import {
   dailySalesChart,
   emailsSubscriptionChart
 } from "variables/charts";
-import SectionCarousel from "./Sections/SectionCarousel.jsx";
 import ListingCard from "./Sections/ListingCard.jsx";
 
 const us_flag = require("assets/img/flags/US.png");
@@ -393,16 +388,25 @@ class Dashboard extends React.Component {
         <h3>Manage Listings</h3>
         <br />
         <GridContainer>
-          <GridItem xs={12} sm={6} md={4}>
+          <GridItem xs={12} sm={6} md={6} lg={3}>
             <ListingCard />
           </GridItem>
-          <GridItem xs={12} sm={6} md={4}>
+          <GridItem xs={12} sm={6} md={6} lg={3}>
             <ListingCard />
           </GridItem>
-          <GridItem xs={12} sm={6} md={4}>
+          <GridItem xs={12} sm={6} md={6} lg={3}>
             <ListingCard />
           </GridItem>
-          <GridItem xs={12} sm={6} md={4}>
+          <GridItem xs={12} sm={6} md={6} lg={3}>
+            <ListingCard />
+          </GridItem>
+          <GridItem xs={12} sm={6} md={6} lg={3}>
+            <ListingCard />
+          </GridItem>
+          <GridItem xs={12} sm={6} md={6} lg={3}>
+            <ListingCard />
+          </GridItem>
+          <GridItem xs={12} sm={6} md={6} lg={3}>
             <ListingCard />
           </GridItem>
         </GridContainer>

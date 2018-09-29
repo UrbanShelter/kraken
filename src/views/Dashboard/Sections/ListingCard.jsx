@@ -34,9 +34,7 @@ class ListingCard extends React.Component {
           <CardBody listing>
             <GridContainer direction="column" style={{ paddingRight: 8 }}>
               <GridItem xs={12}>
-                <h3 className={classes.cardProductTitle}>
-                  151 Charles Street S
-                </h3>
+                <h3 className={classes.cardProductTitle}>1 Victoria St S</h3>
               </GridItem>
               <GridItem xs={12}>
                 <p className={classes.cardProductDesciprion}>Kitchener, ON</p>
@@ -44,28 +42,27 @@ class ListingCard extends React.Component {
             </GridContainer>
             <Button
               color="urbanshelter"
-              style={{ marginRight: "0px", fontSize: "16px" }}
+              style={{
+                marginRight: "0px",
+                fontSize: "16px",
+                minWidth: "30px",
+                minHeight: "30px"
+              }}
             >
               $1200/m
             </Button>
           </CardBody>
+          <div style={{marginTop: "-20px"}}>
           <p className={classes.cardProductDesciprion}>
-            Available from Oct 1st | Unfurnished | 1 Bedroom
+            Available from Oct 1st | Unfurnished | 1 Bedroom Available
           </p>
+          </div>
         </CardBody>
         <CardFooter plain listing>
-          <div className={`${classes.stats}`}>
-            <h4>5 ★ (86)</h4>
-          </div>
-          <div className={`${classes.stats}`}>
-            <h4>5 Beds</h4>
-          </div>
-          <div className={`${classes.stats}`}>
-            <h4>2 Baths</h4>
-          </div>
-          <div className={`${classes.stats}`}>
-            <h4>1200 Sqft</h4>
-          </div>
+          <p className={classes.cardProductDesciprion}>★★★★★ (86)</p>
+          <p className={classes.cardProductDesciprion}>5 Beds</p>
+          <p className={classes.cardProductDesciprion}>2 Baths</p>
+          <p className={classes.cardProductDesciprion}>1200 Sqft</p>
         </CardFooter>
       </Card>
     );

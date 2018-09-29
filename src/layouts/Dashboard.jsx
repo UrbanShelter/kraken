@@ -102,7 +102,6 @@ class Dashboard extends React.Component {
           routes={dashboardRoutes}
           logoText={"Creative Tim"}
           logo={logo}
-          image={image}
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
           color="blue"

@@ -26,21 +26,9 @@ class SectionCarousel extends React.Component {
       <Carousel {...settings}>
         <div>
           <img src={priceImage1} alt="First slide" className="slick-image" />
-          <div className="slick-caption">
-            <h4>
-              <LocationOn className="slick-icons" />
-              Yellowstone National Park, United States
-            </h4>
-          </div>
         </div>
         <div>
           <img src={priceImage2} alt="Second slide" className="slick-image" />
-          <div className="slick-caption">
-            <h4>
-              <LocationOn className="slick-icons" />
-              Somewhere Beyond, United States
-            </h4>
-          </div>
         </div>
         <div>
           <img src={priceImage3} alt="Third slide" className="slick-image" />
