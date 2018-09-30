@@ -38,7 +38,7 @@ import {
   dailySalesChart,
   emailsSubscriptionChart
 } from "variables/charts";
-import ListingCard from "./Sections/ListingCard.jsx";
+import ListingCard from "components/ListingCard/ListingCard.jsx";
 
 const us_flag = require("assets/img/flags/US.png");
 const de_flag = require("assets/img/flags/DE.png");
@@ -388,25 +388,25 @@ class Dashboard extends React.Component {
         <h3>Manage Listings</h3>
         <br />
         <GridContainer>
-          <GridItem xs={12} sm={6} md={6} lg={3}>
+          <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
             <ListingCard />
           </GridItem>
-          <GridItem xs={12} sm={6} md={6} lg={3}>
+          <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
             <ListingCard />
           </GridItem>
-          <GridItem xs={12} sm={6} md={6} lg={3}>
+          <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
             <ListingCard />
           </GridItem>
-          <GridItem xs={12} sm={6} md={6} lg={3}>
+          <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
             <ListingCard />
           </GridItem>
-          <GridItem xs={12} sm={6} md={6} lg={3}>
+          <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
             <ListingCard />
           </GridItem>
-          <GridItem xs={12} sm={6} md={6} lg={3}>
+          <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
             <ListingCard />
           </GridItem>
-          <GridItem xs={12} sm={6} md={6} lg={3}>
+          <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
             <ListingCard />
           </GridItem>
         </GridContainer>

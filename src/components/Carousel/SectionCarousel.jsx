@@ -10,10 +10,8 @@ import React from "react";
 // react component for creating beautiful carousel
 import Carousel from "react-slick";
 
-
 class SectionCarousel extends React.Component {
   render() {
-    const { classes } = this.props;
     const settings = {
       dots: true,
       infinite: true,

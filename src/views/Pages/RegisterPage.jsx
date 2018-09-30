@@ -1,37 +1,47 @@
-import React from "react";
-import PropTypes from "prop-types";
-
-// @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Icon from "@material-ui/core/Icon";
-
-// @material-ui/icons
-import Timeline from "@material-ui/icons/Timeline";
-import Code from "@material-ui/icons/Code";
-import Group from "@material-ui/icons/Group";
-import Face from "@material-ui/icons/Face";
-import Email from "@material-ui/icons/Email";
+import InputAdornment from "@material-ui/core/InputAdornment";
+// @material-ui/core components
+import withStyles from "@material-ui/core/styles/withStyles";
 // import LockOutline from "@material-ui/icons/LockOutline";
 import Check from "@material-ui/icons/Check";
-
+import Code from "@material-ui/icons/Code";
+import Email from "@material-ui/icons/Email";
+import Face from "@material-ui/icons/Face";
+import Group from "@material-ui/icons/Group";
+// @material-ui/icons
+import Timeline from "@material-ui/icons/Timeline";
+import registerPageStyle from "assets/jss/material-dashboard-pro-react/views/registerPageStyle";
+import Card from "components/Card/Card.jsx";
+import CardBody from "components/Card/CardBody.jsx";
+import Button from "components/CustomButtons/Button.jsx";
+import CustomInput from "components/CustomInput/CustomInput.jsx";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import Button from "components/CustomButtons/Button.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import InfoArea from "components/InfoArea/InfoArea.jsx";
-import Card from "components/Card/Card.jsx";
-import CardBody from "components/Card/CardBody.jsx";
+import PropTypes from "prop-types";
+import React from "react";
+// firebase functionality
+import { auth } from "firebase/index.js";
 
-import registerPageStyle from "assets/jss/material-dashboard-pro-react/views/registerPageStyle";
+const INITIAL_STATE = {
+  name: "",
+  email: "",
+  password: "",
+  error: null
+};
+
+const byPropKey = (propertyName, value) => () => ({
+  [propertyName]: value
+});
 
 class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      ...INITIAL_STATE,
       checked: []
     };
     this.handleToggle = this.handleToggle.bind(this);
@@ -51,8 +61,21 @@ class RegisterPage extends React.Component {
       checked: newChecked
     });
   }
+  onSubmit = () => {
+    const { name, email, password } = this.state;
+
+    auth
+      .doCreateUserWithEmailAndPassword(email, password)
+      .then(authUser => {
+        this.setState({ ...INITIAL_STATE });
+      })
+      .catch(error => {
+        this.setState(byPropKey("error", error));
+      });
+  };
   render() {
     const { classes } = this.props;
+    const { name, email, password, error } = this.state;
     return (
       <div className={classes.container}>
         <GridContainer justify="center">
@@ -112,7 +135,12 @@ class RegisterPage extends React.Component {
                               <Face className={classes.inputAdornmentIcon} />
                             </InputAdornment>
                           ),
-                          placeholder: "First Name..."
+                          placeholder: "First Name...",
+                          onChange: event => {
+                            this.setState(
+                              byPropKey("name", event.target.value)
+                            );
+                          }
                         }}
                       />
                       <CustomInput
@@ -129,7 +157,12 @@ class RegisterPage extends React.Component {
                               <Email className={classes.inputAdornmentIcon} />
                             </InputAdornment>
                           ),
-                          placeholder: "Email..."
+                          placeholder: "Email...",
+                          onChange: event => {
+                            this.setState(
+                              byPropKey("email", event.target.value)
+                            );
+                          }
                         }}
                       />
                       <CustomInput
@@ -148,7 +181,12 @@ class RegisterPage extends React.Component {
                               </Icon>
                             </InputAdornment>
                           ),
-                          placeholder: "Password..."
+                          placeholder: "Password...",
+                          onChange: event => {
+                            this.setState(
+                              byPropKey("password", event.target.value)
+                            );
+                          }
                         }}
                       />
                       <FormControlLabel
@@ -177,7 +215,11 @@ class RegisterPage extends React.Component {
                         }
                       />
                       <div className={classes.center}>
-                        <Button round color="primary">
+                        <Button
+                          round
+                          color="primary"
+                          onClick={() => this.onSubmit()}
+                        >
                           Get started
                         </Button>
                       </div>
@@ -188,6 +230,7 @@ class RegisterPage extends React.Component {
             </Card>
           </GridItem>
         </GridContainer>
+        {error && <p>{error.message}</p>}
       </div>
     );
   }
