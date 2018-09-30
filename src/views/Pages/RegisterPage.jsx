@@ -4,6 +4,7 @@ import Icon from "@material-ui/core/Icon";
 import InputAdornment from "@material-ui/core/InputAdornment";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import Danger from "components/Typography/Danger.jsx";
 // import LockOutline from "@material-ui/icons/LockOutline";
 import Check from "@material-ui/icons/Check";
 import Code from "@material-ui/icons/Code";
@@ -61,17 +62,29 @@ class RegisterPage extends React.Component {
       checked: newChecked
     });
   }
-  onSubmit = () => {
+  checkFields() {
     const { name, email, password } = this.state;
+    return name && email && password != "" ? false : true;
+  }
+  onSubmit = event => {
+    const { name, email, password, checked } = this.state;
 
-    auth
-      .doCreateUserWithEmailAndPassword(email, password)
-      .then(authUser => {
-        this.setState({ ...INITIAL_STATE });
-      })
-      .catch(error => {
-        this.setState(byPropKey("error", error));
-      });
+    checked.indexOf(1) === 0
+      ? auth
+          .doCreateUserWithEmailAndPassword(email, password)
+          .then(authUser => {
+            this.setState({ ...INITIAL_STATE });
+          })
+          .catch(error => {
+            this.setState(byPropKey("error", error));
+          })
+      : this.setState(
+          byPropKey("error", {
+            message: "Please agree to the term and conditions"
+          })
+        );
+    // prevents the page from reloading
+    event.preventDefault();
   };
   render() {
     const { classes } = this.props;
@@ -119,6 +132,7 @@ class RegisterPage extends React.Component {
                       </Button>
                       {` `}
                       <h4 className={classes.socialTitle}>or be classical</h4>
+                      {error && <Danger>{error.message}</Danger>}
                     </div>
                     <form className={classes.form}>
                       <CustomInput
@@ -196,6 +210,7 @@ class RegisterPage extends React.Component {
                         }}
                         control={
                           <Checkbox
+                            disabled={this.checkFields()}
                             tabIndex={-1}
                             onClick={() => this.handleToggle(1)}
                             checkedIcon={
@@ -218,7 +233,8 @@ class RegisterPage extends React.Component {
                         <Button
                           round
                           color="primary"
-                          onClick={() => this.onSubmit()}
+                          type="submit"
+                          onClick={event => this.onSubmit(event)}
                         >
                           Get started
                         </Button>
@@ -230,7 +246,6 @@ class RegisterPage extends React.Component {
             </Card>
           </GridItem>
         </GridContainer>
-        {error && <p>{error.message}</p>}
       </div>
     );
   }
