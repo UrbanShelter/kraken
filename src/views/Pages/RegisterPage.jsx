@@ -24,6 +24,7 @@ import GridItem from "components/Grid/GridItem.jsx";
 import InfoArea from "components/InfoArea/InfoArea.jsx";
 import PropTypes from "prop-types";
 import React from "react";
+import { Redirect } from "react-router-dom";
 // firebase functionality
 import { auth } from "firebase/index.js";
 
@@ -31,7 +32,8 @@ const INITIAL_STATE = {
   name: "",
   email: "",
   password: "",
-  error: null
+  error: null,
+  redirect: false
 };
 
 const byPropKey = (propertyName, value) => () => ({
@@ -64,31 +66,33 @@ class RegisterPage extends React.Component {
   }
   checkFields() {
     const { name, email, password } = this.state;
-    return name && email && password != "" ? false : true;
+    return name && email && password !== "" ? false : true;
   }
   onSubmit = event => {
-    const { name, email, password, checked } = this.state;
+    const { name, email, password, error, checked, redirect } = this.state;
 
     checked.indexOf(1) === 0
       ? auth
           .doCreateUserWithEmailAndPassword(email, password)
           .then(authUser => {
-            this.setState({ ...INITIAL_STATE });
+            this.setState({ ...INITIAL_STATE, redirect: true });
           })
           .catch(error => {
             this.setState(byPropKey("error", error));
+            console.log(error);
           })
       : this.setState(
           byPropKey("error", {
             message: "Please agree to the term and conditions"
           })
         );
+
     // prevents the page from reloading
     event.preventDefault();
   };
   render() {
     const { classes } = this.props;
-    const { name, email, password, error } = this.state;
+    const { name, email, password, error, redirect } = this.state;
     return (
       <div className={classes.container}>
         <GridContainer justify="center">
@@ -234,10 +238,11 @@ class RegisterPage extends React.Component {
                           round
                           color="primary"
                           type="submit"
-                          onClick={event => this.onSubmit(event)}
+                          onClick={(event) => this.onSubmit(event)}
                         >
                           Get started
                         </Button>
+                        {redirect && <Redirect to="/dashboard" push />}
                       </div>
                     </form>
                   </GridItem>
