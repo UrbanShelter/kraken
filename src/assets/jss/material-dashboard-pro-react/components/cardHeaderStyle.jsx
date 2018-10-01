@@ -4,7 +4,8 @@ import {
   dangerCardHeader,
   infoCardHeader,
   primaryCardHeader,
-  roseCardHeader
+  roseCardHeader,
+  urbanshelterCardHeader
 } from "assets/jss/material-dashboard-pro-react.jsx";
 const cardHeaderStyle = {
   cardHeader: {
@@ -13,7 +14,7 @@ const cardHeaderStyle = {
     borderBottom: "none",
     background: "transparent",
     zIndex: "3 !important",
-    "&$cardHeaderPlain,&$cardHeaderImage,&$cardHeaderContact,&$cardHeaderSignup,&$cardHeaderIcon,&$cardHeaderStats,&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader": {
+    "&$cardHeaderPlain,&$cardHeaderImage,&$cardHeaderContact,&$cardHeaderSignup,&$cardHeaderIcon,&$cardHeaderStats,&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader,&$urbanshelterCardHeader": {
       margin: "0 15px",
       padding: "0",
       position: "relative",
@@ -22,7 +23,7 @@ const cardHeaderStyle = {
     "&:first-child": {
       borderRadius: "calc(.25rem - 1px) calc(.25rem - 1px) 0 0"
     },
-    "&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader": {
+    "&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader,&$urbanshelterCardHeader": {
       "&:not($cardHeaderIcon):not($cardHeaderImage):not($cardHeaderText)": {
         borderRadius: "3px",
         marginTop: "-20px",
@@ -102,7 +103,7 @@ const cardHeaderStyle = {
     }
   },
   cardHeaderIcon: {
-    "&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader": {
+    "&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader,&$urbanshelterCardHeader": {
       background: "transparent",
       boxShadow: "none"
     },
@@ -155,6 +156,12 @@ const cardHeaderStyle = {
     color: "#FFFFFF",
     "&:not($cardHeaderText):not($cardHeaderIcon)": {
       ...roseCardHeader
+    }
+  },
+  urbanshelterCardHeader: {
+    color: "#FFFFFF",
+    "&:not($cardHeaderText):not($cardHeaderIcon)": {
+      ...urbanshelterCardHeader
     }
   },
   cardCarousel: {

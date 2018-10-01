@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
+import Danger from "components/Typography/Danger.jsx";
 
 // @material-ui/icons
 import Face from "@material-ui/icons/Face";
@@ -22,12 +23,28 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
 import loginPageStyle from "assets/jss/material-dashboard-pro-react/views/loginPageStyle.jsx";
+import { Redirect } from "react-router-dom";
+// firebase functionality
+import { auth } from "firebase/index.js";
+
+const INITIAL_STATE = {
+  name: "",
+  email: "",
+  password: "",
+  error: null,
+  redirect: false
+};
+
+const byPropKey = (propertyName, value) => () => ({
+  [propertyName]: value
+});
 
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     // we use this to make the card to appear after the page has been rendered
     this.state = {
+      ...INITIAL_STATE,
       cardAnimaton: "cardHidden"
     };
   }
@@ -40,12 +57,32 @@ class LoginPage extends React.Component {
       700
     );
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     clearTimeout(this.timeOutFunction);
     this.timeOutFunction = null;
   }
+  checkFields() {
+    const { name, email, password } = this.state;
+    return name && email && password !== "" ? false : true;
+  }
+  onSubmit = event => {
+    const { name, email, password } = this.state;
+
+    auth
+      .doSignInWithEmailAndPassword(email, password)
+      .then(authUser => {
+        this.setState({ ...INITIAL_STATE, redirect: true });
+      })
+      .catch(error => {
+        this.setState(byPropKey("error", error));
+      });
+
+    // prevents the page from reloading
+    event.preventDefault();
+  };
   render() {
     const { classes } = this.props;
+    const { name, email, password, error, redirect } = this.state;
     return (
       <div className={classes.container}>
         <GridContainer justify="center">
@@ -54,7 +91,7 @@ class LoginPage extends React.Component {
               <Card login className={classes[this.state.cardAnimaton]}>
                 <CardHeader
                   className={`${classes.cardHeader} ${classes.textCenter}`}
-                  color="rose"
+                  color="urbanshelter"
                 >
                   <h4 className={classes.cardTitle}>Log in</h4>
                   <div className={classes.socialLine}>
@@ -88,7 +125,10 @@ class LoginPage extends React.Component {
                         <InputAdornment position="end">
                           <Face className={classes.inputAdornmentIcon} />
                         </InputAdornment>
-                      )
+                      ),
+                      onChange: event => {
+                        this.setState(byPropKey("name", event.target.value));
+                      }
                     }}
                   />
                   <CustomInput
@@ -102,7 +142,10 @@ class LoginPage extends React.Component {
                         <InputAdornment position="end">
                           <Email className={classes.inputAdornmentIcon} />
                         </InputAdornment>
-                      )
+                      ),
+                      onChange: event => {
+                        this.setState(byPropKey("email", event.target.value));
+                      }
                     }}
                   />
                   <CustomInput
@@ -118,14 +161,27 @@ class LoginPage extends React.Component {
                             lock_outline
                           </Icon>
                         </InputAdornment>
-                      )
+                      ),
+                      onChange: event => {
+                        this.setState(
+                          byPropKey("password", event.target.value)
+                        );
+                      }
                     }}
                   />
+                  {error && <Danger>{error.message}</Danger>}
                 </CardBody>
                 <CardFooter className={classes.justifyContentCenter}>
-                  <Button color="rose" simple size="lg" block>
+                  <Button
+                    color="urbanshelter"
+                    type="submit"
+                    onClick={event => {
+                      return this.onSubmit(event);
+                    }}
+                  >
                     Let's Go
                   </Button>
+                  {redirect && <Redirect to="/dashboard" push />}
                 </CardFooter>
               </Card>
             </form>

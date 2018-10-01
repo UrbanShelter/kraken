@@ -69,7 +69,7 @@ class RegisterPage extends React.Component {
     return name && email && password !== "" ? false : true;
   }
   onSubmit = event => {
-    const { name, email, password, error, checked, redirect } = this.state;
+    const { name, email, password, checked } = this.state;
 
     checked.indexOf(1) === 0
       ? auth
@@ -79,7 +79,6 @@ class RegisterPage extends React.Component {
           })
           .catch(error => {
             this.setState(byPropKey("error", error));
-            console.log(error);
           })
       : this.setState(
           byPropKey("error", {
@@ -236,9 +235,11 @@ class RegisterPage extends React.Component {
                       <div className={classes.center}>
                         <Button
                           round
-                          color="primary"
+                          color="urbanshelter"
                           type="submit"
-                          onClick={(event) => this.onSubmit(event)}
+                          onClick={event => {
+                            return this.onSubmit(event);
+                          }}
                         >
                           Get started
                         </Button>

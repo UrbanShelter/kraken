@@ -55,7 +55,8 @@ CardHeader.propTypes = {
     "danger",
     "info",
     "primary",
-    "rose"
+    "rose",
+    "urbanshelter"
   ]),
   plain: PropTypes.bool,
   image: PropTypes.bool,

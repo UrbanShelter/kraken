@@ -169,8 +169,8 @@ const roseCardHeader = {
   background: "linear-gradient(60deg, #ec407a, #d81b60)",
   ...roseBoxShadow
 };
-const urbanShelterCardHeader = {
-  background: "linear-gradient(60deg, #ec407a, #d81b60)",
+const urbanshelterCardHeader = {
+  background: "linear-gradient(60deg, #ef4f67, #b70c3d)",
   ...urbanShelterBoxShadow
 };
 
@@ -267,7 +267,7 @@ export {
   // UrbanShelter colors
   urbanShelterColor,
   urbanShelterBoxShadow,
-  urbanShelterCardHeader,
+  urbanshelterCardHeader,
   //variables
   drawerWidth,
   drawerMiniWidth,
