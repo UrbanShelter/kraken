@@ -1,5 +1,8 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
+// nodejs library to set properties for components
+import PropTypes from "prop-types";
 
 const devConfig = {
   apiKey: "AIzaSyDtZLZMjy5KmC3qaOVpKhDUmlBRg5OmcO8",
@@ -26,5 +29,17 @@ if (!firebase.apps.length) {
 }
 
 const auth = firebase.auth();
+const db = firebase.firestore();
 
-export { auth };
+const location = (latitude, longitude) => {
+  return typeof latitude && typeof longitude === "number"
+    ? new firebase.firestore.GeoPoint(latitude, longitude)
+    : null;
+};
+
+export { auth, db, location };
+
+location.propTypes = {
+  latitude: PropTypes.number,
+  longitude: PropTypes.number
+};

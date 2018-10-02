@@ -23,7 +23,7 @@ class ListingCard extends React.Component {
     this.setState({ value: index });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, title } = this.props;
     return (
       <Card listing>
         <CardHeader image carousel>
@@ -33,7 +33,9 @@ class ListingCard extends React.Component {
           <CardBody listing>
             <GridContainer direction="column" style={{ paddingRight: 8 }}>
               <GridItem xs={12}>
-                <h3 className={classes.cardProductTitle}>1 Victoria St S</h3>
+                <h3 className={classes.cardProductTitle}>
+                  {title || "1 Victoria St S"}
+                </h3>
               </GridItem>
               <GridItem xs={12}>
                 <p className={classes.cardProductDesciprion}>Kitchener, ON</p>
@@ -51,10 +53,10 @@ class ListingCard extends React.Component {
               $1200/m
             </Button>
           </CardBody>
-          <div style={{marginTop: "-20px"}}>
-          <p className={classes.cardProductDesciprion}>
-            Available from Oct 1st | Unfurnished | 1 Bedroom Available
-          </p>
+          <div style={{ marginTop: "-20px" }}>
+            <p className={classes.cardProductDesciprion}>
+              Available from Oct 1st | Unfurnished | 1 Bedroom Available
+            </p>
           </div>
         </CardBody>
         <CardFooter plain listing>
@@ -69,7 +71,8 @@ class ListingCard extends React.Component {
 }
 
 ListingCard.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired
 };
 
 export default withStyles(listingCardStyle)(ListingCard);

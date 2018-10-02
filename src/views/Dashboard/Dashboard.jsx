@@ -39,6 +39,7 @@ import {
   emailsSubscriptionChart
 } from "variables/charts";
 import ListingCard from "components/ListingCard/ListingCard.jsx";
+import { user } from "firebase/index.js";
 
 const us_flag = require("assets/img/flags/US.png");
 const de_flag = require("assets/img/flags/DE.png");
@@ -62,9 +63,28 @@ var mapData = {
 };
 
 class Dashboard extends React.Component {
-  state = {
-    value: 0
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      value: 0,
+      listings: null
+    };
+
+    // required to bind the callback function here
+    // see: https://stackoverflow.com/questions/32317154/react-uncaught-typeerror-cannot-read-property-setstate-of-undefined
+    this.callback = this.callback.bind(this);
+  }
+  // this callback is used to enable realtime updates
+  callback(map) {
+    map && this.setState({ listings: map });
+  }
+  componentDidMount() {
+    // user.doTestRead().then(map => {
+    //   this.setState({ listings: map });
+    // });
+    user.doRealtimeTestRead(this.callback);
+  }
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -73,6 +93,8 @@ class Dashboard extends React.Component {
   };
   render() {
     const { classes } = this.props;
+    const { listings } = this.state;
+
     return (
       <div>
         <GridContainer>
@@ -388,7 +410,16 @@ class Dashboard extends React.Component {
         <h3>Manage Listings</h3>
         <br />
         <GridContainer>
-          <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
+          {listings &&
+            listings.map((prop, key) => {
+              if (prop.location.address)
+                return (
+                  <GridItem xs={12} sm={6} md={6} lg={4} xl={3} key={key}>
+                    <ListingCard title={prop.location.address} />
+                  </GridItem>
+                );
+            })}
+          {/* <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
             <ListingCard />
           </GridItem>
           <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
@@ -408,7 +439,7 @@ class Dashboard extends React.Component {
           </GridItem>
           <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
             <ListingCard />
-          </GridItem>
+          </GridItem> */}
         </GridContainer>
       </div>
     );

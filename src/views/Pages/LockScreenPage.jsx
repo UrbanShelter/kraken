@@ -15,12 +15,14 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import avatar from "assets/img/faces/avatar.jpg";
 
 import lockScreenPageStyle from "assets/jss/material-dashboard-pro-react/views/lockScreenPageStyle.jsx";
+import { user } from "firebase/index.js";
 
 class LockScreenPage extends React.Component {
   constructor(props) {
     super(props);
     // we use this to make the card to appear after the page has been rendered
     this.state = {
+      listings: null,
       cardAnimaton: "cardHidden"
     };
   }
@@ -33,12 +35,36 @@ class LockScreenPage extends React.Component {
       700
     );
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     clearTimeout(this.timeOutFunction);
     this.timeOutFunction = null;
   }
+  callback(map) {
+    console.log(map);
+  }
+  onSubmit = event => {
+    // user.doTest();
+
+    // user
+    //   .doTestRead()
+    //   .then(map => {
+    //     this.setState({ listings: map });
+    //   })
+    //   .then(() => console.log(this.state.listings));
+
+    user.doRealtimeTestRead(this.callback);
+    // .then(map => {
+    //   this.setState({ listings: map });
+    // })
+    // .then(() => console.log(this.state.listings));
+
+    // prevents the page from reloading
+    event.preventDefault();
+  };
   render() {
     const { classes } = this.props;
+    const { listings } = this.state;
+
     return (
       <div className={classes.container}>
         <form>
@@ -67,10 +93,24 @@ class LockScreenPage extends React.Component {
               />
             </CardBody>
             <CardFooter className={classes.justifyContentCenter}>
-              <Button color="rose" round>
+              <Button
+                color="urbanshelter"
+                round
+                onClick={event => {
+                  return this.onSubmit(event);
+                }}
+              >
                 Unlock
               </Button>
             </CardFooter>
+            {listings &&
+              listings.map((prop, key) => {
+                return (
+                  <Card key={key}>
+                    <p style={{ color: "red" }}>{prop.category}</p>
+                  </Card>
+                );
+              })}
           </Card>
         </form>
       </div>
