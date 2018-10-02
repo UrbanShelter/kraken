@@ -11,6 +11,7 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import SectionCarousel from "../Carousel/SectionCarousel";
+import Truncate from "react-truncate";
 
 class ListingCard extends React.Component {
   state = {
@@ -34,11 +35,17 @@ class ListingCard extends React.Component {
             <GridContainer direction="column" style={{ paddingRight: 8 }}>
               <GridItem xs={12}>
                 <h3 className={classes.cardProductTitle}>
-                  {title || "1 Victoria St S"}
+                  <Truncate lines={1} ellipsis={<span>...</span>}>
+                    {title || "1 Victoria St S"}
+                  </Truncate>
                 </h3>
               </GridItem>
               <GridItem xs={12}>
-                <p className={classes.cardProductDesciprion}>Kitchener, ON</p>
+                <p className={classes.cardProductDesciprion}>
+                  <Truncate lines={1} ellipsis={<span>...</span>}>
+                    Kitchener, ON
+                  </Truncate>
+                </p>
               </GridItem>
             </GridContainer>
             <Button
@@ -55,7 +62,9 @@ class ListingCard extends React.Component {
           </CardBody>
           <div style={{ marginTop: "-20px" }}>
             <p className={classes.cardProductDesciprion}>
-              Available from Oct 1st | Unfurnished | 1 Bedroom Available
+              <Truncate lines={1} ellipsis={<span>...</span>}>
+                Available from Oct 1st | Unfurnished | 1 Bedroom Available
+              </Truncate>
             </p>
           </div>
         </CardBody>

@@ -8,7 +8,6 @@ export const doCreateUser = (id, username, email) =>
 
 export const onceGetUsers = () => db.ref("users").once("value");
 
-// Add a new document in collection "cities"
 export const doTest = () => {
   var ref = db.collection("properties").doc();
 
