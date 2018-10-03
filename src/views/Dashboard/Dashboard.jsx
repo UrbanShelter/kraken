@@ -84,6 +84,34 @@ class Dashboard extends React.Component {
     //   this.setState({ listings: map });
     // });
     user.doRealtimeTestRead(this.callback);
+    // for mobile touch lock
+    window.addEventListener("touchstart", this.touchStart);
+    window.addEventListener("touchmove", this.preventTouch, { passive: false });
+  }
+  componentWillUnmount() {
+    // for mobile touch lock
+    window.removeEventListener("touchstart", this.touchStart);
+    window.removeEventListener("touchmove", this.preventTouch, {
+      passive: false
+    });
+  }
+  touchStart(e) {
+    this.firstClientX = e.touches[0].clientX;
+    this.firstClientY = e.touches[0].clientY;
+  }
+
+  preventTouch(e) {
+    const minValue = 5; // threshold
+
+    this.clientX = e.touches[0].clientX - this.firstClientX;
+    this.clientY = e.touches[0].clientY - this.firstClientY;
+
+    // Vertical scrolling does not work when you start swiping horizontally.
+    if (Math.abs(this.clientX) > minValue) {
+      e.preventDefault();
+      e.returnValue = false;
+      return false;
+    }
   }
   handleChange = (event, value) => {
     this.setState({ value });
