@@ -13,7 +13,8 @@ const registerPageStyle = {
   ...customCheckboxRadioSwitch,
   cardTitle: {
     ...cardTitle,
-    textAlign: "center"
+    textAlign: "center",
+    padding: "20px 0px"
   },
   container: {
     ...container,
