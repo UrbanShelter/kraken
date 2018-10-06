@@ -99,7 +99,7 @@ class RegisterPage extends React.Component {
     return (
       <div className={classes.container}>
         <GridContainer justify="center">
-          <GridItem xs={12} sm={7} md={7}>
+          <GridItem xs={12} sm={10} md={7}>
             <form>
               <Card login className={classes[this.state.cardAnimaton]}>
                 <GridContainer justify="center">
@@ -144,13 +144,14 @@ class RegisterPage extends React.Component {
                       </Button>
                       <ColoredLine color="#707070" opacity="0.35" />
                       {error && <Danger>{error.message}</Danger>}
-                      <div style={{ textAlign: "center" }}>
-                        <h6>
-                          Already have an UrbanShelter account?{" "}
-                          <a href="#" style={{ color: "#ef4f67" }}>
-                            Log In
-                          </a>
-                        </h6>
+                      <div style={{ textAlign: "center", paddingBottom: 20 }}>
+                        Already have an UrbanShelter account?{" "}
+                        <a
+                          href="#"
+                          style={{ color: "#ef4f67", fontWeight: 500 }}
+                        >
+                          Log In
+                        </a>
                       </div>
                     </CardBody>
                   </GridItem>
