@@ -24,7 +24,6 @@ const styles = createMuiTheme({
 
 let CustomCheckbox = props => (
   <Checkbox
-    defaultChecked
     classes={{
       root: props.classes.root,
       checked: props.classes.checked

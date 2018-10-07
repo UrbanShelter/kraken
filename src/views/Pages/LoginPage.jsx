@@ -11,6 +11,8 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Danger from "components/Typography/Danger.jsx";
 import Muted from "components/Typography/Muted.jsx";
+import ColoredLine from "components/ColoredLine/ColoredLine.jsx";
+
 // firebase functionality
 import { auth } from "firebase/index.js";
 import PropTypes from "prop-types";
@@ -28,18 +30,6 @@ const INITIAL_STATE = {
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value
 });
-
-const ColoredLine = ({ color, opacity }) => (
-  <hr
-    style={{
-      color: color,
-      backgroundColor: color,
-      height: 1,
-      opacity: opacity,
-      maxWidth: "100"
-    }}
-  />
-);
 
 class RegisterPage extends React.Component {
   constructor(props) {
