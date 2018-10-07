@@ -28,7 +28,7 @@ const pagesStyle = theme => ({
       border: "none !important"
     },
     "&:before": {
-      backgroundColor: "rgba(1, 1, 1, 0.35)"
+      backgroundColor: "rgba(0, 0, 0, 0.35)"
     },
     "&:before,&:after": {
       display: "block",

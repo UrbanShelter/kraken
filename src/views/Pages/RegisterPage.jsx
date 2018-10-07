@@ -67,8 +67,8 @@ class RegisterPage extends React.Component {
     auth
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
-          this.setState({ ...INITIAL_STATE, redirect: true });
-        })
+        this.setState({ ...INITIAL_STATE, redirect: true });
+      })
       .catch(error => {
         this.setState(byPropKey("error", error));
       });
@@ -132,7 +132,11 @@ class RegisterPage extends React.Component {
                       </Button>
                       <GridContainer justify="center" alignItems="center">
                         <GridItem xs={5}>
-                          <ColoredLine color="#707070" opacity="0.35" />
+                          <ColoredLine
+                            color="#707070"
+                            height={1}
+                            opacity={0.35}
+                          />
                         </GridItem>
                         <GridItem xs>
                           <div style={{ textAlign: "center" }}>
@@ -140,14 +144,18 @@ class RegisterPage extends React.Component {
                           </div>
                         </GridItem>
                         <GridItem xs={5}>
-                          <ColoredLine color="#707070" opacity="0.35" />
+                          <ColoredLine
+                            color="#707070"
+                            height={1}
+                            opacity={0.35}
+                          />
                         </GridItem>
                       </GridContainer>
                       <Button color="urbanshelter" style={{ width: "100%" }}>
                         <Email />
                         SIGN UP WITH EMAIL
                       </Button>
-                      <ColoredLine color="#707070" opacity="0.35" />
+                      <ColoredLine color="#707070" height={1} opacity={0.35} />
                       {error && <Danger>{error.message}</Danger>}
                       <div style={{ textAlign: "center", paddingBottom: 20 }}>
                         Already have an UrbanShelter account?{" "}

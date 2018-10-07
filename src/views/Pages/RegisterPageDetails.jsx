@@ -151,7 +151,11 @@ class RegisterPageDetails extends React.Component {
                       </div>
                       <GridContainer justify="center" alignItems="center">
                         <GridItem xs={5}>
-                          <ColoredLine color="#707070" opacity="0.35" />
+                          <ColoredLine
+                            color="#707070"
+                            height={1}
+                            opacity={0.35}
+                          />
                         </GridItem>
                         <GridItem xs>
                           <div style={{ textAlign: "center" }}>
@@ -159,7 +163,11 @@ class RegisterPageDetails extends React.Component {
                           </div>
                         </GridItem>
                         <GridItem xs={5}>
-                          <ColoredLine color="#707070" opacity="0.35" />
+                          <ColoredLine
+                            color="#707070"
+                            height={1}
+                            opacity={0.35}
+                          />
                         </GridItem>
                       </GridContainer>
                       <form>
@@ -243,7 +251,7 @@ class RegisterPageDetails extends React.Component {
                           SIGN UP
                         </Button>
                       </form>
-                      <ColoredLine color="#707070" opacity="0.35" />
+                      <ColoredLine color="#707070" height={1} opacity={0.35} />
                       {error && <Danger>{error.message}</Danger>}
                       <div style={{ textAlign: "center", paddingBottom: 20 }}>
                         Already have an UrbanShelter account?{" "}
