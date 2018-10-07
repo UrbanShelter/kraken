@@ -1,13 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// react component plugin for creating a beautiful datetime dropdown picker
-import Datetime from "react-datetime";
-
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
 import Danger from "components/Typography/Danger.jsx";
 import Muted from "components/Typography/Muted.jsx";
 
@@ -19,11 +14,9 @@ import Close from "@material-ui/icons/Close";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import UrbanCheckbox from "components/CustomCheckbox/UrbanCheckbox.jsx";
 import ColoredLine from "components/ColoredLine/ColoredLine.jsx";
 
 // firebase functionality
@@ -35,15 +28,14 @@ const INITIAL_STATE = {
   email: "",
   password: "",
   error: null,
-  redirect: false,
-  checked: []
+  redirect: false
 };
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value
 });
 
-class RegisterPageDetails extends React.Component {
+class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
     // we use this to make the card to appear after the page has been rendered
@@ -84,21 +76,6 @@ class RegisterPageDetails extends React.Component {
     // prevents the page from reloading
     event.preventDefault();
   };
-  handleToggle(value) {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    this.setState({
-      checked: newChecked
-    });
-  }
   render() {
     const { classes } = this.props;
     const { error } = this.state;
@@ -133,22 +110,26 @@ class RegisterPageDetails extends React.Component {
                 <GridContainer justify="center">
                   <GridItem xs={12} sm={10} md={9}>
                     <CardBody>
-                      <div style={{ textAlign: "center", paddingBottom: 20 }}>
-                        Sign Up with{" "}
-                        <a
-                          href="#"
-                          style={{ color: "#ef4f67", fontWeight: 500 }}
-                        >
-                          Facebook
-                        </a>{" "}
-                        or{" "}
-                        <a
-                          href="#"
-                          style={{ color: "#ef4f67", fontWeight: 500 }}
-                        >
-                          Google
-                        </a>
-                      </div>
+                      <h3
+                        className={classes.cardTitle}
+                        style={{ marginBottom: -10 }}
+                      >
+                        Sign Up
+                      </h3>
+                      <Button color="facebook" style={{ width: "100%" }}>
+                        <i
+                          className={
+                            classes.socialButtonsIcons +
+                            " " +
+                            classes.marginRight +
+                            " fab fa-facebook-f"
+                          }
+                        />{" "}
+                        CONNECT WITH FACEBOOK
+                      </Button>
+                      <Button color="google" style={{ width: "100%" }}>
+                        <i className={"fab fa-google"} /> CONNECT WITH GOOGLE
+                      </Button>
                       <GridContainer justify="center" alignItems="center">
                         <GridItem xs={5}>
                           <ColoredLine
@@ -170,87 +151,17 @@ class RegisterPageDetails extends React.Component {
                           />
                         </GridItem>
                       </GridContainer>
-                      <form>
-                        <CustomInput
-                          urbanshelter
-                          labelText="Email adress"
-                          id="email_adress"
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            type: "email"
-                          }}
-                        />
-                        <CustomInput
-                          urbanshelter
-                          labelText="First Name"
-                          id="firstname"
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            type: "text"
-                          }}
-                        />
-                        <CustomInput
-                          urbanshelter
-                          labelText="Last Name"
-                          id="lastname"
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            type: "text"
-                          }}
-                        />
-                        <CustomInput
-                          urbanshelter
-                          labelText="Create Password"
-                          id="password"
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            type: "password"
-                          }}
-                        />
-                        <h6>BIRTHDAY</h6>
-                        <Muted>To sign up you must be 18 years or older.</Muted>
-                        <FormControl fullWidth>
-                          <Datetime
-                            timeFormat={false}
-                            inputProps={{ placeholder: "MM/DD/YYYY" }}
-                          />
-                        </FormControl>
-                        <div
-                          className={classes.checkboxAndRadio}
-                          style={{
-                            justify: "center",
-                            display: "flex",
-                            width: "100%",
-                            wrap: "no-wrap"
-                          }}
-                        >
-                          <FormControlLabel
-                            control={<UrbanCheckbox />}
-                            classes={{
-                              label: classes.checkboxLabel
-                            }}
-                            style={{
-                              marginTop: 8,
-                              marginLeft: 0,
-                              marginRight: 0,
-                              fontSize: 14
-                            }}
-                            label="I want to recieve policy updates, marketing material, inspirations and special offers"
-                          />
-                        </div>
-                        <Button color="urbanshelter" style={{ width: "100%" }}>
-                          <Email />
-                          SIGN UP
-                        </Button>
-                      </form>
+                      <Button color="urbanshelter" style={{ width: "100%" }}>
+                        <i
+                          className={
+                            classes.socialButtonsIcons +
+                            " " +
+                            classes.marginRight +
+                            " far fa-envelope"
+                          }
+                        />{" "}
+                        SIGN UP WITH EMAIL
+                      </Button>
                       <ColoredLine color="#707070" height={1} opacity={0.35} />
                       {error && <Danger>{error.message}</Danger>}
                       <div style={{ textAlign: "center", paddingBottom: 20 }}>
@@ -274,8 +185,8 @@ class RegisterPageDetails extends React.Component {
   }
 }
 
-RegisterPageDetails.propTypes = {
+RegisterPage.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(registerPageStyle)(RegisterPageDetails);
+export default withStyles(registerPageStyle)(RegisterPage);

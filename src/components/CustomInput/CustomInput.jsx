@@ -25,19 +25,22 @@ function CustomInput({ ...props }) {
     inputRootCustomClasses,
     success,
     urbanshelter,
+    urbansheltersuccess,
     helpText
   } = props;
 
   const labelClasses = classNames({
     [" " + classes.labelRootError]: error,
-    [" " + classes.labelRootSuccess]: success && !error
+    [" " + classes.labelRootSuccess]: success && !error,
+    [" " + classes.labelRootUrbanShelter]: urbansheltersuccess && !error
   });
   const underlineClasses = classNames({
+    [classes.underline]: true,
     [classes.underlineError]: error,
     [classes.underlineSuccess]: success && !error,
-    [classes.underline]: true,
-    [classes.whiteUnderline]: white,
-    [classes.urbanUnderline]: urbanshelter
+    [classes.urbanUnderline]: urbanshelter,
+    [" " + classes.UrbanShelterSuccessUnderline]: urbansheltersuccess && !error,
+    [classes.whiteUnderline]: white
   });
   const marginTop = classNames({
     [inputRootCustomClasses]: inputRootCustomClasses !== undefined
@@ -57,7 +60,8 @@ function CustomInput({ ...props }) {
   }
   var helpTextClasses = classNames({
     [classes.labelRootError]: error,
-    [classes.labelRootSuccess]: success && !error
+    [classes.labelRootSuccess]: success && !error,
+    [" " + classes.labelRootUrbanShelter]: urbansheltersuccess && !error
   });
   return (
     <FormControl {...formControlProps} className={formControlClasses}>
@@ -101,6 +105,7 @@ CustomInput.propTypes = {
   success: PropTypes.bool,
   white: PropTypes.bool,
   urbanshelter: PropTypes.bool,
+  urbansheltersuccess: PropTypes.bool,
   helpText: PropTypes.node
 };
 

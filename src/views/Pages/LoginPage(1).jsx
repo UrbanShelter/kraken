@@ -1,27 +1,22 @@
-import React from "react";
-import PropTypes from "prop-types";
-
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import Danger from "components/Typography/Danger.jsx";
-import Muted from "components/Typography/Muted.jsx";
-
-import Email from "@material-ui/icons/Email";
 import Close from "@material-ui/icons/Close";
-
+import Email from "@material-ui/icons/Email";
+import Card from "components/Card/Card.jsx";
+import CardBody from "components/Card/CardBody.jsx";
+import Button from "components/CustomButtons/Button.jsx";
 // import LockOutline from "@material-ui/icons/LockOutline";
-
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
-import Button from "components/CustomButtons/Button.jsx";
-import Card from "components/Card/Card.jsx";
-import CardBody from "components/Card/CardBody.jsx";
+import Danger from "components/Typography/Danger.jsx";
+import Muted from "components/Typography/Muted.jsx";
 import ColoredLine from "components/ColoredLine/ColoredLine.jsx";
 
 // firebase functionality
 import { auth } from "firebase/index.js";
+import PropTypes from "prop-types";
+import React from "react";
 import registerPageStyle from "../../assets/jss/material-dashboard-pro-react/views/registerPageStyle";
 
 const INITIAL_STATE = {
@@ -29,15 +24,14 @@ const INITIAL_STATE = {
   email: "",
   password: "",
   error: null,
-  redirect: false,
-  checked: []
+  redirect: false
 };
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value
 });
 
-class LoginPageDetails extends React.Component {
+class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
     // we use this to make the card to appear after the page has been rendered
@@ -64,11 +58,11 @@ class LoginPageDetails extends React.Component {
     return name && email && password !== "" ? false : true;
   }
   onSubmit = event => {
-    const { email, password } = this.state;
+    const { name, email, password } = this.state;
 
     auth
       .doSignInWithEmailAndPassword(email, password)
-      .then(() => {
+      .then(authUser => {
         this.setState({ ...INITIAL_STATE, redirect: true });
       })
       .catch(error => {
@@ -78,24 +72,9 @@ class LoginPageDetails extends React.Component {
     // prevents the page from reloading
     event.preventDefault();
   };
-  handleToggle(value) {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    this.setState({
-      checked: newChecked
-    });
-  }
   render() {
     const { classes } = this.props;
-    const { error } = this.state;
+    const { name, email, password, error, redirect } = this.state;
     return (
       <div className={classes.container}>
         <GridContainer justify="center">
@@ -127,22 +106,26 @@ class LoginPageDetails extends React.Component {
                 <GridContainer justify="center">
                   <GridItem xs={12} sm={10} md={9}>
                     <CardBody>
-                      <div style={{ textAlign: "center", paddingBottom: 20 }}>
-                        Log In with{" "}
-                        <a
-                          href="#"
-                          style={{ color: "#ef4f67", fontWeight: 500 }}
-                        >
-                          Facebook
-                        </a>{" "}
-                        or{" "}
-                        <a
-                          href="#"
-                          style={{ color: "#ef4f67", fontWeight: 500 }}
-                        >
-                          Google
-                        </a>
-                      </div>
+                      <h3
+                        className={classes.cardTitle}
+                        style={{ marginBottom: -10 }}
+                      >
+                        Log In
+                      </h3>
+                      <Button color="facebook" style={{ width: "100%" }}>
+                        <i
+                          className={
+                            classes.socialButtonsIcons +
+                            " " +
+                            classes.marginRight +
+                            " fab fa-facebook-f"
+                          }
+                        />{" "}
+                        LOG IN WITH FACEBOOK
+                      </Button>
+                      <Button color="google" style={{ width: "100%" }}>
+                        <i className={"fab fa-google"} /> LOG IN WITH GOOGLE
+                      </Button>
                       <GridContainer justify="center" alignItems="center">
                         <GridItem xs={5}>
                           <ColoredLine
@@ -164,34 +147,17 @@ class LoginPageDetails extends React.Component {
                           />
                         </GridItem>
                       </GridContainer>
-                      <form>
-                        <CustomInput
-                          urbanshelter
-                          labelText="Email adress"
-                          id="email_adress"
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            type: "email"
-                          }}
-                        />
-                        <CustomInput
-                          urbanshelter
-                          labelText="Password"
-                          id="password"
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            type: "password"
-                          }}
-                        />
-                        <Button color="urbanshelter" style={{ width: "100%" }}>
-                          <Email />
-                          LOG IN
-                        </Button>
-                      </form>
+                      <Button color="urbanshelter" style={{ width: "100%" }}>
+                        <i
+                          className={
+                            classes.socialButtonsIcons +
+                            " " +
+                            classes.marginRight +
+                            " far fa-envelope"
+                          }
+                        />{" "}
+                        LOG IN WITH EMAIL
+                      </Button>
                       <ColoredLine color="#707070" height={1} opacity={0.35} />
                       {error && <Danger>{error.message}</Danger>}
                       <div style={{ textAlign: "center", paddingBottom: 20 }}>
@@ -215,8 +181,8 @@ class LoginPageDetails extends React.Component {
   }
 }
 
-LoginPageDetails.propTypes = {
+RegisterPage.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(registerPageStyle)(LoginPageDetails);
+export default withStyles(registerPageStyle)(RegisterPage);

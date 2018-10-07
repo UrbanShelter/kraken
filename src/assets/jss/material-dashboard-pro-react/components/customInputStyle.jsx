@@ -36,6 +36,11 @@ const customInputStyle = {
       borderColor: urbanShelterColor
     }
   },
+  UrbanShelterSuccessUnderline: {
+    "&:after": {
+      borderColor: "blue"
+    }
+  },
   labelRoot: {
     ...defaultFont,
     color: "#AAAAAA !important",
@@ -52,6 +57,9 @@ const customInputStyle = {
   },
   labelRootSuccess: {
     color: successColor + " !important"
+  },
+  labelRootUrbanShelter: {
+    color: "blue" + " !important"
   },
   formControl: {
     margin: "0 0 17px 0",
