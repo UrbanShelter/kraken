@@ -24,6 +24,7 @@ function CustomInput({ ...props }) {
     white,
     inputRootCustomClasses,
     success,
+    urbanshelter,
     helpText
   } = props;
 
@@ -35,7 +36,8 @@ function CustomInput({ ...props }) {
     [classes.underlineError]: error,
     [classes.underlineSuccess]: success && !error,
     [classes.underline]: true,
-    [classes.whiteUnderline]: white
+    [classes.whiteUnderline]: white,
+    [classes.urbanUnderline]: urbanshelter
   });
   const marginTop = classNames({
     [inputRootCustomClasses]: inputRootCustomClasses !== undefined
@@ -98,6 +100,7 @@ CustomInput.propTypes = {
   error: PropTypes.bool,
   success: PropTypes.bool,
   white: PropTypes.bool,
+  urbanshelter: PropTypes.bool,
   helpText: PropTypes.node
 };
 

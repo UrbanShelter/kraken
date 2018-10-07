@@ -19,7 +19,7 @@ const pagesStyle = theme => ({
     backgroundPosition: "center center",
     height: "100%",
     [theme.breakpoints.down("sm")]: {
-      minHeight: "fit-content!important",
+      minHeight: "fit-content!important"
     },
     "& footer": {
       position: "absolute",
@@ -28,7 +28,7 @@ const pagesStyle = theme => ({
       border: "none !important"
     },
     "&:before": {
-      backgroundColor: "rgba(0, 0, 0, 0.65)"
+      backgroundColor: "rgba(1, 1, 1, 0.35)"
     },
     "&:before,&:after": {
       display: "block",

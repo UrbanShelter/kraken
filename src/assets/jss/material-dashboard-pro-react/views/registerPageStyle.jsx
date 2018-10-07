@@ -14,7 +14,8 @@ const registerPageStyle = {
   cardTitle: {
     ...cardTitle,
     textAlign: "center",
-    padding: "20px 0px"
+    paddingBottom: 20,
+    marginTop: -24
   },
   container: {
     ...container,
@@ -61,7 +62,9 @@ const registerPageStyle = {
   },
   checkboxLabel: {
     marginLeft: "6px",
-    color: "rgba(0, 0, 0, 0.26)"
+    color: "#AAAAAA",
+    alignItems: "flex-start",
+    display: "flex"
   }
 };
 

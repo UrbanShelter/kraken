@@ -1,0 +1,19 @@
+<MuiThemeProvider theme={theme}>
+                                <Checkbox
+                                  focusRippleColor="green"
+                                  tabIndex={-1}
+                                  onClick={() => this.handleToggle(2)}
+                                  checkedIcon={
+                                    <Check
+                                      className={classes.checkedIcon}
+                                      style={{ color: "ef4f67" }}
+                                    />
+                                  }
+                                  icon={
+                                    <Check className={classes.uncheckedIcon} />
+                                  }
+                                  classes={{
+                                    checked: classes.checked
+                                  }}
+                                />
+                              </MuiThemeProvider>

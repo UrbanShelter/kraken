@@ -23,7 +23,7 @@
   }
   input.form-control {
     border: 0;
-    background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
+    background-image: linear-gradient(#ef4f67, #ef4f67), linear-gradient(#D2D2D2, #D2D2D2);
     background-size: 0 2px, 100% 1px;
     background-repeat: no-repeat;
     background-position: center bottom, center calc(100% - 1px);
@@ -44,7 +44,7 @@
   }
   input.form-control:focus {
     outline: none;
-    background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
+    background-image: linear-gradient(#ef4f67, #ef4f67), linear-gradient(#D2D2D2, #D2D2D2);
     background-size: 100% 2px, 100% 1px;
     box-shadow: none;
     transition-duration: 0.3s;
@@ -130,9 +130,9 @@
   &.rdtToday.rdtActive,
   &.rdtActive,
   &.rdtActive:hover {
-    background-color: $brand-primary !important;
+    background-color: $brand-urbanshelter !important;
     color: $white-color;
-    @include shadow-big-color($brand-primary);
+    @include shadow-big-color($brand-urbanshelter);
   }
 }
 .rdtDays{
@@ -206,7 +206,7 @@
   th.rdtNext,
   th.rdtPrev,
   .rdtTimeToggle{
-    color: $brand-primary;
+    color: $brand-urbanshelter;
   }
 }
 
@@ -295,9 +295,9 @@ td.rdtYear:hover {
 .rdtCounters{
   .rdtCounter:last-child{
     .rdtCount{
-      color: $brand-primary;
+      color: $brand-urbanshelter;
       border-radius: 50%;
-      border: 1px solid $brand-primary;
+      border: 1px solid $brand-urbanshelter;
     }
   }
 }
@@ -361,7 +361,7 @@ td.rdtYear:hover {
     text-align: center;
 
     &.rdtActive{
-      background-color: $brand-primary !important;
+      background-color: $brand-urbanshelter !important;
       color: $white-color;
     }
   }

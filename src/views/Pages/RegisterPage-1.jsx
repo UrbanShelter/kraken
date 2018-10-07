@@ -1,20 +1,33 @@
+import React from "react";
+import PropTypes from "prop-types";
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import Close from "@material-ui/icons/Close";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Icon from "@material-ui/core/Icon";
+import Danger from "components/Typography/Danger.jsx";
+import Muted from "components/Typography/Muted.jsx";
+
+// @material-ui/icons
+import Face from "@material-ui/icons/Face";
 import Email from "@material-ui/icons/Email";
-import Card from "components/Card/Card.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import Button from "components/CustomButtons/Button.jsx";
+import EmailOutlined from "@material-ui/icons/EmailOutlined";
+import Close from "@material-ui/icons/Close";
+
 // import LockOutline from "@material-ui/icons/LockOutline";
+
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import Danger from "components/Typography/Danger.jsx";
-import Muted from "components/Typography/Muted.jsx";
+import CustomInput from "components/CustomInput/CustomInput.jsx";
+import Button from "components/CustomButtons/Button.jsx";
+import Card from "components/Card/Card.jsx";
+import CardBody from "components/Card/CardBody.jsx";
+import CardFooter from "components/Card/CardFooter.jsx";
+
+import { Redirect } from "react-router-dom";
 // firebase functionality
 import { auth } from "firebase/index.js";
-import PropTypes from "prop-types";
-import React from "react";
 import registerPageStyle from "../../assets/jss/material-dashboard-pro-react/views/registerPageStyle";
 
 const INITIAL_STATE = {
@@ -120,7 +133,7 @@ class RegisterPage extends React.Component {
                         className={classes.cardTitle}
                         style={{ marginBottom: -10 }}
                       >
-                        Log In
+                        Sign Up
                       </h3>
                       <Button color="facebook" style={{ width: "100%" }}>
                         <i
@@ -131,10 +144,10 @@ class RegisterPage extends React.Component {
                             " fab fa-facebook-square"
                           }
                         />{" "}
-                        LOG IN WITH FACEBOOK
+                        CONNECT WITH FACEBOOK
                       </Button>
                       <Button color="google" style={{ width: "100%" }}>
-                        <i className={"fab fa-google"} /> LOG IN WITH GOOGLE
+                        <i className={"fab fa-google"} /> CONNECT WITH GOOGLE
                       </Button>
                       <GridContainer justify="center" alignItems="center">
                         <GridItem xs={5}>
@@ -151,17 +164,17 @@ class RegisterPage extends React.Component {
                       </GridContainer>
                       <Button color="urbanshelter" style={{ width: "100%" }}>
                         <Email />
-                        LOG IN WITH EMAIL
+                        SIGN UP WITH EMAIL
                       </Button>
                       <ColoredLine color="#707070" opacity="0.35" />
                       {error && <Danger>{error.message}</Danger>}
                       <div style={{ textAlign: "center", paddingBottom: 20 }}>
-                        Don&apos;t have an UrbanShelter account yet?{" "}
+                        Already have an UrbanShelter account?{" "}
                         <a
                           href="#"
                           style={{ color: "#ef4f67", fontWeight: 500 }}
                         >
-                          Sign Up
+                          Log In
                         </a>
                       </div>
                     </CardBody>

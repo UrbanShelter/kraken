@@ -1,17 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// react component plugin for creating a beautiful datetime dropdown picker
+import Datetime from "react-datetime";
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Icon from "@material-ui/core/Icon";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
 import Danger from "components/Typography/Danger.jsx";
 import Muted from "components/Typography/Muted.jsx";
 
-// @material-ui/icons
-import Face from "@material-ui/icons/Face";
 import Email from "@material-ui/icons/Email";
-import EmailOutlined from "@material-ui/icons/EmailOutlined";
+import Close from "@material-ui/icons/Close";
+
 // import LockOutline from "@material-ui/icons/LockOutline";
 
 // core components
@@ -21,9 +23,8 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
+import UrbanCheckbox from "components/CustomCheckbox/UrbanCheckbox.jsx";
 
-import { Redirect } from "react-router-dom";
 // firebase functionality
 import { auth } from "firebase/index.js";
 import registerPageStyle from "../../assets/jss/material-dashboard-pro-react/views/registerPageStyle";
@@ -33,7 +34,8 @@ const INITIAL_STATE = {
   email: "",
   password: "",
   error: null,
-  redirect: false
+  redirect: false,
+  checked: []
 };
 
 const byPropKey = (propertyName, value) => () => ({
@@ -79,11 +81,11 @@ class RegisterPage extends React.Component {
     return name && email && password !== "" ? false : true;
   }
   onSubmit = event => {
-    const { name, email, password } = this.state;
+    const { email, password } = this.state;
 
     auth
       .doSignInWithEmailAndPassword(email, password)
-      .then(authUser => {
+      .then(() => {
         this.setState({ ...INITIAL_STATE, redirect: true });
       })
       .catch(error => {
@@ -93,38 +95,71 @@ class RegisterPage extends React.Component {
     // prevents the page from reloading
     event.preventDefault();
   };
+  handleToggle(value) {
+    const { checked } = this.state;
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+
+    this.setState({
+      checked: newChecked
+    });
+  }
   render() {
     const { classes } = this.props;
-    const { name, email, password, error, redirect } = this.state;
+    const { error } = this.state;
     return (
       <div className={classes.container}>
         <GridContainer justify="center">
           <GridItem xs={12} sm={10} md={7}>
             <form>
               <Card login className={classes[this.state.cardAnimaton]}>
+                <div
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                    display: "flex",
+                    paddingRight: 16,
+                    paddingTop: 12
+                  }}
+                >
+                  <Button
+                    justIcon
+                    className={classes.modalCloseButton}
+                    key="close"
+                    aria-label="Close"
+                    color="transparent"
+                  >
+                    <Close
+                      className={classes.modalClose}
+                      style={{ color: "#707070", opacity: 0.35 }}
+                    />
+                  </Button>
+                </div>
                 <GridContainer justify="center">
                   <GridItem xs={12} sm={10} md={9}>
                     <CardBody>
-                      <h3
-                        className={classes.cardTitle}
-                        style={{ marginBottom: -10 }}
-                      >
-                        Sign Up
-                      </h3>
-                      <Button color="facebook" style={{ width: "100%" }}>
-                        <i
-                          className={
-                            classes.socialButtonsIcons +
-                            " " +
-                            classes.marginRight +
-                            " fab fa-facebook-square"
-                          }
-                        />{" "}
-                        CONNECT WITH FACEBOOK
-                      </Button>
-                      <Button color="google" style={{ width: "100%" }}>
-                        <i className={"fab fa-google"} /> CONNECT WITH GOOGLE
-                      </Button>
+                      <div style={{ textAlign: "center", paddingBottom: 20 }}>
+                        Sign Up with{" "}
+                        <a
+                          href="#"
+                          style={{ color: "#ef4f67", fontWeight: 500 }}
+                        >
+                          Facebook
+                        </a>{" "}
+                        or{" "}
+                        <a
+                          href="#"
+                          style={{ color: "#ef4f67", fontWeight: 500 }}
+                        >
+                          Google
+                        </a>
+                      </div>
                       <GridContainer justify="center" alignItems="center">
                         <GridItem xs={5}>
                           <ColoredLine color="#707070" opacity="0.35" />
@@ -138,10 +173,87 @@ class RegisterPage extends React.Component {
                           <ColoredLine color="#707070" opacity="0.35" />
                         </GridItem>
                       </GridContainer>
-                      <Button color="urbanshelter" style={{ width: "100%" }}>
-                        <Email />
-                        SIGN UP WITH EMAIL
-                      </Button>
+                      <form>
+                        <CustomInput
+                          urbanshelter
+                          labelText="Email adress"
+                          id="email_adress"
+                          formControlProps={{
+                            fullWidth: true
+                          }}
+                          inputProps={{
+                            type: "email"
+                          }}
+                        />
+                        <CustomInput
+                          urbanshelter
+                          labelText="First Name"
+                          id="firstname"
+                          formControlProps={{
+                            fullWidth: true
+                          }}
+                          inputProps={{
+                            type: "text"
+                          }}
+                        />
+                        <CustomInput
+                          urbanshelter
+                          labelText="Last Name"
+                          id="lastname"
+                          formControlProps={{
+                            fullWidth: true
+                          }}
+                          inputProps={{
+                            type: "text"
+                          }}
+                        />
+                        <CustomInput
+                          urbanshelter
+                          labelText="Create Password"
+                          id="password"
+                          formControlProps={{
+                            fullWidth: true
+                          }}
+                          inputProps={{
+                            type: "password"
+                          }}
+                        />
+                        <h6>BIRTHDAY</h6>
+                        <Muted>To sign up you must be 18 years or older.</Muted>
+                        <FormControl fullWidth>
+                          <Datetime
+                            timeFormat={false}
+                            inputProps={{ placeholder: "MM/DD/YYYY" }}
+                          />
+                        </FormControl>
+                        <div
+                          className={classes.checkboxAndRadio}
+                          style={{
+                            justify: "center",
+                            display: "flex",
+                            width: "100%",
+                            wrap: "no-wrap"
+                          }}
+                        >
+                          <FormControlLabel
+                            control={<UrbanCheckbox />}
+                            classes={{
+                              label: classes.checkboxLabel
+                            }}
+                            style={{
+                              marginTop: 8,
+                              marginLeft: 0,
+                              marginRight: 0,
+                              fontSize: 14
+                            }}
+                            label="I want to recieve policy updates, marketing material, inspirations and special offers"
+                          />
+                        </div>
+                        <Button color="urbanshelter" style={{ width: "100%" }}>
+                          <Email />
+                          SIGN UP
+                        </Button>
+                      </form>
                       <ColoredLine color="#707070" opacity="0.35" />
                       {error && <Danger>{error.message}</Danger>}
                       <div style={{ textAlign: "center", paddingBottom: 20 }}>

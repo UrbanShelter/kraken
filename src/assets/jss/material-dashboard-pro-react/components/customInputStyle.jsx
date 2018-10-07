@@ -2,6 +2,7 @@ import {
   primaryColor,
   dangerColor,
   successColor,
+  urbanShelterColor,
   defaultFont
 } from "assets/jss/material-dashboard-pro-react.jsx";
 
@@ -28,6 +29,11 @@ const customInputStyle = {
   underlineSuccess: {
     "&:after": {
       borderColor: successColor
+    }
+  },
+  urbanUnderline: {
+    "&:after": {
+      borderColor: urbanShelterColor
     }
   },
   labelRoot: {
