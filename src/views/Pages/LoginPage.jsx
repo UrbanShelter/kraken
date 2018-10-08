@@ -105,7 +105,13 @@ class RegisterPage extends React.Component {
                       >
                         Log In
                       </h3>
-                      <Button color="facebook" style={{ width: "100%" }}>
+                      <Button
+                        color="facebook"
+                        style={{ width: "100%" }}
+                        onClick={() => {
+                          auth.doSignInWithFacebook();
+                        }}
+                      >
                         <i
                           className={
                             classes.socialButtonsIcons +

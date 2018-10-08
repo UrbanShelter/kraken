@@ -116,7 +116,13 @@ class RegisterPage extends React.Component {
                       >
                         Sign Up
                       </h3>
-                      <Button color="facebook" style={{ width: "100%" }}>
+                      <Button
+                        color="facebook"
+                        style={{ width: "100%" }}
+                        onClick={() => {
+                          auth.doSignInWithFacebook();
+                        }}
+                      >
                         <i
                           className={
                             classes.socialButtonsIcons +
@@ -127,7 +133,13 @@ class RegisterPage extends React.Component {
                         />{" "}
                         CONNECT WITH FACEBOOK
                       </Button>
-                      <Button color="google" style={{ width: "100%" }}>
+                      <Button
+                        color="google"
+                        style={{ width: "100%" }}
+                        onClick={() => {
+                          auth.doSignInWithGoogle();
+                        }}
+                      >
                         <i className={"fab fa-google"} /> CONNECT WITH GOOGLE
                       </Button>
                       <GridContainer justify="center" alignItems="center">

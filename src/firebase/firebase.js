@@ -31,6 +31,7 @@ if (!firebase.apps.length) {
 const auth = firebase.auth();
 const db = firebase.firestore();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
+const facebookProvider = new firebase.auth.FacebookAuthProvider();
 
 const location = (latitude, longitude) => {
   return typeof latitude && typeof longitude === "number"
@@ -38,7 +39,7 @@ const location = (latitude, longitude) => {
     : null;
 };
 
-export { auth, db, location, googleProvider };
+export { auth, db, location, googleProvider, facebookProvider };
 
 location.propTypes = {
   latitude: PropTypes.number,
