@@ -6,7 +6,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Danger from "components/Typography/Danger.jsx";
 import Muted from "components/Typography/Muted.jsx";
 
-import Email from "@material-ui/icons/Email";
 import Close from "@material-ui/icons/Close";
 
 // import LockOutline from "@material-ui/icons/LockOutline";
@@ -60,10 +59,6 @@ class LoginPageDetails extends React.Component {
   componentWillUnmount() {
     clearTimeout(this.timeOutFunction);
     this.timeOutFunction = null;
-  }
-  checkFields() {
-    const { name, email, password } = this.state;
-    return name && email && password !== "" ? false : true;
   }
   // function that returns true if value is email, false otherwise
   verifyEmail(value) {
@@ -205,36 +200,37 @@ class LoginPageDetails extends React.Component {
         break;
     }
   }
-  onSubmit = event => {
-    const { email, password } = this.state;
+  loginClick = event => {
+    const {
+      loginEmail,
+      loginPassword,
+      loginEmailState,
+      loginPasswordState
+    } = this.state;
+    let pass = true;
 
-    auth
-      .doSignInWithEmailAndPassword(email, password)
-      .then(() => {
-        this.setState({ ...INITIAL_STATE, redirect: true });
-      })
-      .catch(error => {
-        this.setState(byPropKey("error", error));
-      });
+    if (loginEmailState === "" || loginEmailState === "error") {
+      this.setState({ loginEmailState: "error" });
+      pass = false;
+    }
+    if (loginPasswordState === "" || loginPasswordState === "error") {
+      this.setState({ loginPasswordState: "error" });
+      pass = false;
+    }
+    if (pass) {
+      auth
+        .doSignInWithEmailAndPassword(loginEmail, loginPassword)
+        .then(() => {
+          this.setState({ ...INITIAL_STATE, redirect: true });
+        })
+        .catch(error => {
+          this.setState(byPropKey("error", error));
+        });
+    }
 
     // prevents the page from reloading
     event.preventDefault();
   };
-  handleToggle(value) {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    this.setState({
-      checked: newChecked
-    });
-  }
   render() {
     const { classes } = this.props;
     const { error } = this.state;
@@ -302,6 +298,7 @@ class LoginPageDetails extends React.Component {
                     <form>
                       <CustomInput
                         urbanshelter
+                        error={this.state.loginEmailState === "error"}
                         labelText="Email Address"
                         id="loginemail"
                         formControlProps={{
@@ -315,6 +312,7 @@ class LoginPageDetails extends React.Component {
                       />
                       <CustomInput
                         urbanshelter
+                        error={this.state.loginPasswordState === "error"}
                         labelText="Password"
                         id="loginpassword"
                         formControlProps={{
@@ -326,7 +324,12 @@ class LoginPageDetails extends React.Component {
                           type: "password"
                         }}
                       />
-                      <Button color="urbanshelter" style={{ width: "100%" }}>
+                      <Button
+                        color="urbanshelter"
+                        style={{ width: "100%" }}
+                        type="submit"
+                        onClick={this.loginClick}
+                      >
                         <i
                           className={
                             classes.socialButtonsIcons +

@@ -11,7 +11,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Danger from "components/Typography/Danger.jsx";
 import Muted from "components/Typography/Muted.jsx";
 
-import Email from "@material-ui/icons/Email";
 import Close from "@material-ui/icons/Close";
 
 // import LockOutline from "@material-ui/icons/LockOutline";
@@ -33,12 +32,13 @@ import registerPageStyle from "../../assets/jss/material-dashboard-pro-react/vie
 const INITIAL_STATE = {
   error: null,
   redirect: false,
-  checked: [],
   // register form
   registerEmail: "",
   registerEmailState: "",
   registerFirstName: "",
+  registerFirstNameState: "",
   registerLastName: "",
+  registerLastNameState: "",
   registerPassword: "",
   registerPasswordState: "",
   registerCheckbox: false,
@@ -72,10 +72,6 @@ class RegisterPageDetails extends React.Component {
   componentWillUnmount() {
     clearTimeout(this.timeOutFunction);
     this.timeOutFunction = null;
-  }
-  checkFields() {
-    const { name, email, password } = this.state;
-    return name && email && password !== "" ? false : true;
   }
   // function that returns true if value is email, false otherwise
   verifyEmail(value) {
@@ -217,50 +213,52 @@ class RegisterPageDetails extends React.Component {
         break;
     }
   }
-  registerClick() {
-    if (this.state.registerEmailState === "") {
-      this.setState({ registerEmailState: "error" });
-    }
-    if (this.state.registerPasswordState === "") {
-      this.setState({ registerPasswordState: "error" });
-    }
-    if (this.state.registerConfirmPasswordState === "") {
-      this.setState({ registerConfirmPasswordState: "error" });
-    }
-    if (this.state.registerCheckboxState === "") {
-      this.setState({ registerCheckboxState: "error" });
-    }
-  }
-  onSubmit = event => {
-    const { email, password } = this.state;
+  registerClick = event => {
+    const {
+      registerEmail,
+      registerPassword,
+      registerEmailState,
+      registerPasswordState,
+      registerFirstNameState,
+      registerLastNameState,
+      registerCheckboxState
+    } = this.state;
+    let pass = true;
 
-    auth
-      .doSignInWithEmailAndPassword(email, password)
-      .then(() => {
-        this.setState({ ...INITIAL_STATE, redirect: true });
-      })
-      .catch(error => {
-        this.setState(byPropKey("error", error));
-      });
+    if (registerEmailState === "" || registerEmailState === "error") {
+      this.setState({ registerEmailState: "error" });
+      pass = false;
+    }
+    if (registerPasswordState === "" || registerPasswordState === "error") {
+      this.setState({ registerPasswordState: "error" });
+      pass = false;
+    }
+    if (registerFirstNameState === "" || registerFirstNameState === "error") {
+      this.setState({ registerFirstNameState: "error" });
+      pass = false;
+    }
+    if (registerLastNameState === "" || registerLastNameState === "error") {
+      this.setState({ registerLastNameState: "error" });
+      pass = false;
+    }
+    if (registerCheckboxState === "" || registerCheckboxState === "error") {
+      this.setState({ registerCheckboxState: "error" });
+      pass = false;
+    }
+    if (pass) {
+      auth
+        .doCreateUserWithEmailAndPassword(registerEmail, registerPassword)
+        .then(authUser => {
+          this.setState({ ...INITIAL_STATE, redirect: true });
+        })
+        .catch(error => {
+          this.setState(byPropKey("error", error));
+        });
+    }
 
     // prevents the page from reloading
     event.preventDefault();
   };
-  handleToggle(value) {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    this.setState({
-      checked: newChecked
-    });
-  }
   render() {
     const { classes } = this.props;
     const { error } = this.state;
@@ -268,218 +266,198 @@ class RegisterPageDetails extends React.Component {
       <div className={classes.container}>
         <GridContainer justify="center">
           <GridItem xs={12} sm={10} md={7}>
-            <form>
-              <Card login className={classes[this.state.cardAnimaton]}>
-                <div
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "flex-end",
-                    display: "flex",
-                    paddingRight: 16,
-                    paddingTop: 12
-                  }}
+            <Card login className={classes[this.state.cardAnimaton]}>
+              <div
+                style={{
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  display: "flex",
+                  paddingRight: 16,
+                  paddingTop: 12
+                }}
+              >
+                <Button
+                  justIcon
+                  className={classes.modalCloseButton}
+                  key="close"
+                  aria-label="Close"
+                  color="transparent"
                 >
-                  <Button
-                    justIcon
-                    className={classes.modalCloseButton}
-                    key="close"
-                    aria-label="Close"
-                    color="transparent"
-                  >
-                    <Close
-                      className={classes.modalClose}
-                      style={{ color: "#707070", opacity: 0.35 }}
-                    />
-                  </Button>
-                </div>
-                <GridContainer justify="center">
-                  <GridItem xs={12} sm={10} md={9}>
-                    <CardBody>
-                      <div style={{ textAlign: "center", paddingBottom: 20 }}>
-                        Sign Up with{" "}
-                        <a
-                          href="#"
-                          style={{ color: "#ef4f67", fontWeight: 500 }}
-                        >
-                          Facebook
-                        </a>{" "}
-                        or{" "}
-                        <a
-                          href="#"
-                          style={{ color: "#ef4f67", fontWeight: 500 }}
-                        >
-                          Google
-                        </a>
-                      </div>
-                      <GridContainer justify="center" alignItems="center">
-                        <GridItem xs={5}>
-                          <ColoredLine
-                            color="#707070"
-                            height={1}
-                            opacity={0.35}
-                          />
-                        </GridItem>
-                        <GridItem xs>
-                          <div style={{ textAlign: "center" }}>
-                            <Muted>or</Muted>
-                          </div>
-                        </GridItem>
-                        <GridItem xs={5}>
-                          <ColoredLine
-                            color="#707070"
-                            height={1}
-                            opacity={0.35}
-                          />
-                        </GridItem>
-                      </GridContainer>
-                      <form>
-                        <CustomInput
-                          urbanshelter
-                          error={this.state.registerEmailState === "error"}
-                          labelText="Email Address"
-                          id="registeremail"
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            onChange: event =>
-                              this.change(event, "registerEmail", "email"),
-                            type: "email"
-                          }}
+                  <Close
+                    className={classes.modalClose}
+                    style={{ color: "#707070", opacity: 0.35 }}
+                  />
+                </Button>
+              </div>
+              <GridContainer justify="center">
+                <GridItem xs={12} sm={10} md={9}>
+                  <CardBody>
+                    <div style={{ textAlign: "center", paddingBottom: 20 }}>
+                      Sign Up with{" "}
+                      <a href="#" style={{ color: "#ef4f67", fontWeight: 500 }}>
+                        Facebook
+                      </a>{" "}
+                      or{" "}
+                      <a href="#" style={{ color: "#ef4f67", fontWeight: 500 }}>
+                        Google
+                      </a>
+                    </div>
+                    <GridContainer justify="center" alignItems="center">
+                      <GridItem xs={5}>
+                        <ColoredLine
+                          color="#707070"
+                          height={1}
+                          opacity={0.35}
                         />
-                        <CustomInput
-                          urbanshelter
-                          error={this.state.registerFirstNameState === "error"}
-                          labelText="First Name"
-                          id="firstname"
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            onChange: event =>
-                              this.change(
-                                event,
-                                "registerFirstName",
-                                "length",
-                                2
-                              ),
-                            type: "text"
-                          }}
-                        />
-                        <CustomInput
-                          urbanshelter
-                          error={this.state.registerLastNameState === "error"}
-                          labelText="Last Name"
-                          id="lastname"
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            onChange: event =>
-                              this.change(
-                                event,
-                                "registerLastName",
-                                "length",
-                                2
-                              ),
-                            type: "text"
-                          }}
-                        />
-                        <CustomInput
-                          urbanshelter
-                          error={this.state.registerPasswordState === "error"}
-                          labelText="Password"
-                          id="registerpassword"
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            onChange: event =>
-                              this.change(
-                                event,
-                                "registerPassword",
-                                "password"
-                              ),
-                            type: "password"
-                          }}
-                        />
-                        <h6>BIRTHDAY</h6>
-                        <Muted>To sign up you must be 18 years or older.</Muted>
-                        <FormControl fullWidth>
-                          <Datetime
-                            timeFormat={false}
-                            inputProps={{ placeholder: "MM/DD/YYYY" }}
-                          />
-                        </FormControl>
-                        <div
-                          className={classes.checkboxAndRadio}
-                          style={{
-                            justify: "center",
-                            display: "flex",
-                            width: "100%",
-                            wrap: "no-wrap"
-                          }}
-                        >
-                          <FormControlLabel
-                            control={
-                              <UrbanCheckbox
-                                onClick={event =>
-                                  this.change(
-                                    event,
-                                    "registerCheckbox",
-                                    "checkbox"
-                                  )
-                                }
-                              />
-                            }
-                            classes={{
-                              label:
-                                classes.label +
-                                (this.state.registerCheckboxState === "error"
-                                  ? " " + classes.labelError
-                                  : "")
-                            }}
-                            style={{
-                              marginTop: 8,
-                              marginLeft: 0,
-                              marginRight: 0,
-                              fontSize: 14
-                            }}
-                            label="I want to recieve policy updates, marketing material, inspirations and special offers"
-                          />
+                      </GridItem>
+                      <GridItem xs>
+                        <div style={{ textAlign: "center" }}>
+                          <Muted>or</Muted>
                         </div>
-                        <Button
-                          color="urbanshelter"
-                          style={{ width: "100%" }}
-                          onClick={this.registerClick}
-                        >
-                          <i
-                            className={
-                              classes.socialButtonsIcons +
-                              " " +
-                              classes.marginRight +
-                              " far fa-envelope"
-                            }
-                          />{" "}
-                          SIGN UP
-                        </Button>
-                      </form>
-                      <ColoredLine color="#707070" height={1} opacity={0.35} />
-                      {error && <Danger>{error.message}</Danger>}
-                      <div style={{ textAlign: "center", paddingBottom: 20 }}>
-                        Already have an UrbanShelter account?{" "}
-                        <a
-                          href="#"
-                          style={{ color: "#ef4f67", fontWeight: 500 }}
-                        >
-                          Log In
-                        </a>
+                      </GridItem>
+                      <GridItem xs={5}>
+                        <ColoredLine
+                          color="#707070"
+                          height={1}
+                          opacity={0.35}
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <form>
+                      <CustomInput
+                        urbanshelter
+                        error={this.state.registerEmailState === "error"}
+                        labelText="Email Address"
+                        id="registeremail"
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          onChange: event =>
+                            this.change(event, "registerEmail", "email"),
+                          type: "email"
+                        }}
+                      />
+                      <CustomInput
+                        urbanshelter
+                        error={this.state.registerFirstNameState === "error"}
+                        labelText="First Name"
+                        id="firstname"
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          onChange: event =>
+                            this.change(
+                              event,
+                              "registerFirstName",
+                              "length",
+                              2
+                            ),
+                          type: "text"
+                        }}
+                      />
+                      <CustomInput
+                        urbanshelter
+                        error={this.state.registerLastNameState === "error"}
+                        labelText="Last Name"
+                        id="lastname"
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          onChange: event =>
+                            this.change(event, "registerLastName", "length", 2),
+                          type: "text"
+                        }}
+                      />
+                      <CustomInput
+                        urbanshelter
+                        error={this.state.registerPasswordState === "error"}
+                        labelText="Password"
+                        id="registerpassword"
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          onChange: event =>
+                            this.change(event, "registerPassword", "password"),
+                          type: "password"
+                        }}
+                      />
+                      <h6>BIRTHDAY</h6>
+                      <Muted>To sign up you must be 18 years or older.</Muted>
+                      <FormControl fullWidth>
+                        <Datetime
+                          timeFormat={false}
+                          inputProps={{ placeholder: "MM/DD/YYYY" }}
+                        />
+                      </FormControl>
+                      <div
+                        className={classes.checkboxAndRadio}
+                        style={{
+                          justify: "center",
+                          display: "flex",
+                          width: "100%",
+                          wrap: "no-wrap"
+                        }}
+                      >
+                        <FormControlLabel
+                          control={
+                            <UrbanCheckbox
+                              onClick={event =>
+                                this.change(
+                                  event,
+                                  "registerCheckbox",
+                                  "checkbox"
+                                )
+                              }
+                            />
+                          }
+                          classes={{
+                            label:
+                              classes.label +
+                              (this.state.registerCheckboxState === "error"
+                                ? " " + classes.labelError
+                                : "")
+                          }}
+                          style={{
+                            marginTop: 8,
+                            marginLeft: 0,
+                            marginRight: 0,
+                            fontSize: 14
+                          }}
+                          label="I want to recieve policy updates, marketing material, inspirations and special offers"
+                        />
                       </div>
-                    </CardBody>
-                  </GridItem>
-                </GridContainer>
-              </Card>
-            </form>
+                      <Button
+                        color="urbanshelter"
+                        style={{ width: "100%" }}
+                        onClick={this.registerClick}
+                      >
+                        <i
+                          className={
+                            classes.socialButtonsIcons +
+                            " " +
+                            classes.marginRight +
+                            " far fa-envelope"
+                          }
+                        />{" "}
+                        SIGN UP
+                      </Button>
+                    </form>
+                    <ColoredLine color="#707070" height={1} opacity={0.35} />
+                    {error && <Danger>{error.message}</Danger>}
+                    <div style={{ textAlign: "center", paddingBottom: 20 }}>
+                      Already have an UrbanShelter account?{" "}
+                      <a href="#" style={{ color: "#ef4f67", fontWeight: 500 }}>
+                        Log In
+                      </a>
+                    </div>
+                  </CardBody>
+                </GridItem>
+              </GridContainer>
+            </Card>
           </GridItem>
         </GridContainer>
       </div>
