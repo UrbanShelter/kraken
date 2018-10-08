@@ -27,7 +27,10 @@ import ColoredLine from "components/ColoredLine/ColoredLine.jsx";
 
 // firebase functionality
 import { auth } from "firebase/index.js";
+
+// dom components
 import registerPageStyle from "../../assets/jss/material-dashboard-pro-react/views/registerPageStyle";
+import { Redirect } from "react-router-dom";
 
 const INITIAL_STATE = {
   error: null,
@@ -44,10 +47,6 @@ const INITIAL_STATE = {
   registerCheckbox: false,
   registerCheckboxState: ""
 };
-
-const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value
-});
 
 class RegisterPageDetails extends React.Component {
   constructor(props) {
@@ -252,7 +251,7 @@ class RegisterPageDetails extends React.Component {
           this.setState({ ...INITIAL_STATE, redirect: true });
         })
         .catch(error => {
-          this.setState(byPropKey("error", error));
+          this.setState({ error: error });
         });
     }
 
@@ -261,7 +260,7 @@ class RegisterPageDetails extends React.Component {
   };
   render() {
     const { classes } = this.props;
-    const { error } = this.state;
+    const { error, redirect } = this.state;
     return (
       <div className={classes.container}>
         <GridContainer justify="center">
@@ -454,6 +453,7 @@ class RegisterPageDetails extends React.Component {
                         Log In
                       </a>
                     </div>
+                    {redirect && <Redirect to="/dashboard" push />}
                   </CardBody>
                 </GridItem>
               </GridContainer>

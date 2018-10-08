@@ -8,8 +8,6 @@ import Muted from "components/Typography/Muted.jsx";
 
 import Close from "@material-ui/icons/Close";
 
-// import LockOutline from "@material-ui/icons/LockOutline";
-
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
@@ -21,22 +19,20 @@ import ColoredLine from "components/ColoredLine/ColoredLine.jsx";
 
 // firebase functionality
 import { auth } from "firebase/index.js";
+
+// dom components
 import registerPageStyle from "../../assets/jss/material-dashboard-pro-react/views/registerPageStyle";
+import { Redirect } from "react-router-dom";
 
 const INITIAL_STATE = {
   error: null,
   redirect: false,
-  checked: [],
   // login form
   loginEmail: "",
   loginEmailState: "",
   loginPassword: "",
   loginPasswordState: ""
 };
-
-const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value
-});
 
 class LoginPageDetails extends React.Component {
   constructor(props) {
@@ -224,7 +220,7 @@ class LoginPageDetails extends React.Component {
           this.setState({ ...INITIAL_STATE, redirect: true });
         })
         .catch(error => {
-          this.setState(byPropKey("error", error));
+          this.setState({ error: error });
         });
     }
 
@@ -233,7 +229,7 @@ class LoginPageDetails extends React.Component {
   };
   render() {
     const { classes } = this.props;
-    const { error } = this.state;
+    const { error, redirect } = this.state;
     return (
       <div className={classes.container}>
         <GridContainer justify="center">
@@ -349,6 +345,7 @@ class LoginPageDetails extends React.Component {
                         Sign Up
                       </a>
                     </div>
+                    {redirect && <Redirect to="/dashboard" push />}
                   </CardBody>
                 </GridItem>
               </GridContainer>
