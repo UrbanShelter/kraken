@@ -1,4 +1,4 @@
-import { auth } from "./firebase";
+import { auth, googleProvider } from "./firebase";
 
 // Sign Up
 export const doCreateUserWithEmailAndPassword = (email, password) =>
@@ -7,6 +7,14 @@ export const doCreateUserWithEmailAndPassword = (email, password) =>
 // Sign In
 export const doSignInWithEmailAndPassword = (email, password) =>
   auth.signInWithEmailAndPassword(email, password);
+
+export const doSignInWithGoogle = () => {
+  auth.signInWithRedirect(googleProvider);
+};
+
+export const getRedirectResult = () => {
+  return auth.getRedirectResult();
+};
 
 // Sign out
 export const doSignOut = () => auth.signOut();

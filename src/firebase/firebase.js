@@ -30,6 +30,7 @@ if (!firebase.apps.length) {
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 const location = (latitude, longitude) => {
   return typeof latitude && typeof longitude === "number"
@@ -37,7 +38,7 @@ const location = (latitude, longitude) => {
     : null;
 };
 
-export { auth, db, location };
+export { auth, db, location, googleProvider };
 
 location.propTypes = {
   latitude: PropTypes.number,
