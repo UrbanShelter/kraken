@@ -442,7 +442,7 @@ class Dashboard extends React.Component {
             listings.map((prop, key) => {
               if (prop.location && prop.location.address)
                 return (
-                  <GridItem xs={12} sm={6} md={6} lg={4} xl={3} key={key}>
+                  <GridItem xs={12} sm={6} md={6} lg={4} xl={2} key={key}>
                     <ListingCard title={prop.location.address} />
                   </GridItem>
                 );

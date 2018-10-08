@@ -16,6 +16,10 @@ export const getRedirectResult = () => {
   return auth.getRedirectResult();
 };
 
+export const getCurrentUser = () => {
+  return auth.currentUser;
+};
+
 // Sign out
 export const doSignOut = () => auth.signOut();
 

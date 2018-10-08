@@ -57,6 +57,9 @@ class RegisterPage extends React.Component {
       .catch(error => {
         this.setState({ error: error });
       });
+    if (auth.getCurrentUser()) {
+      this.setState({ ...INITIAL_STATE, redirect: true });
+    }
   }
   componentWillUnmount() {
     clearTimeout(this.timeOutFunction);
