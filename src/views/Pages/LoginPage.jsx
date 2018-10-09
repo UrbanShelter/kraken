@@ -24,7 +24,7 @@ import { Redirect } from "react-router-dom";
 
 const INITIAL_STATE = {
   error: null,
-  redirect: false
+  redirect: { login: false, signup: false, dashboard: false }
 };
 
 class RegisterPage extends React.Component {
@@ -51,14 +51,14 @@ class RegisterPage extends React.Component {
       .getRedirectResult()
       .then(result => {
         if (result.credential) {
-          this.setState({ ...INITIAL_STATE, redirect: true });
+          this.setState({ ...INITIAL_STATE, redirect: { dashboard: true } });
         }
       })
       .catch(error => {
         this.setState({ error: error });
       });
     if (auth.getCurrentUser()) {
-      this.setState({ ...INITIAL_STATE, redirect: true });
+      this.setState({ ...INITIAL_STATE, redirect: { dashboard: true } });
     }
   }
   componentWillUnmount() {
@@ -155,7 +155,9 @@ class RegisterPage extends React.Component {
                       <Button
                         color="urbanshelter"
                         style={{ width: "100%" }}
-                        onClick={() => this.setState({ redirect: true })}
+                        onClick={() =>
+                          this.setState({ redirect: { login: true } })
+                        }
                       >
                         <i
                           className={
@@ -172,13 +174,22 @@ class RegisterPage extends React.Component {
                       <div style={{ textAlign: "center", paddingBottom: 20 }}>
                         Don&apos;t have an UrbanShelter account yet?{" "}
                         <a
-                          href="#"
+                          href="/pages/register-page"
                           style={{ color: "#ef4f67", fontWeight: 500 }}
+                          onClick={() =>
+                            this.setState({ redirect: { signup: true } })
+                          }
                         >
                           Sign Up
                         </a>
                       </div>
-                      {redirect && <Redirect to="/dashboard" push />}
+                      {redirect.login && (
+                        <Redirect to="/pages/login-details" push />
+                      )}
+                      {redirect.signup && (
+                        <Redirect to="/pages/register-page" push />
+                      )}
+                      {redirect.dashboard && <Redirect to="/dashboard" push />}
                     </CardBody>
                   </GridItem>
                 </GridContainer>

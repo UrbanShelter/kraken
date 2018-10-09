@@ -26,7 +26,7 @@ import { Redirect } from "react-router-dom";
 
 const INITIAL_STATE = {
   error: null,
-  redirect: false,
+  redirect: { login: false, signup: false, dashboard: false },
   // login form
   loginEmail: "",
   loginEmailState: "",
@@ -51,6 +51,21 @@ class LoginPageDetails extends React.Component {
       }.bind(this),
       700
     );
+    // request is being processed on redirect. This would avoid showing the same login screen while the user waits.
+    // checking for Firebase redirect sign-ins
+    auth
+      .getRedirectResult()
+      .then(result => {
+        if (result.credential) {
+          this.setState({ ...INITIAL_STATE, redirect: { dashboard: true } });
+        }
+      })
+      .catch(error => {
+        this.setState({ error: error });
+      });
+    if (auth.getCurrentUser()) {
+      this.setState({ ...INITIAL_STATE, redirect: { dashboard: true } });
+    }
   }
   componentWillUnmount() {
     clearTimeout(this.timeOutFunction);
@@ -217,7 +232,7 @@ class LoginPageDetails extends React.Component {
       auth
         .doSignInWithEmailAndPassword(loginEmail, loginPassword)
         .then(() => {
-          this.setState({ ...INITIAL_STATE, redirect: true });
+          this.setState({ ...INITIAL_STATE, redirect: { dashboard: true } });
         })
         .catch(error => {
           this.setState({ error: error });
@@ -262,11 +277,23 @@ class LoginPageDetails extends React.Component {
                   <CardBody>
                     <div style={{ textAlign: "center", paddingBottom: 20 }}>
                       Log In with{" "}
-                      <a href="#" style={{ color: "#ef4f67", fontWeight: 500 }}>
+                      <a
+                        href="#"
+                        style={{ color: "#ef4f67", fontWeight: 500 }}
+                        onClick={() => {
+                          auth.doSignInWithFacebook();
+                        }}
+                      >
                         Facebook
                       </a>{" "}
                       or{" "}
-                      <a href="#" style={{ color: "#ef4f67", fontWeight: 500 }}>
+                      <a
+                        href="#"
+                        style={{ color: "#ef4f67", fontWeight: 500 }}
+                        onClick={() => {
+                          auth.doSignInWithGoogle();
+                        }}
+                      >
                         Google
                       </a>
                     </div>
@@ -341,11 +368,21 @@ class LoginPageDetails extends React.Component {
                     {error && <Danger>{error.message}</Danger>}
                     <div style={{ textAlign: "center", paddingBottom: 20 }}>
                       Don&apos;t have an UrbanShelter account yet?{" "}
-                      <a href="#" style={{ color: "#ef4f67", fontWeight: 500 }}>
+                      <a
+                        href="#"
+                        style={{ color: "#ef4f67", fontWeight: 500 }}
+                        onClick={() =>
+                          this.setState({ redirect: { signup: true } })
+                        }
+                      >
                         Sign Up
                       </a>
                     </div>
-                    {redirect && <Redirect to="/dashboard" push />}
+                    {redirect.login && <Redirect to="/pages/login-page" push />}
+                    {redirect.signup && (
+                      <Redirect to="/pages/register-page" push />
+                    )}
+                    {redirect.dashboard && <Redirect to="/dashboard" push />}
                   </CardBody>
                 </GridItem>
               </GridContainer>
