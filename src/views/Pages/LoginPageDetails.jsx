@@ -57,14 +57,14 @@ class LoginPageDetails extends React.Component {
       .getRedirectResult()
       .then(result => {
         if (result.credential) {
-          this.setState({ ...INITIAL_STATE, redirect: { dashboard: true } });
+          this.setState({ ...INITIAL_STATE });
         }
       })
       .catch(error => {
         this.setState({ error: error });
       });
     if (auth.getCurrentUser()) {
-      this.setState({ ...INITIAL_STATE, redirect: { dashboard: true } });
+      this.setState({ ...INITIAL_STATE });
     }
   }
   componentWillUnmount() {
@@ -232,7 +232,7 @@ class LoginPageDetails extends React.Component {
       auth
         .doSignInWithEmailAndPassword(loginEmail, loginPassword)
         .then(() => {
-          this.setState({ ...INITIAL_STATE, redirect: { dashboard: true } });
+          this.setState({ ...INITIAL_STATE });
         })
         .catch(error => {
           this.setState({ error: error });
@@ -382,7 +382,6 @@ class LoginPageDetails extends React.Component {
                     {redirect.signup && (
                       <Redirect to="/pages/register-page" push />
                     )}
-                    {redirect.dashboard && <Redirect to="/dashboard" push />}
                   </CardBody>
                 </GridItem>
               </GridContainer>
