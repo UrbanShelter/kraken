@@ -17,6 +17,7 @@ import FormControl from "@material-ui/core/FormControl";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import PictureUpload from "components/CustomUpload/PictureUpload.jsx";
+import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
@@ -114,21 +115,24 @@ class Step4 extends React.Component {
     const { classes } = this.props;
     return (
       <GridContainer justify="space-evenly" direction="row-reverse">
-        <GridItem xs={12} sm={3}>
+        <GridItem xs={12} sm={4} md={4}>
           <Card infographic>
-            <CardHeader>
+            <CardHeader style={{ margin: "10px 0 -15px" }}>
               {/* <i className={"fal fa-lightbulb"} /> */}
-              <i className={"far fa-lightbulb"} style={{fontSize: "18px"}} />
+              <i
+                className={"far fa-lightbulb"}
+                style={{ fontSize: "25px", color: "#E91E63" }}
+              />
             </CardHeader>
             <CardBody>
-              <p>
+              <p style={{ color: "#3C4858", fontWeight: 400 }}>
                 In this section you are describing the entire unit and not what
                 each tenant is offered.
               </p>
             </CardBody>
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={3}>
+        <GridItem xs={12} sm={4} md={4}>
           <h5 style={{ marginTop: "30px" }}>Which county is yor unit in?</h5>
           <FormControl fullWidth className={classes.selectFormControl}>
             <InputLabel htmlFor="simple-select" className={classes.selectLabel}>
@@ -283,6 +287,50 @@ class Step4 extends React.Component {
               onChange: event => this.change(event, "firstname", "length", 3)
             }}
           />
+          <GridContainer>
+            <GridItem
+              xs={3}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <Button
+                color="urbanshelter"
+                size="sm"
+                round
+                className={classes.lastButton}
+              >
+                <div style={{ fontSize: "14px" }}>-</div>
+              </Button>
+            </GridItem>
+            <GridItem
+              xs={1}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <span
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "100%",
+                  width: "100%"
+                }}
+              >
+                {1}
+              </span>
+            </GridItem>
+            <GridItem
+              xs={3}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <Button
+                color="urbanshelter"
+                size="sm"
+                round
+                className={classes.lastButton}
+              >
+                <div style={{ fontSize: "14px" }}>+</div>
+              </Button>
+            </GridItem>
+          </GridContainer>
         </GridItem>
       </GridContainer>
     );

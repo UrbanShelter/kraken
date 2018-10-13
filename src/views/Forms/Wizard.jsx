@@ -14,7 +14,7 @@ class WizardView extends React.Component {
   render() {
     return (
       <GridContainer justify="center">
-        <GridItem xs={12}>
+        <GridItem xs={12} sm={12} md={12} lg={12} xl={5}>
           <Wizard
             steps={[
               { stepName: "About", stepComponent: Step1, stepId: "about" },
