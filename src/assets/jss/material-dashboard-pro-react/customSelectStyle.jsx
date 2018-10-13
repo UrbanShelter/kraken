@@ -24,7 +24,7 @@ const customSelectStyle = {
     }
   },
   selectFormControl: {
-    margin: "10px 1px 10px 0px !important",
+    margin: "-20px 1px 35px 0px !important",
     "& > div": {
       "&:before": {
         borderBottomWidth: "1px !important",

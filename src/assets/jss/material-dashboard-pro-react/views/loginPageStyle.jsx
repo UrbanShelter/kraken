@@ -13,7 +13,7 @@ const loginPageStyle = theme => ({
     zIndex: "4",
     [theme.breakpoints.down("sm")]: {
       paddingBottom: "100px"
-    },
+    }
   },
   cardTitle: {
     ...cardTitle,

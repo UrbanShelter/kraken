@@ -28,6 +28,7 @@ function Card({ ...props }) {
     login,
     carousel,
     listing,
+    infographic,
     ...rest
   } = props;
   const cardClasses = classNames({
@@ -46,6 +47,7 @@ function Card({ ...props }) {
     [classes.cardLogin]: login,
     [classes.cardCarousel]: carousel,
     [classes.cardListing]: listing,
+    [classes.cardInfographic]: infographic,
     [className]: className !== undefined
   });
   return (
@@ -77,7 +79,8 @@ Card.propTypes = {
   chart: PropTypes.bool,
   login: PropTypes.bool,
   carousel: PropTypes.bool,
-  listing: PropTypes.bool
+  listing: PropTypes.bool,
+  infographic: PropTypes.bool
 };
 
 export default withStyles(cardStyle)(Card);

@@ -64,20 +64,14 @@ var dashRoutes = [
     icon: DashboardIcon,
     component: Dashboard
   },
-  {
-    redirect: true,
-    path: "/",
-    pathTo: "/dashboard",
-    name: "Dashboard"
-  },
-  {
-    collapse: true,
-    path: "-page",
-    name: "Pages",
-    state: "openPages",
-    icon: Image,
-    views: pages
-  },
+  // {
+  //   collapse: true,
+  //   path: "-page",
+  //   name: "Pages",
+  //   state: "openPages",
+  //   icon: Image,
+  //   views: pages
+  // },
   {
     collapse: true,
     path: "/components",
@@ -208,6 +202,12 @@ var dashRoutes = [
   },
   { path: "/widgets", name: "Widgets", icon: WidgetsIcon, component: Widgets },
   { path: "/charts", name: "Charts", icon: Timeline, component: Charts },
-  { path: "/calendar", name: "Calendar", icon: DateRange, component: Calendar }
+  { path: "/calendar", name: "Calendar", icon: DateRange, component: Calendar },
+  {
+    redirect: true,
+    path: "/",
+    pathTo: "/dashboard",
+    name: "Dashboard"
+  }
 ];
 export default dashRoutes;

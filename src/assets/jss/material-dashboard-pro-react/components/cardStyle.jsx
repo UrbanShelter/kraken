@@ -166,6 +166,14 @@ const cardStyle = {
   cardListing: {
     marginBottom: "30px",
     marginTop: "30px"
+  },
+  cardInfographic: {
+    background: "transparent",
+    boxShadow: "none",
+    border: "1px",
+    borderStyle: "solid",
+    borderRadius: "3px",
+    borderColor: "#D2D2D2"
   }
 };
 

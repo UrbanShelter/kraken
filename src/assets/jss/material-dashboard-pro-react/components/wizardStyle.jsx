@@ -133,7 +133,7 @@ const wizardStyle = {
       "0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(233, 30, 99, 0.4)"
   },
   footer: {
-    padding: "0 15px"
+    padding: "15px 15px"
   },
   left: {
     float: "left!important"

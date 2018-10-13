@@ -4,7 +4,10 @@ import PropTypes from "prop-types";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+
 // core components
+import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 
@@ -225,7 +228,7 @@ class Wizard extends React.Component {
         <Card className={classes.card}>
           <div className={classes.wizardHeader}>
             <h3 className={classes.title}>{title}</h3>
-            <h5 className={classes.subtitle}>{subtitle}</h5>
+            {subtitle && <h5 className={classes.subtitle}>{subtitle}</h5>}
           </div>
           <div className={classes.wizardNavigation}>
             <ul className={classes.nav}>
@@ -270,7 +273,43 @@ class Wizard extends React.Component {
             })}
           </div>
           <div className={classes.footer}>
-            <div className={classes.left}>
+            <GridContainer justify="space-evenly">
+              <GridItem xs={6} sm={3}>
+                {this.state.previousButton ? (
+                  <Button
+                    className={this.props.previousButtonClasses}
+                    onClick={() => this.previousButtonClick()}
+                  >
+                    {this.props.previousButtonText}
+                  </Button>
+                ) : null}
+              </GridItem>
+              <GridItem xs={6} sm={3}>
+                <GridContainer justify="flex-end">
+                  <GridItem>
+                    {this.state.nextButton ? (
+                      <Button
+                        color="urbanshelter"
+                        className={this.props.nextButtonClasses}
+                        onClick={() => this.nextButtonClick()}
+                      >
+                        {this.props.nextButtonText}
+                      </Button>
+                    ) : null}
+                    {this.state.finishButton ? (
+                      <Button
+                        color="urbanshelter"
+                        className={this.finishButtonClasses}
+                        onClick={() => this.finishButtonClick()}
+                      >
+                        {this.props.finishButtonText}
+                      </Button>
+                    ) : null}
+                  </GridItem>
+                </GridContainer>
+              </GridItem>
+            </GridContainer>
+            {/* <div className={classes.left}>
               {this.state.previousButton ? (
                 <Button
                   className={this.props.previousButtonClasses}
@@ -283,7 +322,7 @@ class Wizard extends React.Component {
             <div className={classes.right}>
               {this.state.nextButton ? (
                 <Button
-                  color="rose"
+                  color="urbanshelter"
                   className={this.props.nextButtonClasses}
                   onClick={() => this.nextButtonClick()}
                 >
@@ -292,14 +331,14 @@ class Wizard extends React.Component {
               ) : null}
               {this.state.finishButton ? (
                 <Button
-                  color="rose"
+                  color="urbanshelter"
                   className={this.finishButtonClasses}
                   onClick={() => this.finishButtonClick()}
                 >
                   {this.props.finishButtonText}
                 </Button>
               ) : null}
-            </div>
+            </div> */}
             <div className={classes.clearfix} />
           </div>
         </Card>
@@ -311,7 +350,7 @@ class Wizard extends React.Component {
 Wizard.defaultProps = {
   color: "rose",
   title: "Here should go your title",
-  subtitle: "And this would be your subtitle",
+  // subtitle: "And this would be your subtitle",
   previousButtonText: "Previous",
   previousButtonClasses: "",
   nextButtonClasses: "",

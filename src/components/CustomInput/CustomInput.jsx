@@ -26,7 +26,8 @@ function CustomInput({ ...props }) {
     success,
     urbanshelter,
     urbansheltersuccess,
-    helpText
+    helpText,
+    ...rest
   } = props;
 
   const labelClasses = classNames({
@@ -64,7 +65,7 @@ function CustomInput({ ...props }) {
     [" " + classes.labelRootUrbanShelter]: urbansheltersuccess && !error
   });
   return (
-    <FormControl {...formControlProps} className={formControlClasses}>
+    <FormControl {...formControlProps} className={formControlClasses} {...rest}>
       {labelText !== undefined ? (
         <InputLabel
           className={classes.labelRoot + " " + labelClasses}
