@@ -292,7 +292,11 @@ class Step4 extends React.Component {
             <GridItem
               xs={4}
               md={3}
-              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
             >
               <Button
                 color="urbanshelter"
@@ -307,7 +311,7 @@ class Step4 extends React.Component {
               xs={4}
               md={3}
               xl={2}
-              style={{ display: "flex", justifyContent: "center"}}
+              style={{ display: "flex", justifyContent: "center" }}
             >
               <CustomInput
                 regular
@@ -331,7 +335,11 @@ class Step4 extends React.Component {
             <GridItem
               xs={4}
               md={3}
-              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
             >
               <Button
                 color="urbanshelter"
