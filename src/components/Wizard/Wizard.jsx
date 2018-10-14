@@ -123,7 +123,8 @@ class Wizard extends React.Component {
           }
           if (
             this[this.props.steps[i].stepId].isValidated !== undefined &&
-            this[this.props.steps[i].stepId].isValidated() === false
+            this[this.props.steps[i].stepId].isValidated() === false &&
+            this.props.validate
           ) {
             validationState = false;
             break;

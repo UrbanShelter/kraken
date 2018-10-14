@@ -92,26 +92,26 @@ class Step4 extends React.Component {
     }
     this.setState({ [stateName]: event.target.value });
   }
-  isValidated() {
-    if (
-      this.state.firstnameState === "success" &&
-      this.state.lastnameState === "success" &&
-      this.state.emailState === "success"
-    ) {
-      return true;
-    } else {
-      if (this.state.firstnameState !== "success") {
-        this.setState({ firstnameState: "error" });
-      }
-      if (this.state.lastnameState !== "success") {
-        this.setState({ lastnameState: "error" });
-      }
-      if (this.state.emailState !== "success") {
-        this.setState({ emailState: "error" });
-      }
-    }
-    return false;
-  }
+  // isValidated() {
+  //   if (
+  //     this.state.firstnameState === "success" &&
+  //     this.state.lastnameState === "success" &&
+  //     this.state.emailState === "success"
+  //   ) {
+  //     return true;
+  //   } else {
+  //     if (this.state.firstnameState !== "success") {
+  //       this.setState({ firstnameState: "error" });
+  //     }
+  //     if (this.state.lastnameState !== "success") {
+  //       this.setState({ lastnameState: "error" });
+  //     }
+  //     if (this.state.emailState !== "success") {
+  //       this.setState({ emailState: "error" });
+  //     }
+  //   }
+  //   return false;
+  // }
   render() {
     const { classes } = this.props;
     return (
