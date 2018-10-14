@@ -138,12 +138,6 @@ class Wizard extends React.Component {
           finishButton: this.props.steps.length === key + 1 ? true : false
         });
         this.refreshAnimation(key);
-
-        if (this.props.mainsteps && this.props.steps[key].mainstep) {
-          this.setState({
-            mainstep: key
-          });
-        }
       }
     }
   }
@@ -241,6 +235,10 @@ class Wizard extends React.Component {
     var total;
     var total_steps;
 
+    const currentMainstep = this.state.uniqueMainsteps.findIndex(
+      step => step === index
+    );
+
     if (this.props.mainsteps) {
       total = this.state.uniqueMainsteps.length;
       total_steps = this.state.uniqueMainsteps.length;
@@ -250,14 +248,19 @@ class Wizard extends React.Component {
     }
     var li_width = 100 / total;
     var move_distance = this.refs.wizard.children[0].offsetWidth / total_steps;
-    var index_temp = index;
+    var index_temp;
+    this.props.mainsteps
+      ? (index_temp = currentMainstep)
+      : (index_temp = index);
     var vertical_level = 0;
 
     var mobile_device = window.innerWidth < 600 && total > 3;
 
     if (mobile_device) {
       move_distance = this.refs.wizard.children[0].offsetWidth / 2;
-      index_temp = index % 2;
+      this.props.mainsteps
+        ? (index_temp = currentMainstep % 2)
+        : (index_temp = index % 2);
       li_width = 50;
     }
 
@@ -313,7 +316,6 @@ class Wizard extends React.Component {
                     className={classes.steps}
                     key={key}
                     style={{ width: this.state.width }}
-                    value={this.state.mainstepsArray[key]}
                   >
                     <a
                       className={classes.stepsAnchor}

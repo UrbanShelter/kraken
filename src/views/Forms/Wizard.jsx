@@ -17,12 +17,17 @@ class WizardView extends React.Component {
         <GridItem xs={12} sm={12} md={12} lg={12} xl={5}>
           <Wizard
             mainsteps
+            validate
             steps={[
               { stepName: "About", stepComponent: Step1, stepId: "about", mainstep: true },
               { stepName: "Account", stepComponent: Step2, stepId: "account" },
               { stepName: "Address", stepComponent: Step3, stepId: "address" },
               { stepName: "Custom", stepComponent: Step4, stepId: "custom", mainstep: true },
-              { stepName: "Custom", stepComponent: Step4, stepId: "custom1" }
+              { stepName: "Custom", stepComponent: Step4, stepId: "custom1" },
+              { stepName: "Custom2", stepComponent: Step4, stepId: "custom2", mainstep: true },
+              { stepName: "Custom", stepComponent: Step4, stepId: "custom3" },
+               { stepName: "Custom2", stepComponent: Step4, stepId: "custom2", mainstep: true },
+              { stepName: "Custom", stepComponent: Step4, stepId: "custom3" }
             ]}
             title="Listing your home!"
           />
