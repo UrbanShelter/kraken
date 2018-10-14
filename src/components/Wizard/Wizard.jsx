@@ -181,11 +181,12 @@ class Wizard extends React.Component {
         previousButton: key > 0 ? true : false,
         finishButton: this.props.steps.length === key + 1 ? true : false
       });
-      this.refreshAnimation(key);
-      if (this.props.mainsteps && this.props.steps[key].mainstep) {
-        this.setState({
-          mainstep: key
-        });
+      if (this.props.mainsteps) {
+        if (this.state.mainstepsArray[key] === key) {
+          this.refreshAnimation(key);
+        }
+      } else {
+        this.refreshAnimation(key);
       }
     }
   }
@@ -213,15 +214,13 @@ class Wizard extends React.Component {
         previousButton: key > 0 ? true : false,
         finishButton: this.props.steps.length === key + 1 ? true : false
       });
-      this.refreshAnimation(key);
 
-      if (
-        this.props.mainsteps &&
-        this.state.mainstep > this.state.currentStep
-      ) {
-        this.setState({
-          mainstep: key
-        });
+      if (this.props.mainsteps) {
+        if (this.state.mainstepsArray[key] <= key) {
+          this.refreshAnimation(this.state.mainstepsArray[key]);
+        }
+      } else {
+        this.refreshAnimation(key);
       }
     }
   }
@@ -299,8 +298,6 @@ class Wizard extends React.Component {
   }
   render() {
     const { classes, title, subtitle, color, steps, mainsteps } = this.props;
-    console.log(this.state.mainstepsArray[this.state.currentStep]);
-    console.log(steps[this.state.mainstepsArray[this.state.currentStep]]);
     return (
       <div className={classes.wizardContainer} ref="wizard">
         <Card className={classes.card}>
