@@ -20,25 +20,30 @@ class Wizard extends React.Component {
     var mainstepsArray = [];
 
     this.props.steps.map((prop, key) => {
-      if (this.props.mainsteps && prop.mainstep) {
+      if ((this.props.mainsteps && prop.mainstep) || key === 0) {
         mainstepsArray.push(key);
+      } else {
+        mainstepsArray.push(mainstepsArray[key - 1]);
       }
     });
 
-    console.log(mainstepsArray);
+    const unique = (value, index, self) => {
+      return self.indexOf(value) === index;
+    };
+    const uniqueMainsteps = mainstepsArray.filter(unique);
 
     if (this.props.mainsteps) {
-      if (mainstepsArray.length === 1) {
+      if (uniqueMainsteps.length === 1) {
         width = "100%";
       } else {
         if (window.innerWidth < 600) {
-          if (mainstepsArray.length !== 3) {
+          if (uniqueMainsteps.length !== 3) {
             width = "50%";
           } else {
             width = 100 / 3 + "%";
           }
         } else {
-          if (mainstepsArray.length === 2) {
+          if (uniqueMainsteps.length === 2) {
             width = "50%";
           } else {
             width = 100 / 3 + "%";
@@ -71,6 +76,7 @@ class Wizard extends React.Component {
       mainstepId: {},
       mainstepIdKey: 0,
       mainstepsArray: mainstepsArray,
+      uniqueMainsteps: uniqueMainsteps,
       color: this.props.color,
       nextButton: this.props.steps.length > 1 ? true : false,
       previousButton: false,
@@ -237,8 +243,8 @@ class Wizard extends React.Component {
     var total_steps;
 
     if (this.props.mainsteps) {
-      total = this.state.mainstepsArray.length;
-      total_steps = this.state.mainstepsArray.length;
+      total = this.state.uniqueMainsteps.length;
+      total_steps = this.state.uniqueMainsteps.length;
     } else {
       total = this.props.steps.length;
       total_steps = this.props.steps.length;
@@ -247,9 +253,6 @@ class Wizard extends React.Component {
     var move_distance = this.refs.wizard.children[0].offsetWidth / total_steps;
     var index_temp = index;
     var vertical_level = 0;
-
-    console.log(move_distance);
-    console.log(this.refs.wizard.children[0].offsetWidth);
 
     var mobile_device = window.innerWidth < 600 && total > 3;
 
@@ -292,10 +295,12 @@ class Wizard extends React.Component {
         : {}
       : this.setState({ movingTabStyle: movingTabStyle });
 
-      this.setState({ movingTabStyle: movingTabStyle });
+    this.setState({ movingTabStyle: movingTabStyle });
   }
   render() {
     const { classes, title, subtitle, color, steps, mainsteps } = this.props;
+    console.log(this.state.mainstepsArray[this.state.currentStep]);
+    console.log(steps[this.state.mainstepsArray[this.state.currentStep]]);
     return (
       <div className={classes.wizardContainer} ref="wizard">
         <Card className={classes.card}>
@@ -311,6 +316,7 @@ class Wizard extends React.Component {
                     className={classes.steps}
                     key={key}
                     style={{ width: this.state.width }}
+                    value={this.state.mainstepsArray[key]}
                   >
                     <a
                       className={classes.stepsAnchor}
@@ -333,14 +339,20 @@ class Wizard extends React.Component {
                   className={classes.movingTab + " " + classes[color]}
                   style={this.state.movingTabStyle}
                 >
-                  {steps[this.state.mainstep].stepName}
+                  {
+                    steps[this.state.mainstepsArray[this.state.currentStep]]
+                      .stepName
+                  }
                 </div>
               ) : (
                 <div
                   className={classes.movingTab + " " + classes[color]}
                   style={this.state.movingTabStyle}
                 >
-                  {steps[this.state.mainstep].stepName}
+                  {
+                    steps[this.state.mainstepsArray[this.state.currentStep]]
+                      .stepName
+                  }
                 </div>
               )
             ) : (
