@@ -22,6 +22,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
+import TextField from "@material-ui/core/TextField";
 
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
@@ -289,37 +290,48 @@ class Step4 extends React.Component {
           />
           <GridContainer>
             <GridItem
-              xs={3}
-              style={{ display: "flex", justifyContent: "center" }}
+              xs={4}
+              md={3}
+              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
             >
               <Button
                 color="urbanshelter"
                 size="sm"
                 round
-                className={classes.lastButton}
+                className={classes.firstButton}
               >
-                <div style={{ fontSize: "14px" }}>-</div>
+                <div style={{ fontSize: "14px", padding: "0 5px" }}>-</div>
               </Button>
             </GridItem>
             <GridItem
-              xs={1}
-              style={{ display: "flex", justifyContent: "center" }}
+              xs={4}
+              md={3}
+              xl={2}
+              style={{ display: "flex", justifyContent: "center"}}
             >
-              <span
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: "100%",
-                  width: "100%"
+              <CustomInput
+                regular
+                urbanshelter
+                id="bathrooms"
+                formControlProps={{
+                  fullWidth: true
                 }}
-              >
-                {1}
-              </span>
+                inputProps={{
+                  placeholder: "1",
+                  onChange: event =>
+                    this.change(event, "bathrooms", "length", 3),
+                  // deeper text field component input props
+                  inputProps: {
+                    style: { textAlign: "center" }
+                  }
+                }}
+                style={{ paddingBottom: "0", paddingTop: "15px" }}
+              />
             </GridItem>
             <GridItem
-              xs={3}
-              style={{ display: "flex", justifyContent: "center" }}
+              xs={4}
+              md={3}
+              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
             >
               <Button
                 color="urbanshelter"
@@ -327,7 +339,7 @@ class Step4 extends React.Component {
                 round
                 className={classes.lastButton}
               >
-                <div style={{ fontSize: "14px" }}>+</div>
+                <div style={{ fontSize: "14px", padding: "0 5px" }}>+</div>
               </Button>
             </GridItem>
           </GridContainer>
