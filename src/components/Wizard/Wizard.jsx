@@ -111,14 +111,12 @@ class Wizard extends React.Component {
         for (var i = this.state.currentStep; i < key; i++) {
           if (this[this.props.steps[i].stepId].sendState !== undefined) {
             this.setState({
-              allStates: [
+              allStates: {
                 ...this.state.allStates,
-                {
-                  [this.props.steps[i].stepId]: this[
-                    this.props.steps[i].stepId
-                  ].sendState()
-                }
-              ]
+                [this.props.steps[i].stepId]: this[
+                  this.props.steps[i].stepId
+                ].sendState()
+              }
             });
           }
           if (
@@ -159,14 +157,12 @@ class Wizard extends React.Component {
         undefined
       ) {
         this.setState({
-          allStates: [
+          allStates: {
             ...this.state.allStates,
-            {
-              [this.props.steps[this.state.currentStep].stepId]: this[
-                this.props.steps[this.state.currentStep].stepId
-              ].sendState()
-            }
-          ]
+            [this.props.steps[this.state.currentStep].stepId]: this[
+              this.props.steps[this.state.currentStep].stepId
+            ].sendState()
+          }
         });
       }
       var key = this.state.currentStep + 1;
@@ -191,14 +187,12 @@ class Wizard extends React.Component {
       undefined
     ) {
       this.setState({
-        allStates: [
+        allStates: {
           ...this.state.allStates,
-          {
-            [this.props.steps[this.state.currentStep].stepId]: this[
-              this.props.steps[this.state.currentStep].stepId
-            ].sendState()
-          }
-        ]
+          [this.props.steps[this.state.currentStep].stepId]: this[
+            this.props.steps[this.state.currentStep].stepId
+          ].sendState()
+        }
       });
     }
     var key = this.state.currentStep - 1;

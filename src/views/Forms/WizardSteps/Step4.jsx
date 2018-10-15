@@ -38,17 +38,20 @@ class Step4 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: "",
-      firstnameState: "",
-      lastname: "",
-      lastnameState: "",
-      email: "",
-      emailState: ""
+      country: "Canada",
+      address: "",
+      addressAdditional: "",
+      town: "",
+      province: "",
+      postal: ""
     };
   }
   sendState() {
     return this.state;
   }
+  handleSimple = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
   // function that returns true if value is email, false otherwise
   verifyEmail(value) {
     var emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -140,11 +143,11 @@ class Step4 extends React.Component {
               classes={{
                 select: classes.select
               }}
-              value={this.state.simpleSelect}
+              value={this.state.country}
               onChange={this.handleSimple}
               inputProps={{
-                name: "simpleSelect",
-                id: "simple-select"
+                name: "country",
+                id: "country-select"
               }}
             >
               <MenuItem
@@ -160,18 +163,9 @@ class Step4 extends React.Component {
                   root: classes.selectMenuItem,
                   selected: classes.selectMenuItemSelected
                 }}
-                value="2"
+                value="Canada"
               >
-                Paris
-              </MenuItem>
-              <MenuItem
-                classes={{
-                  root: classes.selectMenuItem,
-                  selected: classes.selectMenuItemSelected
-                }}
-                value="3"
-              >
-                Bucharest
+                Canada
               </MenuItem>
             </Select>
           </FormControl>
@@ -180,60 +174,66 @@ class Step4 extends React.Component {
             urbanshelter
             style={{ margin: "-20px 0 15px 0" }}
             labelText={<span>ENTER STREET ADDRESS</span>}
-            id="firstname"
+            id="address"
+            value={this.state.address}
             formControlProps={{
               fullWidth: true
             }}
             inputProps={{
-              onChange: event => this.change(event, "firstname", "length", 3)
+              onChange: event => this.change(event, "address", "length", 3)
             }}
           />
           <CustomInput
             urbanshelter
             style={{ margin: "-20px 0 15px 0" }}
             labelText={<span>APT, SUITE NO. (OPTIONAL)</span>}
-            id="firstname"
+            id="address-additional"
+            value={this.state.addressAdditional}
             formControlProps={{
               fullWidth: true
             }}
             inputProps={{
-              onChange: event => this.change(event, "firstname", "length", 3)
+              onChange: event =>
+                this.change(event, "addressAdditional", "length", 3)
             }}
           />
           <CustomInput
             urbanshelter
             style={{ margin: "-20px 0 15px 0" }}
             labelText={<span>TOWN/CITY</span>}
-            id="firstname"
+            id="town"
+            value={this.state.town}
             formControlProps={{
               fullWidth: true
             }}
             inputProps={{
-              onChange: event => this.change(event, "firstname", "length", 3)
+              onChange: event => this.change(event, "town", "length", 3)
             }}
           />
           <CustomInput
             urbanshelter
             style={{ margin: "-20px 0 15px 0" }}
             labelText={<span>PROVINCE</span>}
-            id="firstname"
+            id="province"
+            value={this.state.province}
             formControlProps={{
               fullWidth: true
             }}
             inputProps={{
-              onChange: event => this.change(event, "firstname", "length", 3)
+              onChange: event => this.change(event, "province", "length", 3)
             }}
           />
           <CustomInput
             urbanshelter
             style={{ margin: "-20px 0 35px 0" }}
             labelText={<span>POSTAL CODE</span>}
-            id="firstname"
+            id="postal"
+            value={this.state.postal}
             formControlProps={{
               fullWidth: true
             }}
             inputProps={{
-              onChange: event => this.change(event, "firstname", "length", 3)
+              onChange: event => this.change(event, "postal", "length", 3)
             }}
           />
         </GridItem>

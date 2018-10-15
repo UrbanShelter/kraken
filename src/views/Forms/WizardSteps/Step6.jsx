@@ -108,13 +108,13 @@ class Step4 extends React.Component {
     const { classes } = this.props;
     return (
       <GridContainer justify="space-evenly" direction="row-reverse">
-        <GridItem xs={12} sm={4} md={4}>
+        <GridItem xs={12} sm={4}>
           <Card infographic>
             <CardHeader style={{ margin: "10px 0 -15px" }}>
               {/* <i className={"fal fa-lightbulb"} /> */}
               <i
                 className={"far fa-lightbulb"}
-                style={{ fontSize: "25px", color: "#E91E63" }}
+                style={{ fontSize: "25px", color: "#ef4f67" }}
               />
             </CardHeader>
             <CardBody>
@@ -126,7 +126,7 @@ class Step4 extends React.Component {
             </CardBody>
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={4} md={4}>
+        <GridItem xs={12} sm={6} md={5}>
           <h5 style={{ marginTop: "30px" }}>
             What will your tenants have access to?
           </h5>

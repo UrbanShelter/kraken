@@ -106,6 +106,7 @@ class Step4 extends React.Component {
   // }
   render() {
     const { classes } = this.props;
+    console.log(this.props.allStates);
     return (
       <GridContainer justify="space-evenly" direction="row-reverse">
         <GridItem xs={12} sm={4}>
