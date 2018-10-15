@@ -11,6 +11,7 @@ import Step3 from "./WizardSteps/Step3.jsx";
 import Step4 from "./WizardSteps/Step4.jsx";
 import Step5 from "./WizardSteps/Step5.jsx";
 import Step6 from "./WizardSteps/Step6.jsx";
+import Step7 from "./WizardSteps/Step7.jsx";
 
 class WizardView extends React.Component {
   render() {
@@ -37,6 +38,11 @@ class WizardView extends React.Component {
                 stepName: "Offerings",
                 stepComponent: Step6,
                 stepId: "listing-offering"
+              },
+              {
+                stepName: "Amenities",
+                stepComponent: Step7,
+                stepId: "listing-amenities"
               },
               {
                 stepName: "Media",

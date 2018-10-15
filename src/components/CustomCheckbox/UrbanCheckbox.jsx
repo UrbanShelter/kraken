@@ -22,10 +22,19 @@ const styles = createMuiTheme({
   disabled: {}
 });
 
-let CustomCheckbox = props => <Checkbox onClick={props.onClick} />;
+let CustomCheckbox = props => (
+  <Checkbox
+    classes={{
+      root: props.classes.root,
+      checked: props.classes.checked
+    }}
+    onClick={props.onClick}
+  />
+);
 
 CustomCheckbox.propTypes = {
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  classes: PropTypes.object.isRequired
 };
 
 CustomCheckbox = withStyles(styles)(CustomCheckbox);
