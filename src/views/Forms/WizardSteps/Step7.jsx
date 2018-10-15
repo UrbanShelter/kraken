@@ -12,7 +12,6 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import UrbanCheckbox from "components/CustomCheckbox/UrbanCheckbox.jsx";
 
-
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
 const style = {
@@ -29,6 +28,13 @@ const style = {
   },
   ...customSelectStyle
 };
+
+var amenities = [
+  'Sign contract for "What are conference organizers afraid of?"',
+  "Lines From Great Russian Literature? Or E-mails From My Boss?",
+  "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
+  "Create 4 Invisible User Experiences you Never Knew About"
+];
 
 class Step4 extends React.Component {
   constructor(props) {
@@ -132,6 +138,9 @@ class Step4 extends React.Component {
                 onClick={event =>
                   this.change(event, "registerCheckbox", "checkbox")
                 }
+                classes={{
+                  checked: classes.checked
+                }}
               />
             }
             classes={{
@@ -147,7 +156,7 @@ class Step4 extends React.Component {
               marginRight: 0,
               fontSize: 14
             }}
-            label="I want to recieve policy updates, marketing material, inspirations and special offers"
+            label="Heating"
           />
         </GridItem>
       </GridContainer>

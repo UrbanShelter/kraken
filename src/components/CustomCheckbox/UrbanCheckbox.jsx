@@ -29,6 +29,7 @@ let CustomCheckbox = props => (
       checked: props.classes.checked
     }}
     onClick={props.onClick}
+    {...props}
   />
 );
 
@@ -40,8 +41,8 @@ CustomCheckbox.propTypes = {
 CustomCheckbox = withStyles(styles)(CustomCheckbox);
 
 function UrbanCheckbox({ ...props }) {
-  const { onClick } = props;
-  return <CustomCheckbox onClick={onClick} />;
+  const { onClick, ...rest } = props;
+  return <CustomCheckbox onClick={onClick} {...rest} />;
 }
 
 UrbanCheckbox.propTypes = {
