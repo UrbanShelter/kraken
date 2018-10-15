@@ -28,7 +28,7 @@ class Wizard extends React.Component {
     });
 
     const unique = (value, index, self) => {
-      return self.indexOf(value) === index;
+      return index === 0 ? true : self.indexOf(value) === index;
     };
     const uniqueMainsteps = mainstepsArray.filter(unique);
 
@@ -327,14 +327,15 @@ class Wizard extends React.Component {
                   </li>
                 );
                 return mainsteps
-                  ? prop.mainstep
+                  ? prop.mainstep || key === 0
                     ? stepComponent
                     : null
                   : stepComponent;
               })}
             </ul>
             {mainsteps ? (
-              steps[this.state.currentStep].mainstep ? (
+              steps[this.state.currentStep].mainstep ||
+              this.state.currentStep === 0 ? (
                 <div
                   className={classes.movingTab + " " + classes[color]}
                   style={this.state.movingTabStyle}
@@ -417,36 +418,6 @@ class Wizard extends React.Component {
                 </GridContainer>
               </GridItem>
             </GridContainer>
-            {/* <div className={classes.left}>
-              {this.state.previousButton ? (
-                <Button
-                  className={this.props.previousButtonClasses}
-                  onClick={() => this.previousButtonClick()}
-                >
-                  {this.props.previousButtonText}
-                </Button>
-              ) : null}
-            </div>
-            <div className={classes.right}>
-              {this.state.nextButton ? (
-                <Button
-                  color="urbanshelter"
-                  className={this.props.nextButtonClasses}
-                  onClick={() => this.nextButtonClick()}
-                >
-                  {this.props.nextButtonText}
-                </Button>
-              ) : null}
-              {this.state.finishButton ? (
-                <Button
-                  color="urbanshelter"
-                  className={this.finishButtonClasses}
-                  onClick={() => this.finishButtonClick()}
-                >
-                  {this.props.finishButtonText}
-                </Button>
-              ) : null}
-            </div> */}
             <div className={classes.clearfix} />
           </div>
         </Card>

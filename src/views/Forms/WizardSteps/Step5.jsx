@@ -119,6 +119,7 @@ class Step4 extends React.Component {
         <GridItem xs={12} sm={4} md={4}>
           <Card infographic>
             <CardHeader style={{ margin: "10px 0 -15px" }}>
+              {/* <i className={"fal fa-lightbulb"} /> */}
               <i
                 className={"far fa-lightbulb"}
                 style={{ fontSize: "25px", color: "#E91E63" }}
@@ -126,10 +127,8 @@ class Step4 extends React.Component {
             </CardHeader>
             <CardBody>
               <p style={{ color: "#3C4858", fontWeight: 400 }}>
-                It is very helpful to create a detailed and realistic lisitng so
-                that tenants can better evaluate the property for their needs,
-                before visiting the home. A well listed property is more likely
-                to get rented sooner.
+                In this section you are describing the entire unit and not what
+                each tenant is offered.
               </p>
             </CardBody>
           </Card>
@@ -182,59 +181,105 @@ class Step4 extends React.Component {
               </MenuItem>
             </Select>
           </FormControl>
-          <h5>Unit Address</h5>
+          <h5>How many bedrooms does this unit have?</h5>
+          <FormControl fullWidth className={classes.selectFormControl}>
+            <InputLabel htmlFor="simple-select" className={classes.selectLabel}>
+              Choose City
+            </InputLabel>
+            <Select
+              MenuProps={{
+                className: classes.selectMenu
+              }}
+              classes={{
+                select: classes.select
+              }}
+              value={this.state.simpleSelect}
+              onChange={this.handleSimple}
+              inputProps={{
+                name: "simpleSelect",
+                id: "simple-select"
+              }}
+            >
+              <MenuItem
+                disabled
+                classes={{
+                  root: classes.selectMenuItem
+                }}
+              >
+                Choose City
+              </MenuItem>
+              <MenuItem
+                classes={{
+                  root: classes.selectMenuItem,
+                  selected: classes.selectMenuItemSelected
+                }}
+                value="2"
+              >
+                Paris
+              </MenuItem>
+              <MenuItem
+                classes={{
+                  root: classes.selectMenuItem,
+                  selected: classes.selectMenuItemSelected
+                }}
+                value="3"
+              >
+                Bucharest
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <h5>How many bathrooms does this unit have?</h5>
+          <FormControl fullWidth className={classes.selectFormControl}>
+            <InputLabel htmlFor="simple-select" className={classes.selectLabel}>
+              Choose City
+            </InputLabel>
+            <Select
+              MenuProps={{
+                className: classes.selectMenu
+              }}
+              classes={{
+                select: classes.select
+              }}
+              value={this.state.simpleSelect}
+              onChange={this.handleSimple}
+              inputProps={{
+                name: "simpleSelect",
+                id: "simple-select"
+              }}
+            >
+              <MenuItem
+                disabled
+                classes={{
+                  root: classes.selectMenuItem
+                }}
+              >
+                Choose City
+              </MenuItem>
+              <MenuItem
+                classes={{
+                  root: classes.selectMenuItem,
+                  selected: classes.selectMenuItemSelected
+                }}
+                value="2"
+              >
+                Paris
+              </MenuItem>
+              <MenuItem
+                classes={{
+                  root: classes.selectMenuItem,
+                  selected: classes.selectMenuItemSelected
+                }}
+                value="3"
+              >
+                Bucharest
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <h5>What is the size of this unit? (sqft)</h5>
           <CustomInput
             urbanshelter
             style={{ margin: "-20px 0 35px 0" }}
-            labelText={<span>ENTER STREET ADDRESS</span>}
-            id="firstname"
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              onChange: event => this.change(event, "firstname", "length", 3)
-            }}
-          />
-          <CustomInput
-            urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
-            labelText={<span>APT, SUITE NO. (OPTIONAL)</span>}
-            id="firstname"
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              onChange: event => this.change(event, "firstname", "length", 3)
-            }}
-          />
-          <CustomInput
-            urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
-            labelText={<span>TOWN/CITY</span>}
-            id="firstname"
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              onChange: event => this.change(event, "firstname", "length", 3)
-            }}
-          />
-          <CustomInput
-            urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
-            labelText={<span>PROVINCE</span>}
-            id="firstname"
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              onChange: event => this.change(event, "firstname", "length", 3)
-            }}
-          />
-          <CustomInput
-            urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
-            labelText={<span>POSTAL CODE</span>}
+            labelText={<span>ENTER HOME SIZE</span>}
             id="firstname"
             formControlProps={{
               fullWidth: true

@@ -19,25 +19,25 @@ class WizardView extends React.Component {
             mainsteps
             validate
             steps={[
-              {
-                stepName: "About",
-                stepComponent: Step1,
-                stepId: "about",
-                mainstep: true
-              },
-              {
-                stepName: "About",
-                stepComponent: Step1,
-                stepId: "about1"
-              },
-              { stepName: "Account", stepComponent: Step2, stepId: "account" },
-              { stepName: "Address", stepComponent: Step3, stepId: "address" },
-              {
-                stepName: "Custom",
-                stepComponent: Step4,
-                stepId: "custom",
-                mainstep: true
-              },
+              // {
+              //   stepName: "About",
+              //   stepComponent: Step1,
+              //   stepId: "about",
+              //   mainstep: true
+              // },
+              // {
+              //   stepName: "About",
+              //   stepComponent: Step1,
+              //   stepId: "about1"
+              // },
+              // { stepName: "Account", stepComponent: Step2, stepId: "account" },
+              // { stepName: "Address", stepComponent: Step3, stepId: "address" },
+              // {
+              //   stepName: "Custom",
+              //   stepComponent: Step4,
+              //   stepId: "custom",
+              //   mainstep: true
+              // },
               { stepName: "Custom", stepComponent: Step4, stepId: "custom1" },
               {
                 stepName: "Custom2",
@@ -47,12 +47,12 @@ class WizardView extends React.Component {
               },
               { stepName: "Custom", stepComponent: Step4, stepId: "custom3" },
               {
-                stepName: "Custom2",
+                stepName: "Custom4",
                 stepComponent: Step4,
                 stepId: "custom2",
                 mainstep: true
               },
-              { stepName: "Custom", stepComponent: Step4, stepId: "custom3" }
+              { stepName: "Custom", stepComponent: Step4, stepId: "custom5" }
             ]}
             title="Listing your home!"
           />
