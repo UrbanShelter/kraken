@@ -1,13 +1,7 @@
 import React from "react";
 
-// @material-ui/icons
-import Face from "@material-ui/icons/Face";
-import RecordVoiceOver from "@material-ui/icons/RecordVoiceOver";
-import Email from "@material-ui/icons/Email";
-
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -16,13 +10,11 @@ import FormControl from "@material-ui/core/FormControl";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import PictureUpload from "components/CustomUpload/PictureUpload.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import TextField from "@material-ui/core/TextField";
 
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
@@ -116,13 +108,12 @@ class Step4 extends React.Component {
     const { classes } = this.props;
     return (
       <GridContainer justify="space-evenly" direction="row-reverse">
-        <GridItem xs={12} sm={4} md={4}>
+        <GridItem xs={12} sm={4}>
           <Card infographic>
             <CardHeader style={{ margin: "10px 0 -15px" }}>
-              {/* <i className={"fal fa-lightbulb"} /> */}
               <i
                 className={"far fa-lightbulb"}
-                style={{ fontSize: "25px", color: "#E91E63" }}
+                style={{ fontSize: "25px", color: "#ef4f67" }}
               />
             </CardHeader>
             <CardBody>
@@ -132,12 +123,27 @@ class Step4 extends React.Component {
               </p>
             </CardBody>
           </Card>
+          <Card infographic>
+            <CardHeader style={{ margin: "10px 0 -15px" }}>
+              <i
+                className={"far fa-lightbulb"}
+                style={{ fontSize: "25px", color: "#ef4f67" }}
+              />
+            </CardHeader>
+            <CardBody>
+              <p style={{ color: "#3C4858", fontWeight: 400 }}>
+                A ‘0.5’ washroom is a washroom without a rain shower or bathtub.
+              </p>
+            </CardBody>
+          </Card>
         </GridItem>
-        <GridItem xs={12} sm={4} md={4}>
-          <h5 style={{ marginTop: "30px" }}>Which county is yor unit in?</h5>
+        <GridItem xs={12} sm={6} md={5}>
+          <h5 style={{ marginTop: "30px" }}>
+            What kind of place are you listing?
+          </h5>
           <FormControl fullWidth className={classes.selectFormControl}>
             <InputLabel htmlFor="simple-select" className={classes.selectLabel}>
-              Choose City
+              Choose Home Type
             </InputLabel>
             <Select
               MenuProps={{
@@ -182,113 +188,7 @@ class Step4 extends React.Component {
             </Select>
           </FormControl>
           <h5>How many bedrooms does this unit have?</h5>
-          <FormControl fullWidth className={classes.selectFormControl}>
-            <InputLabel htmlFor="simple-select" className={classes.selectLabel}>
-              Choose City
-            </InputLabel>
-            <Select
-              MenuProps={{
-                className: classes.selectMenu
-              }}
-              classes={{
-                select: classes.select
-              }}
-              value={this.state.simpleSelect}
-              onChange={this.handleSimple}
-              inputProps={{
-                name: "simpleSelect",
-                id: "simple-select"
-              }}
-            >
-              <MenuItem
-                disabled
-                classes={{
-                  root: classes.selectMenuItem
-                }}
-              >
-                Choose City
-              </MenuItem>
-              <MenuItem
-                classes={{
-                  root: classes.selectMenuItem,
-                  selected: classes.selectMenuItemSelected
-                }}
-                value="2"
-              >
-                Paris
-              </MenuItem>
-              <MenuItem
-                classes={{
-                  root: classes.selectMenuItem,
-                  selected: classes.selectMenuItemSelected
-                }}
-                value="3"
-              >
-                Bucharest
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <h5>How many bathrooms does this unit have?</h5>
-          <FormControl fullWidth className={classes.selectFormControl}>
-            <InputLabel htmlFor="simple-select" className={classes.selectLabel}>
-              Choose City
-            </InputLabel>
-            <Select
-              MenuProps={{
-                className: classes.selectMenu
-              }}
-              classes={{
-                select: classes.select
-              }}
-              value={this.state.simpleSelect}
-              onChange={this.handleSimple}
-              inputProps={{
-                name: "simpleSelect",
-                id: "simple-select"
-              }}
-            >
-              <MenuItem
-                disabled
-                classes={{
-                  root: classes.selectMenuItem
-                }}
-              >
-                Choose City
-              </MenuItem>
-              <MenuItem
-                classes={{
-                  root: classes.selectMenuItem,
-                  selected: classes.selectMenuItemSelected
-                }}
-                value="2"
-              >
-                Paris
-              </MenuItem>
-              <MenuItem
-                classes={{
-                  root: classes.selectMenuItem,
-                  selected: classes.selectMenuItemSelected
-                }}
-                value="3"
-              >
-                Bucharest
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <h5>What is the size of this unit? (sqft)</h5>
-          <CustomInput
-            urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
-            labelText={<span>ENTER HOME SIZE</span>}
-            id="firstname"
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              onChange: event => this.change(event, "firstname", "length", 3)
-            }}
-          />
-          <GridContainer>
+          <GridContainer style={{ marginTop: "-5px", marginBottom: "25px" }}>
             <GridItem
               xs={4}
               md={3}
@@ -351,6 +251,83 @@ class Step4 extends React.Component {
               </Button>
             </GridItem>
           </GridContainer>
+          <h5>How many bathrooms does this unit have?</h5>
+          <GridContainer style={{ marginTop: "-5px", marginBottom: "25px" }}>
+            <GridItem
+              xs={4}
+              md={3}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <Button
+                color="urbanshelter"
+                size="sm"
+                round
+                className={classes.firstButton}
+              >
+                <div style={{ fontSize: "14px", padding: "0 5px" }}>-</div>
+              </Button>
+            </GridItem>
+            <GridItem
+              xs={4}
+              md={3}
+              xl={2}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <CustomInput
+                regular
+                urbanshelter
+                id="bathrooms"
+                formControlProps={{
+                  fullWidth: true
+                }}
+                inputProps={{
+                  placeholder: "1",
+                  onChange: event =>
+                    this.change(event, "bathrooms", "length", 3),
+                  // deeper text field component input props
+                  inputProps: {
+                    style: { textAlign: "center" }
+                  }
+                }}
+                style={{ paddingBottom: "0", paddingTop: "15px" }}
+              />
+            </GridItem>
+            <GridItem
+              xs={4}
+              md={3}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <Button
+                color="urbanshelter"
+                size="sm"
+                round
+                className={classes.lastButton}
+              >
+                <div style={{ fontSize: "14px", padding: "0 5px" }}>+</div>
+              </Button>
+            </GridItem>
+          </GridContainer>
+          <h5>What is the size of this unit? (sqft)</h5>
+          <CustomInput
+            urbanshelter
+            style={{ margin: "-20px 0 35px 0" }}
+            labelText={<span>ENTER HOME SIZE</span>}
+            id="firstname"
+            formControlProps={{
+              fullWidth: true
+            }}
+            inputProps={{
+              onChange: event => this.change(event, "firstname", "length", 3)
+            }}
+          />
         </GridItem>
       </GridContainer>
     );

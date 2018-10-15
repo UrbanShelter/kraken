@@ -1,13 +1,8 @@
 import React from "react";
 
-// @material-ui/icons
-import Face from "@material-ui/icons/Face";
-import RecordVoiceOver from "@material-ui/icons/RecordVoiceOver";
-import Email from "@material-ui/icons/Email";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -16,13 +11,11 @@ import FormControl from "@material-ui/core/FormControl";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import PictureUpload from "components/CustomUpload/PictureUpload.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import TextField from "@material-ui/core/TextField";
 
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
@@ -116,12 +109,12 @@ class Step4 extends React.Component {
     const { classes } = this.props;
     return (
       <GridContainer justify="space-evenly" direction="row-reverse">
-        <GridItem xs={12} sm={4} md={4}>
+        <GridItem xs={12} sm={4}>
           <Card infographic>
             <CardHeader style={{ margin: "10px 0 -15px" }}>
               <i
                 className={"far fa-lightbulb"}
-                style={{ fontSize: "25px", color: "#E91E63" }}
+                style={{ fontSize: "25px", color: "#ef4f67" }}
               />
             </CardHeader>
             <CardBody>
@@ -134,7 +127,7 @@ class Step4 extends React.Component {
             </CardBody>
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={4} md={4}>
+        <GridItem xs={12} sm={6} md={5}>
           <h5 style={{ marginTop: "30px" }}>Which county is yor unit in?</h5>
           <FormControl fullWidth className={classes.selectFormControl}>
             <InputLabel htmlFor="simple-select" className={classes.selectLabel}>
@@ -185,7 +178,7 @@ class Step4 extends React.Component {
           <h5>Unit Address</h5>
           <CustomInput
             urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
+            style={{ margin: "-20px 0 15px 0" }}
             labelText={<span>ENTER STREET ADDRESS</span>}
             id="firstname"
             formControlProps={{
@@ -197,7 +190,7 @@ class Step4 extends React.Component {
           />
           <CustomInput
             urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
+            style={{ margin: "-20px 0 15px 0" }}
             labelText={<span>APT, SUITE NO. (OPTIONAL)</span>}
             id="firstname"
             formControlProps={{
@@ -209,7 +202,7 @@ class Step4 extends React.Component {
           />
           <CustomInput
             urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
+            style={{ margin: "-20px 0 15px 0" }}
             labelText={<span>TOWN/CITY</span>}
             id="firstname"
             formControlProps={{
@@ -221,7 +214,7 @@ class Step4 extends React.Component {
           />
           <CustomInput
             urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
+            style={{ margin: "-20px 0 15px 0" }}
             labelText={<span>PROVINCE</span>}
             id="firstname"
             formControlProps={{
@@ -243,69 +236,6 @@ class Step4 extends React.Component {
               onChange: event => this.change(event, "firstname", "length", 3)
             }}
           />
-          <GridContainer>
-            <GridItem
-              xs={4}
-              md={3}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
-              <Button
-                color="urbanshelter"
-                size="sm"
-                round
-                className={classes.firstButton}
-              >
-                <div style={{ fontSize: "14px", padding: "0 5px" }}>-</div>
-              </Button>
-            </GridItem>
-            <GridItem
-              xs={4}
-              md={3}
-              xl={2}
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              <CustomInput
-                regular
-                urbanshelter
-                id="bathrooms"
-                formControlProps={{
-                  fullWidth: true
-                }}
-                inputProps={{
-                  placeholder: "1",
-                  onChange: event =>
-                    this.change(event, "bathrooms", "length", 3),
-                  // deeper text field component input props
-                  inputProps: {
-                    style: { textAlign: "center" }
-                  }
-                }}
-                style={{ paddingBottom: "0", paddingTop: "15px" }}
-              />
-            </GridItem>
-            <GridItem
-              xs={4}
-              md={3}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
-              <Button
-                color="urbanshelter"
-                size="sm"
-                round
-                className={classes.lastButton}
-              >
-                <div style={{ fontSize: "14px", padding: "0 5px" }}>+</div>
-              </Button>
-            </GridItem>
-          </GridContainer>
         </GridItem>
       </GridContainer>
     );

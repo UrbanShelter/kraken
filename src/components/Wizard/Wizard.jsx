@@ -383,7 +383,7 @@ class Wizard extends React.Component {
           </div>
           <div className={classes.footer}>
             <GridContainer justify="space-evenly">
-              <GridItem xs={6} sm={4} md={4}>
+              <GridItem xs={6} sm={4}>
                 {this.state.previousButton ? (
                   <Button
                     className={this.props.previousButtonClasses}
@@ -393,7 +393,7 @@ class Wizard extends React.Component {
                   </Button>
                 ) : null}
               </GridItem>
-              <GridItem xs={6} sm={4} md={4}>
+              <GridItem xs={6} md={5}>
                 <GridContainer justify="flex-end">
                   <GridItem>
                     {this.state.nextButton ? (
@@ -455,7 +455,8 @@ Wizard.propTypes = {
     "danger",
     "success",
     "info",
-    "rose"
+    "rose",
+    "urbanshelter"
   ]),
   title: PropTypes.string,
   subtitle: PropTypes.string,

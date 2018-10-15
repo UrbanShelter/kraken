@@ -9,6 +9,8 @@ import Step1 from "./WizardSteps/Step1.jsx";
 import Step2 from "./WizardSteps/Step2.jsx";
 import Step3 from "./WizardSteps/Step3.jsx";
 import Step4 from "./WizardSteps/Step4.jsx";
+import Step5 from "./WizardSteps/Step5.jsx";
+import Step6 from "./WizardSteps/Step6.jsx";
 
 class WizardView extends React.Component {
   render() {
@@ -18,6 +20,7 @@ class WizardView extends React.Component {
           <Wizard
             mainsteps
             validate
+            color="urbanshelter"
             steps={[
               // {
               //   stepName: "About",
@@ -38,14 +41,18 @@ class WizardView extends React.Component {
               //   stepId: "custom",
               //   mainstep: true
               // },
-              { stepName: "Custom", stepComponent: Step4, stepId: "custom1" },
               {
-                stepName: "Custom2",
+                stepName: "Listing",
                 stepComponent: Step4,
-                stepId: "custom2",
+                stepId: "listing1",
                 mainstep: true
               },
-              { stepName: "Custom", stepComponent: Step4, stepId: "custom3" },
+              {
+                stepName: "Listing",
+                stepComponent: Step5,
+                stepId: "listing2"
+              },
+              { stepName: "Listing", stepComponent: Step6, stepId: "listing3" },
               {
                 stepName: "Custom4",
                 stepComponent: Step4,
