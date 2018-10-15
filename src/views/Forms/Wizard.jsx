@@ -16,47 +16,32 @@ class WizardView extends React.Component {
   render() {
     return (
       <GridContainer justify="center">
-        <GridItem xs={12} sm={12} md={12} lg={12} xl={5}>
+        <GridItem xs={12} xl={5}>
           <Wizard
             mainsteps
             validate
             color="urbanshelter"
             steps={[
-              // {
-              //   stepName: "About",
-              //   stepComponent: Step1,
-              //   stepId: "about",
-              //   mainstep: true
-              // },
-              // {
-              //   stepName: "About",
-              //   stepComponent: Step1,
-              //   stepId: "about1"
-              // },
-              // { stepName: "Account", stepComponent: Step2, stepId: "account" },
-              // { stepName: "Address", stepComponent: Step3, stepId: "address" },
-              // {
-              //   stepName: "Custom",
-              //   stepComponent: Step4,
-              //   stepId: "custom",
-              //   mainstep: true
-              // },
               {
                 stepName: "Listing",
                 stepComponent: Step4,
-                stepId: "listing1",
+                stepId: "listing-address",
                 mainstep: true
               },
               {
-                stepName: "Listing",
+                stepName: "Details",
                 stepComponent: Step5,
-                stepId: "listing2"
+                stepId: "listing-detail"
               },
-              { stepName: "Listing", stepComponent: Step6, stepId: "listing3" },
               {
-                stepName: "Custom4",
+                stepName: "Offerings",
+                stepComponent: Step6,
+                stepId: "listing-offering"
+              },
+              {
+                stepName: "Media",
                 stepComponent: Step4,
-                stepId: "custom2",
+                stepId: "media1",
                 mainstep: true
               },
               { stepName: "Custom", stepComponent: Step4, stepId: "custom5" }

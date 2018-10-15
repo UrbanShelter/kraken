@@ -37,17 +37,29 @@ class Step4 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: "",
-      firstnameState: "",
-      lastname: "",
-      lastnameState: "",
-      email: "",
-      emailState: ""
+      homeType: "",
+      bedrooms: "1",
+      bathrooms: "1",
+      footage: ""
     };
   }
   sendState() {
     return this.state;
   }
+  handleSimple = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+  increase = (id, increment) => {
+    let value = increment ? increment : 1;
+    this.setState({ [id]: parseFloat(this.state[id]) + value });
+  };
+  decrease = (id, decrement, minimum) => {
+    let value = decrement ? decrement : 1;
+    let min = minimum ? minimum : 1;
+    if (parseFloat(this.state[id]) - value >= min) {
+      this.setState({ [id]: parseFloat(this.state[id]) - value });
+    }
+  };
   // function that returns true if value is email, false otherwise
   verifyEmail(value) {
     var emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -63,7 +75,9 @@ class Step4 extends React.Component {
     }
     return false;
   }
-  change(event, stateName, type, stateNameEqualTo) {
+  change(event, stateName, type, stateNameEqualTo, minimum) {
+    let continueDefault = true;
+    let min = minimum ? minimum : 1;
     switch (type) {
       case "email":
         if (this.verifyEmail(event.target.value)) {
@@ -79,10 +93,21 @@ class Step4 extends React.Component {
           this.setState({ [stateName + "State"]: "error" });
         }
         break;
+      case "min":
+        continueDefault = false;
+        // Sets the minimum value
+        if (event.target.value >= minimum) {
+          this.setState({ [event.target.id]: event.target.value });
+        } else {
+          this.setState({ [event.target.id]: minimum });
+        }
+        break;
       default:
         break;
     }
-    this.setState({ [stateName]: event.target.value });
+    if (continueDefault) {
+      this.setState({ [event.target.id]: event.target.value });
+    }
   }
   // isValidated() {
   //   if (
@@ -153,11 +178,11 @@ class Step4 extends React.Component {
               classes={{
                 select: classes.select
               }}
-              value={this.state.simpleSelect}
+              value={this.state.homeType}
               onChange={this.handleSimple}
               inputProps={{
-                name: "simpleSelect",
-                id: "simple-select"
+                name: "homeType",
+                id: "hometype-select"
               }}
             >
               <MenuItem
@@ -173,18 +198,18 @@ class Step4 extends React.Component {
                   root: classes.selectMenuItem,
                   selected: classes.selectMenuItemSelected
                 }}
-                value="2"
+                value="Condominium"
               >
-                Paris
+                Condominium
               </MenuItem>
               <MenuItem
                 classes={{
                   root: classes.selectMenuItem,
                   selected: classes.selectMenuItemSelected
                 }}
-                value="3"
+                value="Apartment"
               >
-                Bucharest
+                Apartment
               </MenuItem>
             </Select>
           </FormControl>
@@ -204,6 +229,7 @@ class Step4 extends React.Component {
                 size="sm"
                 round
                 className={classes.firstButton}
+                onClick={() => this.decrease("bedrooms")}
               >
                 <div style={{ fontSize: "14px", padding: "0 5px" }}>-</div>
               </Button>
@@ -217,14 +243,14 @@ class Step4 extends React.Component {
               <CustomInput
                 regular
                 urbanshelter
-                id="bathrooms"
+                id="bedrooms"
                 formControlProps={{
                   fullWidth: true
                 }}
                 inputProps={{
                   placeholder: "1",
-                  onChange: event =>
-                    this.change(event, "bathrooms", "length", 3),
+                  value: this.state.bedrooms,
+                  onChange: event => this.change(event, "bedrooms", "min", 3),
                   // deeper text field component input props
                   inputProps: {
                     style: { textAlign: "center" }
@@ -247,6 +273,7 @@ class Step4 extends React.Component {
                 size="sm"
                 round
                 className={classes.lastButton}
+                onClick={() => this.increase("bedrooms")}
               >
                 <div style={{ fontSize: "14px", padding: "0 5px" }}>+</div>
               </Button>
@@ -268,6 +295,7 @@ class Step4 extends React.Component {
                 size="sm"
                 round
                 className={classes.firstButton}
+                onClick={() => this.decrease("bathrooms", 0.5, 0.5)}
               >
                 <div style={{ fontSize: "14px", padding: "0 5px" }}>-</div>
               </Button>
@@ -287,8 +315,9 @@ class Step4 extends React.Component {
                 }}
                 inputProps={{
                   placeholder: "1",
+                  value: this.state.bathrooms,
                   onChange: event =>
-                    this.change(event, "bathrooms", "length", 3),
+                    this.change(event, "bathrooms", "min", 1, 0.5),
                   // deeper text field component input props
                   inputProps: {
                     style: { textAlign: "center" }
@@ -311,6 +340,7 @@ class Step4 extends React.Component {
                 size="sm"
                 round
                 className={classes.lastButton}
+                onClick={() => this.increase("bathrooms", 0.5)}
               >
                 <div style={{ fontSize: "14px", padding: "0 5px" }}>+</div>
               </Button>
@@ -321,12 +351,13 @@ class Step4 extends React.Component {
             urbanshelter
             style={{ margin: "-20px 0 35px 0" }}
             labelText={<span>ENTER HOME SIZE</span>}
-            id="firstname"
+            id="footage"
             formControlProps={{
               fullWidth: true
             }}
             inputProps={{
-              onChange: event => this.change(event, "firstname", "length", 3)
+              value: this.state.footage,
+              onChange: event => this.change(event, "footage", "length", 3)
             }}
           />
         </GridItem>
