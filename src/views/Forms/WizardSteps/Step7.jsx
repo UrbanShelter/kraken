@@ -12,6 +12,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import UrbanCheckbox from "components/CustomCheckbox/UrbanCheckbox.jsx";
 
+import { urbanShelterColor } from "assets/jss/material-dashboard-pro-react.jsx";
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
 const style = {
@@ -132,7 +133,7 @@ class Step4 extends React.Component {
               {/* <i className={"fal fa-lightbulb"} /> */}
               <i
                 className={"far fa-lightbulb"}
-                style={{ fontSize: "25px", color: "#ef4f67" }}
+                style={{ fontSize: "25px", color: urbanShelterColor }}
               />
             </CardHeader>
             <CardBody>

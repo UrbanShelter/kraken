@@ -6,11 +6,13 @@ import PropTypes from "prop-types";
 import { createMuiTheme, withStyles } from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
 
+import { urbanShelterColor } from "assets/jss/material-dashboard-pro-react.jsx";
+
 const styles = createMuiTheme({
   /* Styles applied to the root element. */
   root: {
     "&$checked": {
-      color: "#ef4f67"
+      color: urbanShelterColor
     },
     "&$disabled": {}
   },

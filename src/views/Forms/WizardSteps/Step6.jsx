@@ -15,6 +15,7 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 
+import { urbanShelterColor } from "assets/jss/material-dashboard-pro-react.jsx";
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
 const style = {
@@ -36,8 +37,8 @@ class Step4 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      offering: "",
-      bedroomNumber: "1"
+      offering: "offering",
+      bedroomNumber: "rooms"
     };
   }
   sendState() {
@@ -112,7 +113,7 @@ class Step4 extends React.Component {
               {/* <i className={"fal fa-lightbulb"} /> */}
               <i
                 className={"far fa-lightbulb"}
-                style={{ fontSize: "25px", color: "#ef4f67" }}
+                style={{ fontSize: "25px", color: urbanShelterColor }}
               />
             </CardHeader>
             <CardBody>
@@ -129,9 +130,6 @@ class Step4 extends React.Component {
             What will your tenants have access to?
           </h5>
           <FormControl fullWidth className={classes.selectFormControl}>
-            <InputLabel htmlFor="simple-select" className={classes.selectLabel}>
-              Choose Offering
-            </InputLabel>
             <Select
               MenuProps={{
                 className: classes.selectMenu
@@ -151,6 +149,7 @@ class Step4 extends React.Component {
                 classes={{
                   root: classes.selectMenuItem
                 }}
+                value="offering"
               >
                 Choose Offering
               </MenuItem>
@@ -176,9 +175,6 @@ class Step4 extends React.Component {
           </FormControl>
           <h5>How many bedrooms are you listing?</h5>
           <FormControl fullWidth className={classes.selectFormControl}>
-            <InputLabel htmlFor="simple-select" className={classes.selectLabel}>
-              Number of Rooms
-            </InputLabel>
             <Select
               MenuProps={{
                 className: classes.selectMenu
@@ -198,6 +194,7 @@ class Step4 extends React.Component {
                 classes={{
                   root: classes.selectMenuItem
                 }}
+                value="rooms"
               >
                 Number of Rooms
               </MenuItem>
@@ -226,12 +223,13 @@ class Step4 extends React.Component {
           <CustomInput
             urbanshelter
             style={{ margin: "-20px 0 35px 0" }}
-            labelText={<span>ENTER DESCRIPTION</span>}
             id="firstname"
             formControlProps={{
               fullWidth: true
             }}
             inputProps={{
+              placeholder: "Enter Description",
+              multiline: true,
               onChange: event => this.change(event, "bedroom1", "length", 3)
             }}
           />
@@ -239,12 +237,13 @@ class Step4 extends React.Component {
           <CustomInput
             urbanshelter
             style={{ margin: "-20px 0 35px 0" }}
-            labelText={<span>ENTER DESCRIPTION</span>}
             id="firstname"
             formControlProps={{
               fullWidth: true
             }}
             inputProps={{
+              placeholder: "Enter Description",
+              multiline: true,
               onChange: event => this.change(event, "bedroom2", "length", 3)
             }}
           />

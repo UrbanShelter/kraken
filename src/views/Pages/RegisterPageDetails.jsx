@@ -29,6 +29,7 @@ import ColoredLine from "components/ColoredLine/ColoredLine.jsx";
 import { auth } from "firebase/index.js";
 
 // dom components
+import { urbanShelterColor } from "assets/jss/material-dashboard-pro-react.jsx";
 import registerPageStyle from "../../assets/jss/material-dashboard-pro-react/views/registerPageStyle";
 import { Redirect } from "react-router-dom";
 
@@ -310,7 +311,7 @@ class RegisterPageDetails extends React.Component {
                       Sign Up with{" "}
                       <a
                         href={null}
-                        style={{ color: "#ef4f67", fontWeight: 500 }}
+                        style={{ color: urbanShelterColor, fontWeight: 500 }}
                         onClick={() => {
                           auth.doSignInWithFacebook();
                         }}
@@ -320,7 +321,7 @@ class RegisterPageDetails extends React.Component {
                       or{" "}
                       <a
                         href={null}
-                        style={{ color: "#ef4f67", fontWeight: 500 }}
+                        style={{ color: urbanShelterColor, fontWeight: 500 }}
                         onClick={() => {
                           auth.doSignInWithGoogle();
                         }}
@@ -478,7 +479,7 @@ class RegisterPageDetails extends React.Component {
                       Already have an UrbanShelter account?{" "}
                       <a
                         href=""
-                        style={{ color: "#ef4f67", fontWeight: 500 }}
+                        style={{ color: urbanShelterColor, fontWeight: 500 }}
                         onClick={() =>
                           this.setState({ redirect: { login: true } })
                         }

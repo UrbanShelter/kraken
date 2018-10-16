@@ -5,7 +5,6 @@ import React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
 // core components
@@ -16,6 +15,7 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 
+import { urbanShelterColor } from "assets/jss/material-dashboard-pro-react.jsx";
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
 const style = {
@@ -37,7 +37,7 @@ class Step4 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      country: "Canada",
+      country: "city",
       address: "",
       addressAdditional: "",
       town: "",
@@ -116,7 +116,7 @@ class Step4 extends React.Component {
             <CardHeader style={{ margin: "10px 0 -15px" }}>
               <i
                 className={"far fa-lightbulb"}
-                style={{ fontSize: "25px", color: "#ef4f67" }}
+                style={{ fontSize: "25px", color: urbanShelterColor }}
               />
             </CardHeader>
             <CardBody>
@@ -132,9 +132,6 @@ class Step4 extends React.Component {
         <GridItem xs={12} sm={6} md={5}>
           <h5 style={{ marginTop: "30px" }}>Which county is yor unit in?</h5>
           <FormControl fullWidth className={classes.selectFormControl}>
-            <InputLabel htmlFor="simple-select" className={classes.selectLabel}>
-              Choose City
-            </InputLabel>
             <Select
               MenuProps={{
                 className: classes.selectMenu
@@ -154,6 +151,7 @@ class Step4 extends React.Component {
                 classes={{
                   root: classes.selectMenuItem
                 }}
+                value="city"
               >
                 Choose City
               </MenuItem>
@@ -172,7 +170,7 @@ class Step4 extends React.Component {
           <CustomInput
             urbanshelter
             style={{ margin: "-20px 0 15px 0" }}
-            labelText={<span>ENTER STREET ADDRESS</span>}
+            labelText={<span>STREET ADDRESS</span>}
             id="address"
             value={this.state.address}
             formControlProps={{

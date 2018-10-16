@@ -4,7 +4,7 @@ import React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
+// import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
 // core components
@@ -16,6 +16,7 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 
+import { urbanShelterColor } from "assets/jss/material-dashboard-pro-react.jsx";
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
 const style = {
@@ -37,7 +38,7 @@ class Step4 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      homeType: "",
+      homeType: "type",
       bedrooms: "1",
       bathrooms: "1",
       footage: ""
@@ -49,15 +50,24 @@ class Step4 extends React.Component {
   handleSimple = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+  round(value, step) {
+    step || (step = 1.0);
+    var inv = 1.0 / step;
+    return Math.round(value * inv) / inv;
+  }
   increase = (id, increment) => {
     let value = increment ? increment : 1;
-    this.setState({ [id]: parseFloat(this.state[id]) + value });
+    this.setState({
+      [id]: this.round(parseFloat(this.state[id]) + value, increment)
+    });
   };
   decrease = (id, decrement, minimum) => {
     let value = decrement ? decrement : 1;
     let min = minimum ? minimum : 1;
     if (parseFloat(this.state[id]) - value >= min) {
-      this.setState({ [id]: parseFloat(this.state[id]) - value });
+      this.setState({
+        [id]: this.round(parseFloat(this.state[id]) - value, decrement)
+      });
     }
   };
   // function that returns true if value is email, false otherwise
@@ -97,7 +107,9 @@ class Step4 extends React.Component {
         continueDefault = false;
         // Sets the minimum value
         if (event.target.value >= min) {
-          this.setState({ [event.target.id]: event.target.value });
+          this.setState({
+            [event.target.id]: this.round(event.target.value, min)
+          });
         } else {
           this.setState({ [event.target.id]: min });
         }
@@ -138,7 +150,7 @@ class Step4 extends React.Component {
             <CardHeader style={{ margin: "10px 0 -15px" }}>
               <i
                 className={"far fa-lightbulb"}
-                style={{ fontSize: "25px", color: "#ef4f67" }}
+                style={{ fontSize: "25px", color: urbanShelterColor }}
               />
             </CardHeader>
             <CardBody>
@@ -152,7 +164,7 @@ class Step4 extends React.Component {
             <CardHeader style={{ margin: "10px 0 -15px" }}>
               <i
                 className={"far fa-lightbulb"}
-                style={{ fontSize: "25px", color: "#ef4f67" }}
+                style={{ fontSize: "25px", color: urbanShelterColor }}
               />
             </CardHeader>
             <CardBody>
@@ -167,9 +179,6 @@ class Step4 extends React.Component {
             What kind of place are you listing?
           </h5>
           <FormControl fullWidth className={classes.selectFormControl}>
-            <InputLabel htmlFor="simple-select" className={classes.selectLabel}>
-              Choose Home Type
-            </InputLabel>
             <Select
               MenuProps={{
                 className: classes.selectMenu
@@ -189,8 +198,9 @@ class Step4 extends React.Component {
                 classes={{
                   root: classes.selectMenuItem
                 }}
+                value="type"
               >
-                Choose City
+                Choose Home Type
               </MenuItem>
               <MenuItem
                 classes={{
@@ -346,13 +356,13 @@ class Step4 extends React.Component {
           <h5>What is the size of this unit? (sqft)</h5>
           <CustomInput
             urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
-            labelText={<span>ENTER HOME SIZE</span>}
+            style={{ margin: "-35px 0 35px 0" }}
             id="footage"
             formControlProps={{
               fullWidth: true
             }}
             inputProps={{
+              placeholder: "Home Size",
               value: this.state.footage,
               onChange: event => this.change(event, "footage", "length", 3)
             }}

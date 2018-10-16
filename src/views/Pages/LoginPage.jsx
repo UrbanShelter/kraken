@@ -19,6 +19,7 @@ import ColoredLine from "components/ColoredLine/ColoredLine.jsx";
 import { auth } from "firebase/index.js";
 
 // dom components
+import { urbanShelterColor } from "assets/jss/material-dashboard-pro-react.jsx";
 import registerPageStyle from "../../assets/jss/material-dashboard-pro-react/views/registerPageStyle";
 import { Redirect } from "react-router-dom";
 
@@ -175,7 +176,7 @@ class RegisterPage extends React.Component {
                         Don&apos;t have an UrbanShelter account yet?{" "}
                         <a
                           href="/pages/register-page"
-                          style={{ color: "#ef4f67", fontWeight: 500 }}
+                          style={{ color: urbanShelterColor, fontWeight: 500 }}
                           onClick={() =>
                             this.setState({ redirect: { signup: true } })
                           }
