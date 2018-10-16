@@ -30,27 +30,42 @@ const style = {
 };
 
 var amenities = [
-  'Sign contract for "What are conference organizers afraid of?"',
-  "Lines From Great Russian Literature? Or E-mails From My Boss?",
-  "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-  "Create 4 Invisible User Experiences you Never Knew About"
+  "Heating",
+  "Air Conditioning",
+  "Furnished",
+  "Wifi",
+  "Utilities",
+  "Washer/Dryer",
+  "Gym",
+  "Elevator",
+  "Balcony/Patio"
 ];
 
 class Step4 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: "",
-      firstnameState: "",
-      lastname: "",
-      lastnameState: "",
-      email: "",
-      emailState: ""
+      checked: []
     };
   }
   sendState() {
     return this.state;
   }
+  handleToggle = value => () => {
+    const { checked } = this.state;
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+
+    this.setState({
+      checked: newChecked
+    });
+  };
   // function that returns true if value is email, false otherwise
   verifyEmail(value) {
     var emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -132,32 +147,36 @@ class Step4 extends React.Component {
           <h5 style={{ marginTop: "30px" }}>
             What amenities are included within the unit?
           </h5>
-          <FormControlLabel
-            control={
-              <UrbanCheckbox
-                onClick={event =>
-                  this.change(event, "registerCheckbox", "checkbox")
-                }
-                classes={{
-                  checked: classes.checked
-                }}
-              />
-            }
-            classes={{
-              label:
-                classes.label +
-                (this.state.registerCheckboxState === "error"
-                  ? " " + classes.labelError
-                  : "")
-            }}
-            style={{
-              marginTop: 8,
-              marginLeft: 0,
-              marginRight: 0,
-              fontSize: 14
-            }}
-            label="Heating"
-          />
+          <GridContainer>
+            {amenities.map(value => (
+              <GridItem xs={12} key={value}>
+                <FormControlLabel
+                  control={
+                    <UrbanCheckbox
+                      onClick={this.handleToggle(value)}
+                      classes={{
+                        checked: classes.checked
+                      }}
+                    />
+                  }
+                  classes={{
+                    label:
+                      classes.label +
+                      (this.state.registerCheckboxState === "error"
+                        ? " " + classes.labelError
+                        : "")
+                  }}
+                  style={{
+                    marginTop: 8,
+                    marginLeft: 0,
+                    marginRight: 0,
+                    fontSize: 14
+                  }}
+                  label={value}
+                />
+              </GridItem>
+            ))}
+          </GridContainer>
         </GridItem>
       </GridContainer>
     );

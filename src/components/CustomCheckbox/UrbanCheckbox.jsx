@@ -29,24 +29,31 @@ let CustomCheckbox = props => (
       checked: props.classes.checked
     }}
     onClick={props.onClick}
-    {...props}
+    checked={props.checked}
+    disabled={props.disabled}
   />
 );
 
 CustomCheckbox.propTypes = {
+  classes: PropTypes.object.isRequired,
   onClick: PropTypes.func,
-  classes: PropTypes.object.isRequired
+  checked: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 CustomCheckbox = withStyles(styles)(CustomCheckbox);
 
 function UrbanCheckbox({ ...props }) {
-  const { onClick, ...rest } = props;
-  return <CustomCheckbox onClick={onClick} {...rest} />;
+  const { onClick, disabled, checked } = props;
+  return (
+    <CustomCheckbox onClick={onClick} checked={checked} disabled={disabled} />
+  );
 }
 
 UrbanCheckbox.propTypes = {
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  checked: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 export default UrbanCheckbox;

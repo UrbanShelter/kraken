@@ -37,17 +37,16 @@ class Step4 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: "",
-      firstnameState: "",
-      lastname: "",
-      lastnameState: "",
-      email: "",
-      emailState: ""
+      offering: "",
+      bedroomNumber: "1"
     };
   }
   sendState() {
     return this.state;
   }
+  handleSimple = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
   // function that returns true if value is email, false otherwise
   verifyEmail(value) {
     var emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -141,11 +140,11 @@ class Step4 extends React.Component {
               classes={{
                 select: classes.select
               }}
-              value={this.state.simpleSelect}
+              value={this.state.offering}
               onChange={this.handleSimple}
               inputProps={{
-                name: "simpleSelect",
-                id: "simple-select"
+                name: "offering",
+                id: "offering-select"
               }}
             >
               <MenuItem
@@ -161,7 +160,7 @@ class Step4 extends React.Component {
                   root: classes.selectMenuItem,
                   selected: classes.selectMenuItemSelected
                 }}
-                value="2"
+                value="1"
               >
                 Private Rooms
               </MenuItem>
@@ -170,7 +169,7 @@ class Step4 extends React.Component {
                   root: classes.selectMenuItem,
                   selected: classes.selectMenuItemSelected
                 }}
-                value="3"
+                value="entire"
               >
                 Entire Place
               </MenuItem>
@@ -188,11 +187,11 @@ class Step4 extends React.Component {
               classes={{
                 select: classes.select
               }}
-              value={this.state.simpleSelect}
+              value={this.state.bedroomNumber}
               onChange={this.handleSimple}
               inputProps={{
-                name: "simpleSelect",
-                id: "simple-select"
+                name: "bedroomNumber",
+                id: "bedroomNumber-select"
               }}
             >
               <MenuItem
@@ -208,7 +207,7 @@ class Step4 extends React.Component {
                   root: classes.selectMenuItem,
                   selected: classes.selectMenuItemSelected
                 }}
-                value="2"
+                value="1"
               >
                 1 Bedroom
               </MenuItem>
@@ -217,7 +216,7 @@ class Step4 extends React.Component {
                   root: classes.selectMenuItem,
                   selected: classes.selectMenuItemSelected
                 }}
-                value="3"
+                value="2"
               >
                 2 Bedrooms
               </MenuItem>
@@ -234,7 +233,7 @@ class Step4 extends React.Component {
               fullWidth: true
             }}
             inputProps={{
-              onChange: event => this.change(event, "firstname", "length", 3)
+              onChange: event => this.change(event, "bedroom1", "length", 3)
             }}
           />
           <h5>Bedroom 2</h5>
@@ -247,7 +246,7 @@ class Step4 extends React.Component {
               fullWidth: true
             }}
             inputProps={{
-              onChange: event => this.change(event, "firstname", "length", 3)
+              onChange: event => this.change(event, "bedroom2", "length", 3)
             }}
           />
         </GridItem>
