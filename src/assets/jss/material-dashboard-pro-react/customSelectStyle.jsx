@@ -1,7 +1,8 @@
 import {
   // primaryColor,
-  primaryBoxShadow,
-  urbanShelterColor
+  // primaryBoxShadow,
+  urbanShelterColor,
+  urbanShelterBoxShadow
 } from "assets/jss/material-dashboard-pro-react.jsx";
 
 const customSelectStyle = {
@@ -81,7 +82,7 @@ const customSelectStyle = {
     "&:hover": {
       backgroundColor: urbanShelterColor,
       color: "#FFFFFF",
-      ...primaryBoxShadow
+      ...urbanShelterBoxShadow
     }
   },
   selectMenuItemSelected: {
@@ -93,7 +94,7 @@ const customSelectStyle = {
     "&:hover": {
       backgroundColor: urbanShelterColor + "!important",
       color: "#FFFFFF",
-      ...primaryBoxShadow,
+      ...urbanShelterBoxShadow,
       "&:after": {
         color: "#FFFFFF"
       }

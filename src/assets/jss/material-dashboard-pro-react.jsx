@@ -92,7 +92,10 @@ const successColor = "#4caf50";
 const infoColor = "#00acc1";
 const roseColor = "#e91e63";
 const grayColor = "#999999";
-const urbanShelterColor = "#ef4f67";
+const r = "50";
+const g = "209";
+const b = "181";
+const urbanShelterColor = "rgba(" + r + "," + g + "," + b + ",1)";
 
 const primaryBoxShadow = {
   boxShadow:
@@ -120,7 +123,58 @@ const roseBoxShadow = {
 };
 const urbanShelterBoxShadow = {
   boxShadow:
-    "0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(233, 30, 99, 0.4)"
+    "0 2px 2px 0 " +
+    "rgba(" +
+    r +
+    "," +
+    g +
+    "," +
+    b +
+    ",0.14)" +
+    ", 0 3px 1px -2px " +
+    "rgba(" +
+    r +
+    "," +
+    g +
+    "," +
+    b +
+    ",0.2)" +
+    ", 0 1px 5px 0 " +
+    "rgba(" +
+    r +
+    "," +
+    g +
+    "," +
+    b +
+    ",0.12)",
+  "&:hover,&:focus": {
+    backgroundColor: urbanShelterColor,
+    boxShadow:
+      "0 14px 26px -12px " +
+      "rgba(" +
+      r +
+      "," +
+      g +
+      "," +
+      b +
+      ",0.42)" +
+      ", 0 4px 23px 0px " +
+      "rgba(" +
+      r +
+      "," +
+      g +
+      "," +
+      b +
+      ",0.12)" +
+      ", 0 8px 10px -5px " +
+      "rgba(" +
+      r +
+      "," +
+      g +
+      "," +
+      b +
+      ",0.2)"
+  }
 };
 
 // old card headers
