@@ -17,7 +17,7 @@ class WizardView extends React.Component {
   render() {
     return (
       <GridContainer justify="center">
-        <GridItem xs={12} xl={5}>
+        <GridItem xs={12} lg={10} xl={5}>
           <Wizard
             mainsteps
             validate
