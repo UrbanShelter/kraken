@@ -6,7 +6,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Danger from "components/Typography/Danger.jsx";
 import Muted from "components/Typography/Muted.jsx";
 
-import Email from "@material-ui/icons/Email";
 import Close from "@material-ui/icons/Close";
 
 // import LockOutline from "@material-ui/icons/LockOutline";

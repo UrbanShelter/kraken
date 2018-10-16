@@ -59,7 +59,7 @@ const customInputStyle = {
     color: successColor + " !important"
   },
   labelRootUrbanShelter: {
-    color: "blue" + " !important"
+    color: urbanShelterColor + " !important"
   },
   formControl: {
     margin: "0 0 17px 0",

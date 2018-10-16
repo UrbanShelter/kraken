@@ -278,7 +278,7 @@ class LoginPageDetails extends React.Component {
                     <div style={{ textAlign: "center", paddingBottom: 20 }}>
                       Log In with{" "}
                       <a
-                        href="#"
+                        href={null}
                         style={{ color: "#ef4f67", fontWeight: 500 }}
                         onClick={() => {
                           auth.doSignInWithFacebook();
@@ -288,7 +288,7 @@ class LoginPageDetails extends React.Component {
                       </a>{" "}
                       or{" "}
                       <a
-                        href="#"
+                        href={null}
                         style={{ color: "#ef4f67", fontWeight: 500 }}
                         onClick={() => {
                           auth.doSignInWithGoogle();
@@ -369,7 +369,7 @@ class LoginPageDetails extends React.Component {
                     <div style={{ textAlign: "center", paddingBottom: 20 }}>
                       Don&apos;t have an UrbanShelter account yet?{" "}
                       <a
-                        href="#"
+                        href={null}
                         style={{ color: "#ef4f67", fontWeight: 500 }}
                         onClick={() =>
                           this.setState({ redirect: { signup: true } })

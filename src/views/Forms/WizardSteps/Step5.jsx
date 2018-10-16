@@ -96,10 +96,10 @@ class Step4 extends React.Component {
       case "min":
         continueDefault = false;
         // Sets the minimum value
-        if (event.target.value >= minimum) {
+        if (event.target.value >= min) {
           this.setState({ [event.target.id]: event.target.value });
         } else {
-          this.setState({ [event.target.id]: minimum });
+          this.setState({ [event.target.id]: min });
         }
         break;
       default:

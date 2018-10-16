@@ -29,7 +29,6 @@ class RoutePaths extends React.Component {
         this.setState({
           indexRoutes: [{ path: "/", name: "Home", component: Dashboard }]
         });
-        Router.refresh();
       } else {
         // No user is signed in.
         console.log("unauthorized");
@@ -38,7 +37,6 @@ class RoutePaths extends React.Component {
         this.setState({
           indexRoutes: [{ path: "/", name: "Pages", component: Pages }]
         });
-        Router.refresh();
       }
     });
   }

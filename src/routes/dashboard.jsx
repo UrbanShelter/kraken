@@ -19,15 +19,14 @@ import VectorMap from "views/Maps/VectorMap.jsx";
 import Charts from "views/Charts/Charts.jsx";
 import Calendar from "views/Calendar/Calendar.jsx";
 import Widgets from "views/Widgets/Widgets.jsx";
-import UserProfile from "views/Pages/UserProfile.jsx";
-import TimelinePage from "views/Pages/Timeline.jsx";
-import RTLSupport from "views/Pages/RTLSupport.jsx";
+// import UserProfile from "views/Pages/UserProfile.jsx";
+// import TimelinePage from "views/Pages/Timeline.jsx";
+// import RTLSupport from "views/Pages/RTLSupport.jsx";
 
-import pagesRoutes from "./pages.jsx";
+// import pagesRoutes from "./pages.jsx";
 
 // @material-ui/icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import Image from "@material-ui/icons/Image";
 import Apps from "@material-ui/icons/Apps";
 // import ContentPaste from "@material-ui/icons/ContentPaste";
 import GridOn from "@material-ui/icons/GridOn";
@@ -36,26 +35,26 @@ import WidgetsIcon from "@material-ui/icons/Widgets";
 import Timeline from "@material-ui/icons/Timeline";
 import DateRange from "@material-ui/icons/DateRange";
 
-var pages = [
-  {
-    path: "/timeline-page",
-    name: "Timeline Page",
-    mini: "TP",
-    component: TimelinePage
-  },
-  {
-    path: "/user-page",
-    name: "User Profile",
-    mini: "UP",
-    component: UserProfile
-  },
-  {
-    path: "/rtl/rtl-support-page",
-    name: "RTL Support",
-    mini: "RS",
-    component: RTLSupport
-  }
-].concat(pagesRoutes);
+// var pages = [
+//   {
+//     path: "/timeline-page",
+//     name: "Timeline Page",
+//     mini: "TP",
+//     component: TimelinePage
+//   },
+//   {
+//     path: "/user-page",
+//     name: "User Profile",
+//     mini: "UP",
+//     component: UserProfile
+//   },
+//   {
+//     path: "/rtl/rtl-support-page",
+//     name: "RTL Support",
+//     mini: "RS",
+//     component: RTLSupport
+//   }
+// ].concat(pagesRoutes);
 
 var dashRoutes = [
   {

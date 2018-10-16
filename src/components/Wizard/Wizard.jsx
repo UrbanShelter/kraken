@@ -19,7 +19,7 @@ class Wizard extends React.Component {
     var width;
     var mainstepsArray = [];
 
-    this.props.steps.map((prop, key) => {
+    this.props.steps.forEach((prop, key) => {
       if ((this.props.mainsteps && prop.mainstep) || key === 0) {
         mainstepsArray.push(key);
       } else {
@@ -286,13 +286,13 @@ class Wizard extends React.Component {
       transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)"
     };
 
-    this.props.mainsteps
-      ? this.props.steps[index].mainstep
-        ? this.setState({ movingTabStyle: movingTabStyle })
-        : {}
-      : this.setState({ movingTabStyle: movingTabStyle });
-
-    this.setState({ movingTabStyle: movingTabStyle });
+    if (this.props.mainsteps) {
+      if (this.props.steps[index].mainstep){
+        this.setState({ movingTabStyle: movingTabStyle });
+      }
+    } else {
+      this.setState({ movingTabStyle: movingTabStyle });
+    }
   }
   render() {
     const { classes, title, subtitle, color, steps, mainsteps } = this.props;

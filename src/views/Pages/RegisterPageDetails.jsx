@@ -309,7 +309,7 @@ class RegisterPageDetails extends React.Component {
                     <div style={{ textAlign: "center", paddingBottom: 20 }}>
                       Sign Up with{" "}
                       <a
-                        href="#"
+                        href={null}
                         style={{ color: "#ef4f67", fontWeight: 500 }}
                         onClick={() => {
                           auth.doSignInWithFacebook();
@@ -319,7 +319,7 @@ class RegisterPageDetails extends React.Component {
                       </a>{" "}
                       or{" "}
                       <a
-                        href="#"
+                        href={null}
                         style={{ color: "#ef4f67", fontWeight: 500 }}
                         onClick={() => {
                           auth.doSignInWithGoogle();

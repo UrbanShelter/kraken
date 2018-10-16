@@ -60,7 +60,6 @@ class HeaderLinks extends React.Component {
     return (
       <div className={wrapper}>
         <CustomInput
-          rtlActive={rtlActive}
           formControlProps={{
             className: classes.top + " " + classes.search
           }}

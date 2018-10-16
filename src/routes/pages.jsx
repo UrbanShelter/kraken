@@ -3,13 +3,11 @@ import LoginPage from "views/Pages/LoginPage.jsx";
 import LoginPageDetails from "views/Pages/LoginPageDetails.jsx";
 import RegisterPage from "views/Pages/RegisterPage.jsx";
 import RegisterPageDetails from "views/Pages/RegisterPageDetails.jsx";
-import LockScreenPage from "views/Pages/LockScreenPage.jsx";
 
 // @material-ui/icons
 import PersonAdd from "@material-ui/icons/PersonAdd";
 import Fingerprint from "@material-ui/icons/Fingerprint";
 import MonetizationOn from "@material-ui/icons/MonetizationOn";
-import LockOpen from "@material-ui/icons/LockOpen";
 
 const pagesRoutes = [
   {
