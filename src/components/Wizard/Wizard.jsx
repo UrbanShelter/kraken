@@ -102,7 +102,11 @@ class Wizard extends React.Component {
     window.removeEventListener("resize", this.updateWidth);
   }
   updateWidth() {
-    this.refreshAnimation(this.state.currentStep);
+    if (this.props.mainsteps) {
+      this.refreshAnimation(this.state.mainstepsArray[this.state.currentStep]);
+    } else {
+      this.refreshAnimation(this.state.currentStep);
+    }
   }
   navigationStepChange(key) {
     if (this.props.steps) {
@@ -172,10 +176,9 @@ class Wizard extends React.Component {
         previousButton: key > 0 ? true : false,
         finishButton: this.props.steps.length === key + 1 ? true : false
       });
+
       if (this.props.mainsteps) {
-        if (this.state.mainstepsArray[key] === key) {
-          this.refreshAnimation(key);
-        }
+        this.refreshAnimation(this.state.mainstepsArray[key]);
       } else {
         this.refreshAnimation(key);
       }
@@ -287,7 +290,7 @@ class Wizard extends React.Component {
     };
 
     if (this.props.mainsteps) {
-      if (this.props.steps[index].mainstep){
+      if (this.props.steps[index].mainstep) {
         this.setState({ movingTabStyle: movingTabStyle });
       }
     } else {
