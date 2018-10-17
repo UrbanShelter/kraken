@@ -1,10 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
 // core components
@@ -33,12 +33,13 @@ const style = {
   ...customSelectStyle
 };
 
-class Step4 extends React.Component {
+class Step6 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       offering: "offering",
-      bedroomNumber: "rooms"
+      bedroomNumber: "rooms",
+      descriptions: []
     };
   }
   sendState() {
@@ -83,6 +84,12 @@ class Step4 extends React.Component {
     }
     this.setState({ [stateName]: event.target.value });
   }
+  setBedroomsDescription(event) {
+    // const descriptions = event.target.value;
+    var descriptions = this.state.descriptions;
+    descriptions[event.target.id] = event.target.value;
+    this.setState({ descriptions: descriptions });
+  }
   // isValidated() {
   //   if (
   //     this.state.firstnameState === "success" &&
@@ -103,16 +110,38 @@ class Step4 extends React.Component {
   //   }
   //   return false;
   // }
+  componentDidUpdate() {
+    const bedrooms = this.props.allStates["listing-detail"]
+      ? this.props.allStates["listing-detail"].bedrooms
+      : null;
+
+    if (bedrooms) {
+      // checking if the number of rooms was modified
+      if (
+        (this.state.bedroomNumber !== "rooms" &&
+          bedrooms < this.state.bedroomNumber) ||
+        bedrooms < this.state.descriptions
+      ) {
+        var descriptions = this.state.descriptions.slice(0, bedrooms);
+        this.setState({ bedroomNumber: "rooms", descriptions: descriptions });
+      }
+    }
+  }
+
   render() {
     const { classes } = this.props;
     const bedrooms = this.props.allStates["listing-detail"]
       ? this.props.allStates["listing-detail"].bedrooms
       : null;
 
-    var menuItems = [];
-    var descriptions = [];
+    // variables for dynamic field rendering
+    const menuItems = [];
+    const descriptions = [];
 
     if (bedrooms) {
+      // checking if the number of rooms was modified
+      menuItems.length = 0;
+      descriptions.length = 0;
       for (var i = 0; i < bedrooms; i++) {
         let text = i + 1 > 1 ? " Bedrooms" : " Bedroom";
         menuItems.push(
@@ -121,7 +150,7 @@ class Step4 extends React.Component {
               root: classes.selectMenuItem,
               selected: classes.selectMenuItemSelected
             }}
-            value={i}
+            value={i + 1}
             key={i}
           >
             {i + 1 + text}
@@ -134,15 +163,14 @@ class Step4 extends React.Component {
             <CustomInput
               urbanshelter
               style={{ margin: "-20px 0 35px 0" }}
-              id="firstname"
+              id={i.toString()}
               formControlProps={{
                 fullWidth: true
               }}
               inputProps={{
                 placeholder: "Enter Description",
                 multiline: true,
-                onChange: event =>
-                  this.change(event, "bedroom" + (i + 1), "length", 3)
+                onChange: event => this.setBedroomsDescription(event)
               }}
             />
           </div>
@@ -220,8 +248,6 @@ class Step4 extends React.Component {
           </FormControl>
           <h5>How many bedrooms are you listing?</h5>
           <FormControl fullWidth className={classes.selectFormControl}>
-            {/* this.props.allStates */}
-            {/* {this.props.allStates.map((prop, key) => console.log(prop))} */}
             <Select
               MenuProps={{
                 className: classes.selectMenu
@@ -248,12 +274,19 @@ class Step4 extends React.Component {
               {menuItems}
             </Select>
           </FormControl>
-          <h3>Bedroom Descriptions</h3>
-          {descriptions}
+          <div>
+            <h3>Bedroom Descriptions</h3>
+            {descriptions}
+          </div>
         </GridItem>
       </GridContainer>
     );
   }
 }
 
-export default withStyles(style)(Step4);
+Step6.propTypes = {
+  classes: PropTypes.object.isRequired,
+  allStates: PropTypes.object.isRequired
+};
+
+export default withStyles(style)(Step6);

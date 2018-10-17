@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -34,7 +35,7 @@ const style = {
   ...customSelectStyle
 };
 
-class Step4 extends React.Component {
+class Step5 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -373,4 +374,9 @@ class Step4 extends React.Component {
   }
 }
 
-export default withStyles(style)(Step4);
+Step5.propTypes = {
+  classes: PropTypes.object.isRequired,
+  allStates: PropTypes.object.isRequired
+};
+
+export default withStyles(style)(Step5);

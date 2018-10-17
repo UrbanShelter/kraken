@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -42,7 +43,7 @@ var amenities = [
   "Balcony/Patio"
 ];
 
-class Step4 extends React.Component {
+class Step7 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -184,4 +185,9 @@ class Step4 extends React.Component {
   }
 }
 
-export default withStyles(style)(Step4);
+Step7.propTypes = {
+  classes: PropTypes.object.isRequired,
+  allStates: PropTypes.object.isRequired
+};
+
+export default withStyles(style)(Step7);
