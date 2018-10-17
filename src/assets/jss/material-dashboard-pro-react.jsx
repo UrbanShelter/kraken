@@ -92,9 +92,9 @@ const successColor = "#4caf50";
 const infoColor = "#00acc1";
 const roseColor = "#e91e63";
 const grayColor = "#999999";
-const r = "50";
-const g = "209";
-const b = "181";
+const r = "241";
+const g = "91";
+const b = "106";
 const urbanShelterColor = "rgba(" + r + "," + g + "," + b + ",1)";
 
 const primaryBoxShadow = {

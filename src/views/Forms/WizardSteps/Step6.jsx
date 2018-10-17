@@ -146,7 +146,7 @@ class Step6 extends React.Component {
       // checking if the number of rooms was modified
       menuItems.length = 0;
       descriptions.length = 0;
-      for (var i = 0; i < bedrooms; i++) {
+      for (let i = 0; i < bedrooms; i++) {
         let text = i + 1 > 1 ? " Bedrooms" : " Bedroom";
         menuItems.push(
           <MenuItem
@@ -161,24 +161,48 @@ class Step6 extends React.Component {
           </MenuItem>
         );
 
-        descriptions.push(
-          <div key={i}>
-            <h5>{"Bedroom " + (i + 1)}</h5>
-            <CustomInput
-              urbanshelter
-              style={{ margin: "-20px 0 35px 0" }}
-              id={i.toString()}
-              formControlProps={{
-                fullWidth: true
-              }}
-              inputProps={{
-                placeholder: "Enter Description",
-                multiline: true,
-                onChange: event => this.setBedroomsDescription(event)
-              }}
-            />
-          </div>
-        );
+        if (this.state.offering === "entire") {
+          descriptions.push(
+            <div key={i}>
+              <h5>{"Bedroom " + (i + 1)}</h5>
+              <CustomInput
+                urbanshelter
+                style={{ margin: "-20px 0 35px 0" }}
+                id={i.toString()}
+                formControlProps={{
+                  fullWidth: true
+                }}
+                inputProps={{
+                  placeholder: "Enter Description",
+                  multiline: true,
+                  onChange: event => this.setBedroomsDescription(event)
+                }}
+              />
+            </div>
+          );
+        } else if (
+          this.state.offering === "private" &&
+          i < this.state.bedroomNumber
+        ) {
+          descriptions.push(
+            <div key={i}>
+              <h5>{"Bedroom " + (i + 1)}</h5>
+              <CustomInput
+                urbanshelter
+                style={{ margin: "-20px 0 35px 0" }}
+                id={i.toString()}
+                formControlProps={{
+                  fullWidth: true
+                }}
+                inputProps={{
+                  placeholder: "Enter Description",
+                  multiline: true,
+                  onChange: event => this.setBedroomsDescription(event)
+                }}
+              />
+            </div>
+          );
+        }
       }
     }
 
@@ -283,7 +307,7 @@ class Step6 extends React.Component {
             </div>
           )}
           <div>
-            <h3>Bedroom Descriptions</h3>
+            {descriptions.length > 0 && <h3>Bedroom Descriptions</h3>}
             {descriptions}
           </div>
         </GridItem>
