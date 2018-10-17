@@ -123,7 +123,11 @@ class Step6 extends React.Component {
         bedrooms < this.state.descriptions
       ) {
         var descriptions = this.state.descriptions.slice(0, bedrooms);
-        this.setState({ bedroomNumber: "rooms", descriptions: descriptions });
+        this.setState({
+          bedroomNumber: "rooms",
+          offering: "entire",
+          descriptions: descriptions
+        });
       }
     }
   }
@@ -231,7 +235,7 @@ class Step6 extends React.Component {
                   root: classes.selectMenuItem,
                   selected: classes.selectMenuItemSelected
                 }}
-                value="1"
+                value="private"
               >
                 Private Rooms
               </MenuItem>
@@ -246,34 +250,38 @@ class Step6 extends React.Component {
               </MenuItem>
             </Select>
           </FormControl>
-          <h5>How many bedrooms are you listing?</h5>
-          <FormControl fullWidth className={classes.selectFormControl}>
-            <Select
-              MenuProps={{
-                className: classes.selectMenu
-              }}
-              classes={{
-                select: classes.select
-              }}
-              value={this.state.bedroomNumber}
-              onChange={this.handleSimple}
-              inputProps={{
-                name: "bedroomNumber",
-                id: "bedroomNumber-select"
-              }}
-            >
-              <MenuItem
-                disabled
-                classes={{
-                  root: classes.selectMenuItem
-                }}
-                value="rooms"
-              >
-                Number of Rooms
-              </MenuItem>
-              {menuItems}
-            </Select>
-          </FormControl>
+          {this.state.offering === "private" && (
+            <div>
+              <h5>How many bedrooms are you listing?</h5>
+              <FormControl fullWidth className={classes.selectFormControl}>
+                <Select
+                  MenuProps={{
+                    className: classes.selectMenu
+                  }}
+                  classes={{
+                    select: classes.select
+                  }}
+                  value={this.state.bedroomNumber}
+                  onChange={this.handleSimple}
+                  inputProps={{
+                    name: "bedroomNumber",
+                    id: "bedroomNumber-select"
+                  }}
+                >
+                  <MenuItem
+                    disabled
+                    classes={{
+                      root: classes.selectMenuItem
+                    }}
+                    value="rooms"
+                  >
+                    Number of Rooms
+                  </MenuItem>
+                  {menuItems}
+                </Select>
+              </FormControl>
+            </div>
+          )}
           <div>
             <h3>Bedroom Descriptions</h3>
             {descriptions}
