@@ -105,6 +105,51 @@ class Step4 extends React.Component {
   // }
   render() {
     const { classes } = this.props;
+    const bedrooms = this.props.allStates["listing-detail"]
+      ? this.props.allStates["listing-detail"].bedrooms
+      : null;
+
+    var menuItems = [];
+    var descriptions = [];
+
+    if (bedrooms) {
+      for (var i = 0; i < bedrooms; i++) {
+        let text = i + 1 > 1 ? " Bedrooms" : " Bedroom";
+        menuItems.push(
+          <MenuItem
+            classes={{
+              root: classes.selectMenuItem,
+              selected: classes.selectMenuItemSelected
+            }}
+            value={i}
+            key={i}
+          >
+            {i + 1 + text}
+          </MenuItem>
+        );
+
+        descriptions.push(
+          <div key={i}>
+            <h5>{"Bedroom " + (i + 1)}</h5>
+            <CustomInput
+              urbanshelter
+              style={{ margin: "-20px 0 35px 0" }}
+              id="firstname"
+              formControlProps={{
+                fullWidth: true
+              }}
+              inputProps={{
+                placeholder: "Enter Description",
+                multiline: true,
+                onChange: event =>
+                  this.change(event, "bedroom" + (i + 1), "length", 3)
+              }}
+            />
+          </div>
+        );
+      }
+    }
+
     return (
       <GridContainer justify="space-evenly" direction="row-reverse">
         <GridItem xs={12} sm={4}>
@@ -175,6 +220,8 @@ class Step4 extends React.Component {
           </FormControl>
           <h5>How many bedrooms are you listing?</h5>
           <FormControl fullWidth className={classes.selectFormControl}>
+            {/* this.props.allStates */}
+            {/* {this.props.allStates.map((prop, key) => console.log(prop))} */}
             <Select
               MenuProps={{
                 className: classes.selectMenu
@@ -198,55 +245,11 @@ class Step4 extends React.Component {
               >
                 Number of Rooms
               </MenuItem>
-              <MenuItem
-                classes={{
-                  root: classes.selectMenuItem,
-                  selected: classes.selectMenuItemSelected
-                }}
-                value="1"
-              >
-                1 Bedroom
-              </MenuItem>
-              <MenuItem
-                classes={{
-                  root: classes.selectMenuItem,
-                  selected: classes.selectMenuItemSelected
-                }}
-                value="2"
-              >
-                2 Bedrooms
-              </MenuItem>
+              {menuItems}
             </Select>
           </FormControl>
           <h3>Bedroom Descriptions</h3>
-          <h5>Bedroom 1</h5>
-          <CustomInput
-            urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
-            id="firstname"
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              placeholder: "Enter Description",
-              multiline: true,
-              onChange: event => this.change(event, "bedroom1", "length", 3)
-            }}
-          />
-          <h5>Bedroom 2</h5>
-          <CustomInput
-            urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
-            id="firstname"
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              placeholder: "Enter Description",
-              multiline: true,
-              onChange: event => this.change(event, "bedroom2", "length", 3)
-            }}
-          />
+          {descriptions}
         </GridItem>
       </GridContainer>
     );
