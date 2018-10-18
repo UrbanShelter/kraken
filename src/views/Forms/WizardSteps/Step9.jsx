@@ -31,7 +31,7 @@ const style = {
   ...customSelectStyle
 };
 
-var precautions = {
+var amenities = {
   Deposits: ["0.5 Month's Rent", "1 Month's Rent", "2 Month's Rent"],
   Additional: ["No Smoking", "No Pets"],
   Safety: ["Smoke Detector", "Carbon-monoxide Detector", "Burglary Protection"]
@@ -133,8 +133,26 @@ class Step7 extends React.Component {
             </CardHeader>
             <CardBody>
               <p style={{ color: "#3C4858", fontWeight: 400 }}>
-                When mentioning Other precautions please add a comma to separate
-                the precautions.
+                It is advisable to have at least 8 photos for each listing.
+                However, you can begin with just adding one photo. You can add
+                more photos later. Including photos of all the different spaces
+                the tenant can interact will help potential tenants to better
+                imagine your place.
+              </p>
+            </CardBody>
+          </Card>
+          <Card infographic>
+            <CardHeader style={{ margin: "10px 0 -15px" }}>
+              {/* <i className={"fal fa-lightbulb"} /> */}
+              <i
+                className={"far fa-lightbulb"}
+                style={{ fontSize: "25px", color: urbanShelterColor }}
+              />
+            </CardHeader>
+            <CardBody>
+              <p style={{ color: "#3C4858", fontWeight: 400 }}>
+                Please make sure to take pictures in a well-lit room.
+                Preferably, take photos during daylight hours.
               </p>
             </CardBody>
           </Card>
@@ -142,7 +160,7 @@ class Step7 extends React.Component {
         <GridItem xs={12} sm={6} md={5}>
           <h5 style={{ marginTop: "30px" }}>Precautions</h5>
           <GridContainer>
-            {Object.keys(precautions).map(key => (
+            {Object.keys(amenities).map(key => (
               <GridItem xs={12} key={key}>
                 <h5
                   style={{
@@ -153,7 +171,7 @@ class Step7 extends React.Component {
                 >
                   {key}
                 </h5>
-                {precautions[key].map(value => (
+                {amenities[key].map(value => (
                   <GridItem xs={12} key={value}>
                     <FormControlLabel
                       control={

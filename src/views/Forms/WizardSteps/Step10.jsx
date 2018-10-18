@@ -31,7 +31,7 @@ const style = {
   ...customSelectStyle
 };
 
-var precautions = {
+var amenities = {
   Deposits: ["0.5 Month's Rent", "1 Month's Rent", "2 Month's Rent"],
   Additional: ["No Smoking", "No Pets"],
   Safety: ["Smoke Detector", "Carbon-monoxide Detector", "Burglary Protection"]
@@ -133,8 +133,8 @@ class Step7 extends React.Component {
             </CardHeader>
             <CardBody>
               <p style={{ color: "#3C4858", fontWeight: 400 }}>
-                When mentioning Other precautions please add a comma to separate
-                the precautions.
+                When mentioning Other Amenities please add a comma to separate
+                the amenities.
               </p>
             </CardBody>
           </Card>
@@ -142,7 +142,7 @@ class Step7 extends React.Component {
         <GridItem xs={12} sm={6} md={5}>
           <h5 style={{ marginTop: "30px" }}>Precautions</h5>
           <GridContainer>
-            {Object.keys(precautions).map(key => (
+            {Object.keys(amenities).map(key => (
               <GridItem xs={12} key={key}>
                 <h5
                   style={{
@@ -153,7 +153,7 @@ class Step7 extends React.Component {
                 >
                   {key}
                 </h5>
-                {precautions[key].map(value => (
+                {amenities[key].map(value => (
                   <GridItem xs={12} key={value}>
                     <FormControlLabel
                       control={

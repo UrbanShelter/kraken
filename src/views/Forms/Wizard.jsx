@@ -13,6 +13,8 @@ import Step5 from "./WizardSteps/Step5.jsx";
 import Step6 from "./WizardSteps/Step6.jsx";
 import Step7 from "./WizardSteps/Step7.jsx";
 import Step8 from "./WizardSteps/Step8.jsx";
+import Step9 from "./WizardSteps/Step9.jsx";
+import Step10 from "./WizardSteps/Step10.jsx";
 
 class WizardView extends React.Component {
   render() {
@@ -52,11 +54,15 @@ class WizardView extends React.Component {
               },
               {
                 stepName: "Media",
-                stepComponent: Step4,
+                stepComponent: Step9,
                 stepId: "media1",
                 mainstep: true
               },
-              { stepName: "Custom", stepComponent: Step4, stepId: "custom5" }
+              {
+                stepName: "Description",
+                stepComponent: Step10,
+                stepId: "media2"
+              }
             ]}
             title="Listing your home!"
           />
