@@ -37,8 +37,8 @@ class Step6 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      offering: "offering",
-      bedroomNumber: "rooms",
+      offering: "entire",
+      bedroomNumber: 1,
       descriptions: []
     };
   }
@@ -120,11 +120,11 @@ class Step6 extends React.Component {
       if (
         (this.state.bedroomNumber !== "rooms" &&
           bedrooms < this.state.bedroomNumber) ||
-        bedrooms < this.state.descriptions
+        bedrooms < this.state.descriptions.length
       ) {
         var descriptions = this.state.descriptions.slice(0, bedrooms);
         this.setState({
-          bedroomNumber: "rooms",
+          bedroomNumber: 1,
           offering: "entire",
           descriptions: descriptions
         });

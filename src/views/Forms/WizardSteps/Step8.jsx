@@ -32,34 +32,8 @@ const style = {
 };
 
 var amenities = {
-  "In-suite": [
-    "Heating",
-    "Air Conditioning",
-    "Furnished",
-    "Wifi",
-    "Utilities",
-    "Laundry",
-    "Fireplace",
-    "Television",
-    "Balcony/Patio",
-    "Garden",
-    "Storage Space",
-    "View",
-    "En-suite washrooms"
-  ],
-  "In-Building": [
-    "Laundry",
-    "Gym",
-    "Elevator",
-    "Parking",
-    "Pool",
-    "Doorman",
-    "Storage Space",
-    "Wheelchair Accessible",
-    "Theatre",
-    "Games Room",
-    "Work Spaces"
-  ],
+  Deposits: ["0.5 Month's Rent", "1 Month's Rent", "2 Month's Rent"],
+  Additional: ["No Smoking", "No Pets"],
   Safety: ["Smoke Detector", "Carbon-monoxide Detector", "Burglary Protection"]
 };
 
@@ -166,9 +140,7 @@ class Step7 extends React.Component {
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={5}>
-          <h5 style={{ marginTop: "30px" }}>
-            What amenities are included within the unit?
-          </h5>
+          <h5 style={{ marginTop: "30px" }}>Precautions</h5>
           <GridContainer>
             {Object.keys(amenities).map(key => (
               <GridItem xs={12} key={key}>
