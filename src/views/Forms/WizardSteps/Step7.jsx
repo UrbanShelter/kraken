@@ -31,17 +31,38 @@ const style = {
   ...customSelectStyle
 };
 
-var amenities = [
-  "Heating",
-  "Air Conditioning",
-  "Furnished",
-  "Wifi",
-  "Utilities",
-  "Washer/Dryer",
-  "Gym",
-  "Elevator",
-  "Balcony/Patio"
-];
+var amenities = {
+  "In-suite": [
+    "Heating",
+    "Air Conditioning",
+    "Furnished",
+    "Wifi",
+    "Utilities",
+    "laundry",
+    "Fireplace",
+    "Television",
+    "Balcony/Patio",
+    "Garden",
+    "Storage Space",
+    "View",
+    "En-suite washrooms"
+  ],
+  "In-Building": [
+    "Laundry",
+    "Gym",
+    "Elevator",
+    "Parking",
+    "Pool",
+    "Doorman",
+    "Storage Space",
+    "Wheelchair Accessible",
+    "Theatre",
+    "Laundry",
+    "Games Room",
+    "Work Spaces"
+  ],
+  Safety: ["Smoke Detector", "Carbon-monoxide Detector", "Burglary Protection"]
+};
 
 class Step7 extends React.Component {
   constructor(props) {
@@ -150,32 +171,46 @@ class Step7 extends React.Component {
             What amenities are included within the unit?
           </h5>
           <GridContainer>
-            {amenities.map(value => (
-              <GridItem xs={12} key={value}>
-                <FormControlLabel
-                  control={
-                    <UrbanCheckbox
-                      onClick={this.handleToggle(value)}
-                      classes={{
-                        checked: classes.checked
-                      }}
-                    />
-                  }
-                  classes={{
-                    label:
-                      classes.label +
-                      (this.state.registerCheckboxState === "error"
-                        ? " " + classes.labelError
-                        : "")
-                  }}
+            {Object.keys(amenities).map(key => (
+              <GridItem xs={12} key={key}>
+                <h5
                   style={{
-                    marginTop: 8,
-                    marginLeft: 0,
-                    marginRight: 0,
-                    fontSize: 14
+                    color: urbanShelterColor,
+                    fontWeight: 450,
+                    marginBottom: "-10px"
                   }}
-                  label={value}
-                />
+                >
+                  {key}
+                </h5>
+                {amenities[key].map(value => (
+                  <GridItem xs={12} key={value}>
+                    <FormControlLabel
+                      control={
+                        <UrbanCheckbox
+                          onClick={this.handleToggle(value)}
+                          classes={{
+                            checked: classes.checked
+                          }}
+                        />
+                      }
+                      classes={{
+                        label:
+                          classes.label +
+                          (this.state.registerCheckboxState === "error"
+                            ? " " + classes.labelError
+                            : "")
+                      }}
+                      style={{
+                        marginTop: 8,
+                        marginLeft: 0,
+                        marginRight: 0,
+                        fontSize: 14,
+                        fontWeight: 400
+                      }}
+                      label={value}
+                    />
+                  </GridItem>
+                ))}
               </GridItem>
             ))}
           </GridContainer>
