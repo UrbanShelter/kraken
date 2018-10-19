@@ -216,9 +216,6 @@ class Step9 extends React.Component {
   }
 
   render() {
-    const offering = this.props.allStates["listing-offering"]
-      ? this.props.allStates["listing-offering"].offering
-      : "entire";
     const bedrooms = this.props.allStates["listing-offering"]
       ? this.props.allStates["listing-offering"].bedroomNumber
       : null;
@@ -226,7 +223,6 @@ class Step9 extends React.Component {
       ? this.props.allStates["listing-detail"].bathrooms
       : null;
 
-      console.log(this.props.allStates);
     // variables for dynamic field rendering
     const rooms = [];
     const baths = [];
