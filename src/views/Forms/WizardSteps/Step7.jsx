@@ -67,21 +67,59 @@ class Step7 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: []
+      checked: {}
     };
   }
   sendState() {
     return this.state;
   }
-  handleToggle = value => () => {
+  clean(obj) {
+    for (var propName in obj) {
+      if (
+        obj[propName] === null ||
+        obj[propName] === undefined ||
+        obj[propName].length === 0
+      ) {
+        delete obj[propName];
+      }
+    }
+  }
+  handleToggle = (key, value) => () => {
     const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+    let currentIndex;
+    let newChecked;
+
+    if (key) {
+      // case where checked is an object
+      newChecked = checked;
+      checked[key] !== undefined
+        ? (currentIndex = checked[key].indexOf(value))
+        : (currentIndex = -1);
+    } else {
+      // case where checked is an array
+      newChecked = [...checked];
+      currentIndex = checked.indexOf(value);
+    }
 
     if (currentIndex === -1) {
-      newChecked.push(value);
+      if (key) {
+        if (newChecked[key] !== undefined) {
+          newChecked[key].push(value);
+        } else {
+          // initialize object array
+          newChecked[key] = [];
+          newChecked[key].push(value);
+        }
+      } else {
+        newChecked.push(value);
+      }
     } else {
-      newChecked.splice(currentIndex, 1);
+      if (key) {
+        newChecked[key].splice(currentIndex, 1);
+        this.clean(newChecked);
+      } else {
+        newChecked.splice(currentIndex, 1);
+      }
     }
 
     this.setState({
@@ -186,7 +224,7 @@ class Step7 extends React.Component {
                     <FormControlLabel
                       control={
                         <UrbanCheckbox
-                          onClick={this.handleToggle(value)}
+                          onClick={this.handleToggle(key, value)}
                           classes={{
                             checked: classes.checked
                           }}
