@@ -31,12 +31,52 @@ const style = {
   ...customSelectStyle
 };
 
+let UploadItem = props => (
+  <div>
+    <h5 style={{ marginTop: "30px" }}>{props.name}</h5>
+    <Card infographic>
+      <CardBody
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "25% 0"
+        }}
+      >
+        <Button color="urbanshelter">Upload Photos</Button>
+        <p style={{ color: "#3C4858", fontWeight: 400 }}>or drag them in</p>
+      </CardBody>
+    </Card>
+    <CustomInput
+      urbanshelter
+      style={{ margin: "-20px 0 35px 0" }}
+      id={props.id}
+      formControlProps={{
+        fullWidth: true
+      }}
+      inputProps={{
+        placeholder: "Describe Room Elements",
+        multiline: true,
+        onChange: event => props.onChange(props.category, event)
+      }}
+    />
+  </div>
+);
+
+UploadItem.propTypes = {
+  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
+};
 class Step9 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       descriptions: {}
     };
+    this.setDescription = this.setDescription.bind(this);
   }
   sendState() {
     return this.state;
@@ -192,38 +232,13 @@ class Step9 extends React.Component {
       rooms.length = 0;
       for (let i = 0; i < bedrooms; i++) {
         rooms.push(
-          <div key={i}>
-            <h5 style={{ marginTop: "30px" }}>{"Bedroom " + (i + 1)}</h5>
-            <Card infographic>
-              <CardBody
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "25% 0"
-                }}
-              >
-                <Button color="urbanshelter">Upload Photos</Button>
-                <p style={{ color: "#3C4858", fontWeight: 400 }}>
-                  or drag them in
-                </p>
-              </CardBody>
-            </Card>
-            <CustomInput
-              urbanshelter
-              style={{ margin: "-20px 0 35px 0" }}
-              id={i.toString()}
-              formControlProps={{
-                fullWidth: true
-              }}
-              inputProps={{
-                placeholder: "Describe Room Elements",
-                multiline: true,
-                onChange: event => this.setDescription("bedrooms", event)
-              }}
-            />
-          </div>
+          <UploadItem
+            key={i}
+            name={"Bedroom " + (i + 1)}
+            id={i.toString()}
+            category={"bedrooms"}
+            onChange={this.setDescription}
+          />
         );
       }
     }
@@ -233,127 +248,36 @@ class Step9 extends React.Component {
       for (let i = 0; i < Math.ceil(bathrooms); i++) {
         let number = bathrooms - i > 0.5 ? i + 1 : 0.5;
         baths.push(
-          <div key={i}>
-            <h5 style={{ marginTop: "30px" }}>{"Bathroom " + number}</h5>
-            <Card infographic>
-              <CardBody
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "25% 0"
-                }}
-              >
-                <Button color="urbanshelter">Upload Photos</Button>
-                <p style={{ color: "#3C4858", fontWeight: 400 }}>
-                  or drag them in
-                </p>
-              </CardBody>
-            </Card>
-            <CustomInput
-              urbanshelter
-              style={{ margin: "-20px 0 35px 0" }}
-              id={i.toString()}
-              formControlProps={{
-                fullWidth: true
-              }}
-              inputProps={{
-                placeholder: "Describe Room Elements",
-                multiline: true,
-                onChange: event => this.setDescription("bathrooms", event)
-              }}
-            />
-          </div>
+          <UploadItem
+            key={i}
+            name={"Bathroom " + number}
+            id={i.toString()}
+            category={"bathrooms"}
+            onChange={this.setDescription}
+          />
         );
       }
     }
 
     let main = (
       <div>
-        <h5 style={{ marginTop: "30px" }}>{"Entire Building"}</h5>
-        <Card infographic>
-          <CardBody
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "25% 0"
-            }}
-          >
-            <Button color="urbanshelter">Upload Photos</Button>
-            <p style={{ color: "#3C4858", fontWeight: 400 }}>or drag them in</p>
-          </CardBody>
-        </Card>
-        <CustomInput
-          urbanshelter
-          style={{ margin: "-20px 0 35px 0" }}
+        <UploadItem
+          name={"Entire Building"}
           id={"entire-building"}
-          formControlProps={{
-            fullWidth: true
-          }}
-          inputProps={{
-            placeholder: "Describe Room Elements",
-            multiline: true,
-            onChange: event => this.setDescription("main", event)
-          }}
+          category={"main"}
+          onChange={this.setDescription}
         />
-        <h5 style={{ marginTop: "30px" }}>{"Layout/Floor Plan"}</h5>
-        <Card infographic>
-          <CardBody
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "25% 0"
-            }}
-          >
-            <Button color="urbanshelter">Upload Photos</Button>
-            <p style={{ color: "#3C4858", fontWeight: 400 }}>or drag them in</p>
-          </CardBody>
-        </Card>
-        <CustomInput
-          urbanshelter
-          style={{ margin: "-20px 0 35px 0" }}
+        <UploadItem
+          name={"Layout/Floor Plan"}
           id={"layout"}
-          formControlProps={{
-            fullWidth: true
-          }}
-          inputProps={{
-            placeholder: "Describe Room Elements",
-            multiline: true,
-            onChange: event => this.setDescription("main", event)
-          }}
+          category={"main"}
+          onChange={this.setDescription}
         />
-        <h5 style={{ marginTop: "30px" }}>{"Living Room"}</h5>
-        <Card infographic>
-          <CardBody
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "25% 0"
-            }}
-          >
-            <Button color="urbanshelter">Upload Photos</Button>
-            <p style={{ color: "#3C4858", fontWeight: 400 }}>or drag them in</p>
-          </CardBody>
-        </Card>
-        <CustomInput
-          urbanshelter
-          style={{ margin: "-20px 0 35px 0" }}
+        <UploadItem
+          name={"Living Room"}
           id={"living-room"}
-          formControlProps={{
-            fullWidth: true
-          }}
-          inputProps={{
-            placeholder: "Describe Room Elements",
-            multiline: true,
-            onChange: event => this.setDescription("main", event)
-          }}
+          category={"main"}
+          onChange={this.setDescription}
         />
       </div>
     );
