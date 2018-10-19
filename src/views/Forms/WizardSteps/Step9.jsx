@@ -3,16 +3,15 @@ import PropTypes from "prop-types";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
+import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import UrbanCheckbox from "components/CustomCheckbox/UrbanCheckbox.jsx";
 
 import { urbanShelterColor } from "assets/jss/material-dashboard-pro-react.jsx";
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
@@ -32,44 +31,29 @@ const style = {
   ...customSelectStyle
 };
 
-var amenities = {
-  Deposits: ["0.5 Month's Rent", "1 Month's Rent", "2 Month's Rent"],
-  Additional: ["No Smoking", "No Pets"],
-  Safety: ["Smoke Detector", "Carbon-monoxide Detector", "Burglary Protection"]
-};
-
-class Step7 extends React.Component {
+class Step9 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: []
+      descriptions: {}
     };
   }
   sendState() {
     return this.state;
   }
-  handleToggle = value => () => {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
+  clean(obj) {
+    for (var propName in obj) {
+      if (
+        obj[propName] === null ||
+        obj[propName] === undefined ||
+        obj[propName].length === 0 ||
+        obj[propName] === "" ||
+        obj[propName] === {} ||
+        Object.keys(obj[propName]).length === 0
+      ) {
+        delete obj[propName];
+      }
     }
-
-    this.setState({
-      checked: newChecked
-    });
-  };
-  // function that returns true if value is email, false otherwise
-  verifyEmail(value) {
-    var emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (emailRex.test(value)) {
-      return true;
-    }
-    return false;
   }
   // function that verifies if a string has a given length or not
   verifyLength(value, length) {
@@ -99,6 +83,24 @@ class Step7 extends React.Component {
     }
     this.setState({ [stateName]: event.target.value });
   }
+  setDescription(key, event) {
+    var descriptions = this.state.descriptions;
+    let _key = key ? key : "default";
+
+    if (descriptions[_key] !== undefined) {
+      descriptions[_key][event.target.id] = event.target.value;
+    } else {
+      // initialize object array
+      descriptions[_key] = {};
+      descriptions[_key][event.target.id] = {};
+      descriptions[_key][event.target.id] = event.target.value;
+    }
+
+    this.clean(descriptions[_key]);
+    this.clean(descriptions);
+
+    this.setState({ descriptions: descriptions });
+  }
   // isValidated() {
   //   if (
   //     this.state.firstnameState === "success" &&
@@ -123,18 +125,50 @@ class Step7 extends React.Component {
     const bedrooms = this.props.allStates["listing-detail"]
       ? this.props.allStates["listing-detail"].bedrooms
       : null;
+    const bathrooms = this.props.allStates["listing-detail"]
+      ? this.props.allStates["listing-detail"].bathrooms
+      : null;
 
     if (bedrooms) {
       // checking if the number of rooms was modified
+      let descriptions = this.state.descriptions;
       if (
-        (this.state.bedroomNumber !== "rooms" &&
-          bedrooms < this.state.bedroomNumber) ||
-        (this.state.descriptions && bedrooms < this.state.descriptions.length)
+        descriptions &&
+        descriptions["bedrooms"] &&
+        bedrooms < Object.keys(descriptions["bedrooms"]).length
       ) {
-        var descriptions = this.state.descriptions.slice(0, bedrooms);
+        for (
+          let i = bedrooms;
+          i <= Object.keys(descriptions["bedrooms"]).length;
+          i++
+        ) {
+          delete descriptions["bedrooms"][i];
+        }
+        this.clean(descriptions["bedrooms"]);
+        this.clean(descriptions);
         this.setState({
-          bedroomNumber: 1,
-          offering: "entire",
+          descriptions: descriptions
+        });
+      }
+    }
+    if (bathrooms) {
+      // checking if the number of rooms was modified
+      let descriptions = this.state.descriptions;
+      if (
+        descriptions &&
+        descriptions["bathrooms"] &&
+        Math.ceil(bathrooms) < Object.keys(descriptions["bathrooms"]).length
+      ) {
+        for (
+          let i = bedrooms;
+          i <= Object.keys(descriptions["bathrooms"]).length;
+          i++
+        ) {
+          delete descriptions["bathrooms"][i];
+        }
+        this.clean(descriptions["bathrooms"]);
+        this.clean(descriptions);
+        this.setState({
           descriptions: descriptions
         });
       }
@@ -142,96 +176,193 @@ class Step7 extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
     const bedrooms = this.props.allStates["listing-detail"]
       ? this.props.allStates["listing-detail"].bedrooms
+      : null;
+    const bathrooms = this.props.allStates["listing-detail"]
+      ? this.props.allStates["listing-detail"].bathrooms
       : null;
 
     // variables for dynamic field rendering
     const rooms = [];
-    const descriptions = [];
-
-    const UploadItem = props => {
-      const { id, name } = props;
-      return (
-        <div>
-          <h5 style={{ marginTop: "30px" }}>{name}</h5>
-          <CustomInput
-            urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
-            id={id}
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              placeholder: "Describe Room Elements",
-              multiline: true
-            }}
-          />
-        </div>
-      );
-    };
+    const baths = [];
 
     if (bedrooms) {
       // checking if the number of rooms was modified
       rooms.length = 0;
-      descriptions.length = 0;
       for (let i = 0; i < bedrooms; i++) {
         rooms.push(
-          <UploadItem key={i} id={i.toString()} name={"Bedroom " + (i + 1)} />
+          <div key={i}>
+            <h5 style={{ marginTop: "30px" }}>{"Bedroom " + (i + 1)}</h5>
+            <Card infographic>
+              <CardBody
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "25% 0"
+                }}
+              >
+                <Button color="urbanshelter">Upload Photos</Button>
+                <p style={{ color: "#3C4858", fontWeight: 400 }}>
+                  or drag them in
+                </p>
+              </CardBody>
+            </Card>
+            <CustomInput
+              urbanshelter
+              style={{ margin: "-20px 0 35px 0" }}
+              id={i.toString()}
+              formControlProps={{
+                fullWidth: true
+              }}
+              inputProps={{
+                placeholder: "Describe Room Elements",
+                multiline: true,
+                onChange: event => this.setDescription("bedrooms", event)
+              }}
+            />
+          </div>
         );
-
-        if (this.state.offering === "entire") {
-          descriptions.push(
-            <div key={i}>
-              <h5>{"Bedroom " + (i + 1)}</h5>
-              <CustomInput
-                urbanshelter
-                style={{ margin: "-20px 0 35px 0" }}
-                id={i.toString()}
-                formControlProps={{
-                  fullWidth: true
-                }}
-                inputProps={{
-                  placeholder: "Enter Description",
-                  multiline: true,
-                  onChange: event => this.setBedroomsDescription(event)
-                }}
-              />
-            </div>
-          );
-        } else if (
-          this.state.offering === "private" &&
-          i < this.state.bedroomNumber
-        ) {
-          descriptions.push(
-            <div key={i}>
-              <h5>{"Bedroom " + (i + 1)}</h5>
-              <CustomInput
-                urbanshelter
-                style={{ margin: "-20px 0 35px 0" }}
-                id={i.toString()}
-                formControlProps={{
-                  fullWidth: true
-                }}
-                inputProps={{
-                  placeholder: "Enter Description",
-                  multiline: true,
-                  onChange: event => this.setBedroomsDescription(event)
-                }}
-              />
-            </div>
-          );
-        }
       }
     }
+    if (bathrooms) {
+      // checking if the number of bathrooms was modified
+      baths.length = 0;
+      for (let i = 0; i < Math.ceil(bathrooms); i++) {
+        let number = bathrooms - i > 0.5 ? i + 1 : 0.5;
+        baths.push(
+          <div key={i}>
+            <h5 style={{ marginTop: "30px" }}>{"Bathroom " + number}</h5>
+            <Card infographic>
+              <CardBody
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "25% 0"
+                }}
+              >
+                <Button color="urbanshelter">Upload Photos</Button>
+                <p style={{ color: "#3C4858", fontWeight: 400 }}>
+                  or drag them in
+                </p>
+              </CardBody>
+            </Card>
+            <CustomInput
+              urbanshelter
+              style={{ margin: "-20px 0 35px 0" }}
+              id={i.toString()}
+              formControlProps={{
+                fullWidth: true
+              }}
+              inputProps={{
+                placeholder: "Describe Room Elements",
+                multiline: true,
+                onChange: event => this.setDescription("bathrooms", event)
+              }}
+            />
+          </div>
+        );
+      }
+    }
+
+    let main = (
+      <div>
+        <h5 style={{ marginTop: "30px" }}>{"Entire Building"}</h5>
+        <Card infographic>
+          <CardBody
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "25% 0"
+            }}
+          >
+            <Button color="urbanshelter">Upload Photos</Button>
+            <p style={{ color: "#3C4858", fontWeight: 400 }}>or drag them in</p>
+          </CardBody>
+        </Card>
+        <CustomInput
+          urbanshelter
+          style={{ margin: "-20px 0 35px 0" }}
+          id={"entire-building"}
+          formControlProps={{
+            fullWidth: true
+          }}
+          inputProps={{
+            placeholder: "Describe Room Elements",
+            multiline: true,
+            onChange: event => this.setDescription("main", event)
+          }}
+        />
+        <h5 style={{ marginTop: "30px" }}>{"Layout/Floor Plan"}</h5>
+        <Card infographic>
+          <CardBody
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "25% 0"
+            }}
+          >
+            <Button color="urbanshelter">Upload Photos</Button>
+            <p style={{ color: "#3C4858", fontWeight: 400 }}>or drag them in</p>
+          </CardBody>
+        </Card>
+        <CustomInput
+          urbanshelter
+          style={{ margin: "-20px 0 35px 0" }}
+          id={"layout"}
+          formControlProps={{
+            fullWidth: true
+          }}
+          inputProps={{
+            placeholder: "Describe Room Elements",
+            multiline: true,
+            onChange: event => this.setDescription("main", event)
+          }}
+        />
+        <h5 style={{ marginTop: "30px" }}>{"Living Room"}</h5>
+        <Card infographic>
+          <CardBody
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "25% 0"
+            }}
+          >
+            <Button color="urbanshelter">Upload Photos</Button>
+            <p style={{ color: "#3C4858", fontWeight: 400 }}>or drag them in</p>
+          </CardBody>
+        </Card>
+        <CustomInput
+          urbanshelter
+          style={{ margin: "-20px 0 35px 0" }}
+          id={"living-room"}
+          formControlProps={{
+            fullWidth: true
+          }}
+          inputProps={{
+            placeholder: "Describe Room Elements",
+            multiline: true,
+            onChange: event => this.setDescription("main", event)
+          }}
+        />
+      </div>
+    );
 
     return (
       <GridContainer justify="space-evenly" direction="row-reverse">
         <GridItem xs={12} sm={4}>
           <Card infographic>
             <CardHeader style={{ margin: "10px 0 -15px" }}>
-              {/* <i className={"fal fa-lightbulb"} /> */}
               <i
                 className={"far fa-lightbulb"}
                 style={{ fontSize: "25px", color: urbanShelterColor }}
@@ -249,7 +380,6 @@ class Step7 extends React.Component {
           </Card>
           <Card infographic>
             <CardHeader style={{ margin: "10px 0 -15px" }}>
-              {/* <i className={"fal fa-lightbulb"} /> */}
               <i
                 className={"far fa-lightbulb"}
                 style={{ fontSize: "25px", color: urbanShelterColor }}
@@ -264,63 +394,20 @@ class Step7 extends React.Component {
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={5}>
-          {rooms}
-        </GridItem>
-        <GridItem xs={12} sm={6} md={5}>
-          <h5 style={{ marginTop: "30px" }}>Precautions</h5>
-          <GridContainer>
-            {Object.keys(amenities).map(key => (
-              <GridItem xs={12} key={key}>
-                <h5
-                  style={{
-                    color: urbanShelterColor,
-                    fontWeight: 450,
-                    marginBottom: "-10px"
-                  }}
-                >
-                  {key}
-                </h5>
-                {amenities[key].map(value => (
-                  <GridItem xs={12} key={value}>
-                    <FormControlLabel
-                      control={
-                        <UrbanCheckbox
-                          onClick={this.handleToggle(value)}
-                          classes={{
-                            checked: classes.checked
-                          }}
-                        />
-                      }
-                      classes={{
-                        label:
-                          classes.label +
-                          (this.state.registerCheckboxState === "error"
-                            ? " " + classes.labelError
-                            : "")
-                      }}
-                      style={{
-                        marginTop: 8,
-                        marginLeft: 0,
-                        marginRight: 0,
-                        fontSize: 14,
-                        fontWeight: 400
-                      }}
-                      label={value}
-                    />
-                  </GridItem>
-                ))}
-              </GridItem>
-            ))}
-          </GridContainer>
+          <div>
+            {main}
+            {rooms}
+            {baths}
+          </div>
         </GridItem>
       </GridContainer>
     );
   }
 }
 
-Step7.propTypes = {
+Step9.propTypes = {
   classes: PropTypes.object.isRequired,
   allStates: PropTypes.object.isRequired
 };
 
-export default withStyles(style)(Step7);
+export default withStyles(style)(Step9);

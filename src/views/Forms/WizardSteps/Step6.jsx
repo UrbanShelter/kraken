@@ -84,7 +84,7 @@ class Step6 extends React.Component {
     }
     this.setState({ [stateName]: event.target.value });
   }
-  setBedroomsDescription(event) {
+  setDescription(event) {
     // const descriptions = event.target.value;
     var descriptions = this.state.descriptions;
     descriptions[event.target.id] = event.target.value;
@@ -175,7 +175,7 @@ class Step6 extends React.Component {
                 inputProps={{
                   placeholder: "Enter Description",
                   multiline: true,
-                  onChange: event => this.setBedroomsDescription(event)
+                  onChange: event => this.setDescription(event)
                 }}
               />
             </div>
@@ -197,7 +197,7 @@ class Step6 extends React.Component {
                 inputProps={{
                   placeholder: "Enter Description",
                   multiline: true,
-                  onChange: event => this.setBedroomsDescription(event)
+                  onChange: event => this.setDescription(event)
                 }}
               />
             </div>

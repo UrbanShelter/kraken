@@ -37,7 +37,7 @@ var precautions = {
   Safety: ["Smoke Detector", "Carbon-monoxide Detector", "Burglary Protection"]
 };
 
-class Step7 extends React.Component {
+class Step8 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -229,9 +229,9 @@ class Step7 extends React.Component {
   }
 }
 
-Step7.propTypes = {
+Step8.propTypes = {
   classes: PropTypes.object.isRequired,
   allStates: PropTypes.object.isRequired
 };
 
-export default withStyles(style)(Step7);
+export default withStyles(style)(Step8);
