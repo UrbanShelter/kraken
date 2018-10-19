@@ -120,7 +120,7 @@ class Step6 extends React.Component {
       if (
         (this.state.bedroomNumber !== "rooms" &&
           bedrooms < this.state.bedroomNumber) ||
-        bedrooms < this.state.descriptions.length
+        (this.state.descriptions && bedrooms < this.state.descriptions.length)
       ) {
         var descriptions = this.state.descriptions.slice(0, bedrooms);
         this.setState({

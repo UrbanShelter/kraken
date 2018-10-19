@@ -8,6 +8,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
+import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
@@ -118,8 +119,113 @@ class Step7 extends React.Component {
   //   }
   //   return false;
   // }
+  componentDidUpdate() {
+    const bedrooms = this.props.allStates["listing-detail"]
+      ? this.props.allStates["listing-detail"].bedrooms
+      : null;
+
+    if (bedrooms) {
+      // checking if the number of rooms was modified
+      if (
+        (this.state.bedroomNumber !== "rooms" &&
+          bedrooms < this.state.bedroomNumber) ||
+        (this.state.descriptions && bedrooms < this.state.descriptions.length)
+      ) {
+        var descriptions = this.state.descriptions.slice(0, bedrooms);
+        this.setState({
+          bedroomNumber: 1,
+          offering: "entire",
+          descriptions: descriptions
+        });
+      }
+    }
+  }
+
   render() {
     const { classes } = this.props;
+    const bedrooms = this.props.allStates["listing-detail"]
+      ? this.props.allStates["listing-detail"].bedrooms
+      : null;
+
+    // variables for dynamic field rendering
+    const rooms = [];
+    const descriptions = [];
+
+    const UploadItem = props => {
+      const { id, name } = props;
+      return (
+        <div>
+          <h5 style={{ marginTop: "30px" }}>{name}</h5>
+          <CustomInput
+            urbanshelter
+            style={{ margin: "-20px 0 35px 0" }}
+            id={id}
+            formControlProps={{
+              fullWidth: true
+            }}
+            inputProps={{
+              placeholder: "Describe Room Elements",
+              multiline: true
+            }}
+          />
+        </div>
+      );
+    };
+
+    if (bedrooms) {
+      // checking if the number of rooms was modified
+      rooms.length = 0;
+      descriptions.length = 0;
+      for (let i = 0; i < bedrooms; i++) {
+        rooms.push(
+          <UploadItem key={i} id={i.toString()} name={"Bedroom " + (i + 1)} />
+        );
+
+        if (this.state.offering === "entire") {
+          descriptions.push(
+            <div key={i}>
+              <h5>{"Bedroom " + (i + 1)}</h5>
+              <CustomInput
+                urbanshelter
+                style={{ margin: "-20px 0 35px 0" }}
+                id={i.toString()}
+                formControlProps={{
+                  fullWidth: true
+                }}
+                inputProps={{
+                  placeholder: "Enter Description",
+                  multiline: true,
+                  onChange: event => this.setBedroomsDescription(event)
+                }}
+              />
+            </div>
+          );
+        } else if (
+          this.state.offering === "private" &&
+          i < this.state.bedroomNumber
+        ) {
+          descriptions.push(
+            <div key={i}>
+              <h5>{"Bedroom " + (i + 1)}</h5>
+              <CustomInput
+                urbanshelter
+                style={{ margin: "-20px 0 35px 0" }}
+                id={i.toString()}
+                formControlProps={{
+                  fullWidth: true
+                }}
+                inputProps={{
+                  placeholder: "Enter Description",
+                  multiline: true,
+                  onChange: event => this.setBedroomsDescription(event)
+                }}
+              />
+            </div>
+          );
+        }
+      }
+    }
+
     return (
       <GridContainer justify="space-evenly" direction="row-reverse">
         <GridItem xs={12} sm={4}>
@@ -156,6 +262,9 @@ class Step7 extends React.Component {
               </p>
             </CardBody>
           </Card>
+        </GridItem>
+        <GridItem xs={12} sm={6} md={5}>
+          {rooms}
         </GridItem>
         <GridItem xs={12} sm={6} md={5}>
           <h5 style={{ marginTop: "30px" }}>Precautions</h5>
