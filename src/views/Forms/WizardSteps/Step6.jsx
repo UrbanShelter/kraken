@@ -116,6 +116,12 @@ class Step6 extends React.Component {
       : null;
 
     if (bedrooms) {
+      if (
+        this.state.offering === "entire" &&
+        this.state.bedroomNumber !== bedrooms
+      ) {
+        this.setState({ bedroomNumber: bedrooms });
+      }
       // checking if the number of rooms was modified
       if (
         (this.state.bedroomNumber !== "rooms" &&
@@ -124,7 +130,7 @@ class Step6 extends React.Component {
       ) {
         var descriptions = this.state.descriptions.slice(0, bedrooms);
         this.setState({
-          bedroomNumber: 1,
+          bedroomNumber: bedrooms,
           offering: "entire",
           descriptions: descriptions
         });

@@ -162,8 +162,8 @@ class Step9 extends React.Component {
   //   return false;
   // }
   componentDidUpdate() {
-    const bedrooms = this.props.allStates["listing-detail"]
-      ? this.props.allStates["listing-detail"].bedrooms
+    const bedrooms = this.props.allStates["listing-offering"]
+      ? this.props.allStates["listing-offering"].bedroomNumber
       : null;
     const bathrooms = this.props.allStates["listing-detail"]
       ? this.props.allStates["listing-detail"].bathrooms
@@ -216,13 +216,17 @@ class Step9 extends React.Component {
   }
 
   render() {
-    const bedrooms = this.props.allStates["listing-detail"]
-      ? this.props.allStates["listing-detail"].bedrooms
+    const offering = this.props.allStates["listing-offering"]
+      ? this.props.allStates["listing-offering"].offering
+      : "entire";
+    const bedrooms = this.props.allStates["listing-offering"]
+      ? this.props.allStates["listing-offering"].bedroomNumber
       : null;
     const bathrooms = this.props.allStates["listing-detail"]
       ? this.props.allStates["listing-detail"].bathrooms
       : null;
 
+      console.log(this.props.allStates);
     // variables for dynamic field rendering
     const rooms = [];
     const baths = [];
