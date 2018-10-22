@@ -19,6 +19,10 @@ class Wizard extends React.Component {
     var width;
     var mainstepsArray = [];
 
+    // fire callback on each step change
+    // this is necessary should the callback require initialization
+    this.props.callback && this.props.callback();
+
     this.props.steps.forEach((prop, key) => {
       if ((this.props.mainsteps && prop.mainstep) || key === 0) {
         mainstepsArray.push(key);
@@ -322,7 +326,15 @@ class Wizard extends React.Component {
     }
   }
   render() {
-    const { classes, title, subtitle, color, steps, mainsteps } = this.props;
+    const {
+      classes,
+      title,
+      subtitle,
+      color,
+      steps,
+      mainsteps,
+      data
+    } = this.props;
     return (
       <div className={classes.wizardContainer} ref={ref => (this.wizard = ref)}>
         <Card className={classes.card}>
@@ -397,6 +409,7 @@ class Wizard extends React.Component {
                   <prop.stepComponent
                     innerRef={node => (this[prop.stepId] = node)}
                     allStates={this.state.allStates}
+                    data={data}
                   />
                 </div>
               );
@@ -483,6 +496,7 @@ Wizard.propTypes = {
   subtitle: PropTypes.string,
   mainsteps: PropTypes.bool,
   callback: PropTypes.func,
+  data: PropTypes.any,
   previousButtonClasses: PropTypes.string,
   previousButtonText: PropTypes.string,
   nextButtonClasses: PropTypes.string,

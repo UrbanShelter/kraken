@@ -22,12 +22,20 @@ import { user } from "firebase/index.js";
 class WizardView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      reference: null
+    };
 
     this.saveDraft = this.saveDraft.bind(this);
   }
 
   saveDraft(data) {
-    user.uploadData(data, "test");
+    this.state.reference === null
+      ? this.setState(
+          { reference: user.generatePropertyDoc() },
+          () => data && user.uploadData(data, this.state.reference)
+        )
+      : data && user.uploadData(data, this.state.reference);
   }
 
   render() {
@@ -38,6 +46,7 @@ class WizardView extends React.Component {
             mainsteps
             validate
             callback={this.saveDraft}
+            data={{ reference: this.state.reference }}
             color="urbanshelter"
             steps={[
               {

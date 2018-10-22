@@ -1,5 +1,9 @@
 import { db, location } from "../firebase";
 
+export const generatePropertyDoc = () => {
+  return db.collection("properties").doc().id;
+};
+
 export const doCreateUser = (id, username, email) =>
   db.ref(`users/${id}`).set({
     username,

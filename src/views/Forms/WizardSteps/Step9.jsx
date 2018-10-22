@@ -149,33 +149,40 @@ class Step9 extends React.Component {
     this.setState({ descriptions: descriptions });
   }
   handleProcessing(fieldName, file, metadata, load, error, progress, abort) {
-    // handle file upload here
-    const fileUpload = file;
+    if (this.props.data.reference) {
+      let reference = this.props.data.reference;
+      // handle file upload here
+      const fileUpload = file;
 
-    const upload = storage.uploadTest(`filepond/${file.name}`, fileUpload);
+      const upload = storage.uploadTest(
+        `${reference}/${file.name}`,
+        fileUpload
+      );
 
-    upload.on(
-      `state_changed`,
-      snapshot => {
-        progress(true, snapshot.bytesTransferred, snapshot.totalBytes);
-      },
-      err => {
-        error(err.message);
-      },
-      () => {
-        load(upload.snapshot.ref.location.path);
-        // upload.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-        //   load(downloadURL);
-        // });
-      }
-    );
-
-    return {
-      abort: () => {
-        upload.cancel();
-        abort();
-      }
-    };
+      upload.on(
+        `state_changed`,
+        snapshot => {
+          progress(true, snapshot.bytesTransferred, snapshot.totalBytes);
+        },
+        err => {
+          error(err.message);
+        },
+        () => {
+          load(upload.snapshot.ref.location.path);
+          // upload.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          //   load(downloadURL);
+          // });
+        }
+      );
+      return {
+        abort: () => {
+          upload.cancel();
+          abort();
+        }
+      };
+    } else {
+      error("Could not reach server");
+    }
 
     // storageRef
     //   .getMetadata()
@@ -419,6 +426,7 @@ class Step9 extends React.Component {
 
 Step9.propTypes = {
   classes: PropTypes.object.isRequired,
+  data: PropTypes.object,
   allStates: PropTypes.object.isRequired
 };
 
