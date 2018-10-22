@@ -19,7 +19,7 @@ class ImageUpload extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
-    this.btnRef;
+    this.btnRef = React.createRef();
   }
   handleImageChange(e) {
     e.preventDefault();
