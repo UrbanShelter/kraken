@@ -46,6 +46,21 @@ export const doTest = () => {
     });
 };
 
+export const uploadData = (data, docId) => {
+  let ref = docId
+    ? db.collection("draft-properties").doc(docId)
+    : db.collection("draft-properties").doc();
+
+  ref
+    .set(data)
+    .then(function() {
+      console.log("Draft saved");
+    })
+    .catch(function(error) {
+      console.error("Error writing document: ", error.message);
+    });
+};
+
 // returns parsed query data from the test query location
 export const doTestRead = () => {
   var ref = db.collection("properties");

@@ -16,7 +16,20 @@ import Step8 from "./WizardSteps/Step8.jsx";
 import Step9 from "./WizardSteps/Step9.jsx";
 import Step10 from "./WizardSteps/Step10.jsx";
 
+// firebase
+import { user } from "firebase/index.js";
+
 class WizardView extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.saveDraft = this.saveDraft.bind(this);
+  }
+
+  saveDraft(data) {
+    user.uploadData(data, "test");
+  }
+
   render() {
     return (
       <GridContainer justify="center">
@@ -24,6 +37,7 @@ class WizardView extends React.Component {
           <Wizard
             mainsteps
             validate
+            callback={this.saveDraft}
             color="urbanshelter"
             steps={[
               {

@@ -93,6 +93,7 @@ class Wizard extends React.Component {
     this.previousButtonClick = this.previousButtonClick.bind(this);
     this.finishButtonClick = this.finishButtonClick.bind(this);
     this.updateWidth = this.updateWidth.bind(this);
+    this.wizard = React.createRef();
   }
   componentDidMount() {
     this.refreshAnimation(0);
@@ -141,6 +142,10 @@ class Wizard extends React.Component {
           finishButton: this.props.steps.length === key + 1 ? true : false
         });
         this.refreshAnimation(key);
+        // fire callback on step change
+        this.props.callback &&
+          this.state.allStates &&
+          this.props.callback(this.state.allStates);
       }
     }
   }
@@ -179,8 +184,18 @@ class Wizard extends React.Component {
 
       if (this.props.mainsteps) {
         this.refreshAnimation(this.state.mainstepsArray[key]);
+        // fire callback on mainstep change
+        if (key === this.state.mainstepsArray[key]) {
+          this.props.callback &&
+            this.state.allStates &&
+            this.props.callback(this.state.allStates);
+        }
       } else {
         this.refreshAnimation(key);
+        // fire callback on each step change
+        this.props.callback &&
+          this.state.allStates &&
+          this.props.callback(this.state.allStates);
       }
     }
   }
@@ -210,9 +225,18 @@ class Wizard extends React.Component {
       if (this.props.mainsteps) {
         if (this.state.mainstepsArray[key] <= key) {
           this.refreshAnimation(this.state.mainstepsArray[key]);
+          // fire callback on mainstep change
+          this.state.mainstepsArray[key] === key &&
+            this.props.callback &&
+            this.state.allStates &&
+            this.props.callback(this.state.allStates);
         }
       } else {
         this.refreshAnimation(key);
+        // fire callback on each step change
+        this.props.callback &&
+          this.state.allStates &&
+          this.props.callback(this.state.allStates);
       }
     }
   }
@@ -245,7 +269,7 @@ class Wizard extends React.Component {
       total_steps = this.props.steps.length;
     }
     var li_width = 100 / total;
-    var move_distance = this.refs.wizard.children[0].offsetWidth / total_steps;
+    var move_distance = this.wizard.children[0].offsetWidth / total_steps;
     var index_temp;
     this.props.mainsteps
       ? (index_temp = currentMainstep)
@@ -255,7 +279,7 @@ class Wizard extends React.Component {
     var mobile_device = window.innerWidth < 600 && total > 3;
 
     if (mobile_device) {
-      move_distance = this.refs.wizard.children[0].offsetWidth / 2;
+      move_distance = this.wizard.children[0].offsetWidth / 2;
       this.props.mainsteps
         ? (index_temp = currentMainstep % 2)
         : (index_temp = index % 2);
@@ -300,7 +324,7 @@ class Wizard extends React.Component {
   render() {
     const { classes, title, subtitle, color, steps, mainsteps } = this.props;
     return (
-      <div className={classes.wizardContainer} ref="wizard">
+      <div className={classes.wizardContainer} ref={ref => (this.wizard = ref)}>
         <Card className={classes.card}>
           <div className={classes.wizardHeader}>
             <h3 className={classes.title}>{title}</h3>
@@ -458,6 +482,7 @@ Wizard.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   mainsteps: PropTypes.bool,
+  callback: PropTypes.func,
   previousButtonClasses: PropTypes.string,
   previousButtonText: PropTypes.string,
   nextButtonClasses: PropTypes.string,
