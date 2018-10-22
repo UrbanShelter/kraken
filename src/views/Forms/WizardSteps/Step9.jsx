@@ -14,10 +14,11 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 
 // image upload
-import { FilePond } from "react-filepond";
+import { FilePond, File } from "react-filepond";
 
 import { urbanShelterColor } from "assets/jss/material-dashboard-pro-react.jsx";
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
+import "filepond/dist/filepond.min.css";
 
 const style = {
   infoText: {
@@ -47,8 +48,13 @@ let UploadItem = props => (
           padding: "25% 0"
         }}
       >
-        <Button color="urbanshelter">Upload Photos</Button>
-        <p style={{ color: "#3C4858", fontWeight: 400 }}>or drag them in</p>
+        <FilePond
+          allowMultiple={true}
+          maxFiles={3}
+          ref={ref => (this.pond = ref)}
+          server={{ process: props.processing }}
+        >
+        </FilePond>
       </CardBody>
     </Card>
     <CustomInput
@@ -80,6 +86,7 @@ class Step9 extends React.Component {
       descriptions: {}
     };
     this.setDescription = this.setDescription.bind(this);
+    this.handleProcessing = this.handleProcessing.bind(this);
   }
   sendState() {
     return this.state;
@@ -143,6 +150,65 @@ class Step9 extends React.Component {
     this.clean(descriptions);
 
     this.setState({ descriptions: descriptions });
+  }
+  handleProcessing(fieldName, file, metadata, load, error, progress, abort) {
+    // handle file upload here
+
+    progress(true, 20, 100);
+
+    // const fileUpload = file;
+    // const storageRef = firebase.storage().ref(`filepond/${file.name}`);
+    // const task = storageRef.put(fileUpload);
+
+    // task.on(
+    //   `state_changed`,
+    //   snapshot => {
+    //     // console.log(snapshot.bytesTransferred, snapshot.totalBytes);
+    //     let percentage =
+    //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //     //Process
+    //     this.setState({
+    //       uploadValue: percentage
+    //     });
+    //   },
+    //   error => {
+    //     //Error
+    //     this.setState({
+    //       message: `Upload error : ${error.message}`
+    //     });
+    //   },
+    //   () => {
+    //     //Success
+    //     this.setState({
+    //       message: `Upload Success`,
+    //       picture: task.snapshot.downloadURL
+    //     });
+
+    //     storageRef
+    //       .getMetadata()
+    //       .then(metadata => {
+    //         // Metadata now contains the metadata for 'filepond/${file.name}'
+    //         let metadataFile = {
+    //           name: metadata.name,
+    //           size: metadata.size,
+    //           contentType: metadata.contentType,
+    //           fullPath: metadata.fullPath,
+    //           downloadURLs: metadata.downloadURLs[0]
+    //         };
+
+    //         const databaseRef = firebase.database().ref("/filepond");
+
+    //         databaseRef.push({
+    //           metadataFile
+    //         });
+    //       })
+    //       .catch(function(error) {
+    //         this.setState({
+    //           message: `Upload error : ${error.message}`
+    //         });
+    //       });
+    //   }
+    // );
   }
   // isValidated() {
   //   if (
@@ -241,6 +307,7 @@ class Step9 extends React.Component {
             id={i.toString()}
             category={"bedrooms"}
             onChange={this.setDescription}
+            processing={this.handleProcessing}
           />
         );
       }
@@ -257,6 +324,7 @@ class Step9 extends React.Component {
             id={i.toString()}
             category={"bathrooms"}
             onChange={this.setDescription}
+            processing={this.handleProcessing}
           />
         );
       }
@@ -269,18 +337,21 @@ class Step9 extends React.Component {
           id={"entire-building"}
           category={"main"}
           onChange={this.setDescription}
+          processing={this.handleProcessing}
         />
         <UploadItem
           name={"Layout/Floor Plan"}
           id={"layout"}
           category={"main"}
           onChange={this.setDescription}
+          processing={this.handleProcessing}
         />
         <UploadItem
           name={"Living Room"}
           id={"living-room"}
           category={"main"}
           onChange={this.setDescription}
+          processing={this.handleProcessing}
         />
       </div>
     );
