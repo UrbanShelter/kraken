@@ -72,7 +72,9 @@ UploadItem.propTypes = {
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  processing: PropTypes.func.isRequired,
+  revert: PropTypes.func.isRequired
 };
 class Step9 extends React.Component {
   constructor(props) {
