@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 
@@ -30,6 +31,7 @@ if (!firebase.apps.length) {
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 const facebookProvider = new firebase.auth.FacebookAuthProvider();
 
@@ -39,7 +41,7 @@ const location = (latitude, longitude) => {
     : null;
 };
 
-export { auth, db, location, googleProvider, facebookProvider };
+export { auth, db, storage, location, googleProvider, facebookProvider };
 
 location.propTypes = {
   latitude: PropTypes.number,

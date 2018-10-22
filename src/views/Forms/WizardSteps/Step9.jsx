@@ -7,18 +7,25 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 
+// firebase
+import { storage } from "firebase/index.js";
+
 // image upload
-import { FilePond, File } from "react-filepond";
+import { FilePond, registerPlugin } from "react-filepond";
 
 import { urbanShelterColor } from "assets/jss/material-dashboard-pro-react.jsx";
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+
+// Register the plugins
+registerPlugin(FilePondPluginImagePreview);
 
 const style = {
   infoText: {
@@ -37,26 +44,14 @@ const style = {
 
 let UploadItem = props => (
   <div>
-    <h5 style={{ marginTop: "30px" }}>{props.name}</h5>
-    <Card infographic>
-      <CardBody
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "25% 0"
-        }}
-      >
-        <FilePond
-          allowMultiple={true}
-          maxFiles={3}
-          ref={ref => (this.pond = ref)}
-          server={{ process: props.processing }}
-        >
-        </FilePond>
-      </CardBody>
-    </Card>
+    <h5 style={{ margin: "30px 0 20px 0" }}>{props.name}</h5>
+    <FilePond
+      style={{ minHeight: "200px" }}
+      allowMultiple={true}
+      maxFiles={4}
+      ref={ref => (this.pond = ref)}
+      server={{ process: props.processing, revert: props.revert }}
+    />
     <CustomInput
       urbanshelter
       style={{ margin: "-20px 0 35px 0" }}
@@ -153,62 +148,69 @@ class Step9 extends React.Component {
   }
   handleProcessing(fieldName, file, metadata, load, error, progress, abort) {
     // handle file upload here
+    const fileUpload = file;
 
-    progress(true, 20, 100);
+    const upload = storage.uploadTest(`filepond/${file.name}`, fileUpload);
 
-    // const fileUpload = file;
-    // const storageRef = firebase.storage().ref(`filepond/${file.name}`);
-    // const task = storageRef.put(fileUpload);
+    upload.on(
+      `state_changed`,
+      snapshot => {
+        progress(true, snapshot.bytesTransferred, snapshot.totalBytes);
+      },
+      err => {
+        error(err.message);
+      },
+      () => {
+        load(upload.snapshot.ref.location.path);
+        // upload.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        //   load(downloadURL);
+        // });
+      }
+    );
 
-    // task.on(
-    //   `state_changed`,
-    //   snapshot => {
-    //     // console.log(snapshot.bytesTransferred, snapshot.totalBytes);
-    //     let percentage =
-    //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    //     //Process
-    //     this.setState({
-    //       uploadValue: percentage
+    return {
+      abort: () => {
+        upload.cancel();
+        abort();
+      }
+    };
+
+    // storageRef
+    //   .getMetadata()
+    //   .then(metadata => {
+    //     // Metadata now contains the metadata for 'filepond/${file.name}'
+    //     let metadataFile = {
+    //       name: metadata.name,
+    //       size: metadata.size,
+    //       contentType: metadata.contentType,
+    //       fullPath: metadata.fullPath,
+    //       downloadURLs: metadata.downloadURLs[0]
+    //     };
+
+    //     const databaseRef = firebase.database().ref("/filepond");
+
+    //     databaseRef.push({
+    //       metadataFile
     //     });
-    //   },
-    //   error => {
-    //     //Error
+    //   })
+    //   .catch(function(error) {
     //     this.setState({
     //       message: `Upload error : ${error.message}`
     //     });
-    //   },
-    //   () => {
-    //     //Success
-    //     this.setState({
-    //       message: `Upload Success`,
-    //       picture: task.snapshot.downloadURL
-    //     });
+    //   });
+  }
+  handleRemove(ref, load, error) {
+    storage
+      .deleteTest(ref)
+      .then(function() {
+        // File deleted successfully
+      })
+      .catch(function(err) {
+        error(err.message);
+      });
 
-    //     storageRef
-    //       .getMetadata()
-    //       .then(metadata => {
-    //         // Metadata now contains the metadata for 'filepond/${file.name}'
-    //         let metadataFile = {
-    //           name: metadata.name,
-    //           size: metadata.size,
-    //           contentType: metadata.contentType,
-    //           fullPath: metadata.fullPath,
-    //           downloadURLs: metadata.downloadURLs[0]
-    //         };
-
-    //         const databaseRef = firebase.database().ref("/filepond");
-
-    //         databaseRef.push({
-    //           metadataFile
-    //         });
-    //       })
-    //       .catch(function(error) {
-    //         this.setState({
-    //           message: `Upload error : ${error.message}`
-    //         });
-    //       });
-    //   }
-    // );
+    // Should call the load method when done, no parameters required
+    load();
   }
   // isValidated() {
   //   if (
@@ -308,6 +310,8 @@ class Step9 extends React.Component {
             category={"bedrooms"}
             onChange={this.setDescription}
             processing={this.handleProcessing}
+            revert={this.handleRemove}
+            files={this.state.files ? this.state.files : []}
           />
         );
       }
@@ -325,6 +329,8 @@ class Step9 extends React.Component {
             category={"bathrooms"}
             onChange={this.setDescription}
             processing={this.handleProcessing}
+            revert={this.handleRemove}
+            files={this.state.files ? this.state.files : []}
           />
         );
       }
@@ -338,6 +344,8 @@ class Step9 extends React.Component {
           category={"main"}
           onChange={this.setDescription}
           processing={this.handleProcessing}
+          revert={this.handleRemove}
+          files={this.state.files ? this.state.files : []}
         />
         <UploadItem
           name={"Layout/Floor Plan"}
@@ -345,6 +353,8 @@ class Step9 extends React.Component {
           category={"main"}
           onChange={this.setDescription}
           processing={this.handleProcessing}
+          revert={this.handleRemove}
+          files={this.state.files ? this.state.files : []}
         />
         <UploadItem
           name={"Living Room"}
@@ -352,6 +362,8 @@ class Step9 extends React.Component {
           category={"main"}
           onChange={this.setDescription}
           processing={this.handleProcessing}
+          revert={this.handleRemove}
+          files={this.state.files ? this.state.files : []}
         />
       </div>
     );
