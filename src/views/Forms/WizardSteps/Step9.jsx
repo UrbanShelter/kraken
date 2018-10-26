@@ -248,10 +248,17 @@ class Step9 extends React.Component {
     const bathrooms = this.props.allStates["listing-detail"]
       ? this.props.allStates["listing-detail"].bathrooms
       : null;
+    const suiteAmenities = this.props.allStates["listing-amenities"]
+      ? this.props.allStates["listing-amenities"].checked["In-Suite"]
+      : null;
+    const buildingAmenities = this.props.allStates["listing-amenities"]
+      ? this.props.allStates["listing-amenities"].checked["In-Building"]
+      : null;
+
+    let descriptions = this.state.descriptions;
 
     if (bedrooms) {
       // checking if the number of rooms was modified
-      let descriptions = this.state.descriptions;
       if (
         descriptions &&
         descriptions["bedrooms"] &&
@@ -273,7 +280,6 @@ class Step9 extends React.Component {
     }
     if (bathrooms) {
       // checking if the number of rooms was modified
-      let descriptions = this.state.descriptions;
       if (
         descriptions &&
         descriptions["bathrooms"] &&
@@ -293,6 +299,56 @@ class Step9 extends React.Component {
         });
       }
     }
+    if (suiteAmenities) {
+      // checking if the In-Suite amenities was modified
+      if (
+        descriptions &&
+        descriptions["suiteAmenities"] &&
+        suiteAmenities.length <
+          Object.keys(descriptions["suiteAmenities"]).length
+      ) {
+        // Operations here are different than above
+        // since the keys are not numbers and since
+        // entires are based on checkbox
+
+        // find the differences in the arrays
+        let keys = Object.keys(descriptions["suiteAmenities"]).filter(
+          key => !suiteAmenities.includes(key)
+        );
+        // delete the differences
+        keys.forEach(key => delete descriptions["suiteAmenities"][key]);
+        this.clean(descriptions["suiteAmenities"]);
+        this.clean(descriptions);
+        this.setState({
+          descriptions: descriptions
+        });
+      }
+    }
+    if (buildingAmenities) {
+      // checking if the In-Suite amenities was modified
+      if (
+        descriptions &&
+        descriptions["buildingAmenities"] &&
+        buildingAmenities.length <
+          Object.keys(descriptions["buildingAmenities"]).length
+      ) {
+        // Operations here are different than above
+        // since the keys are not numbers and since
+        // entires are based on checkbox
+
+        // find the differences in the arrays
+        let keys = Object.keys(descriptions["buildingAmenities"]).filter(
+          key => !buildingAmenities.includes(key)
+        );
+        // delete the differences
+        keys.forEach(key => delete descriptions["buildingAmenities"][key]);
+        this.clean(descriptions["buildingAmenities"]);
+        this.clean(descriptions);
+        this.setState({
+          descriptions: descriptions
+        });
+      }
+    }
   }
 
   render() {
@@ -302,10 +358,20 @@ class Step9 extends React.Component {
     const bathrooms = this.props.allStates["listing-detail"]
       ? this.props.allStates["listing-detail"].bathrooms
       : null;
+    const suiteAmenities = this.props.allStates["listing-amenities"]
+      ? this.props.allStates["listing-amenities"].checked["In-Suite"]
+      : null;
+    const buildingAmenities = this.props.allStates["listing-amenities"]
+      ? this.props.allStates["listing-amenities"].checked["In-Building"]
+      : null;
+
+    // console.log(suiteAmenities);
 
     // variables for dynamic field rendering
     const rooms = [];
     const baths = [];
+    const suite = [];
+    const building = [];
 
     if (bedrooms) {
       // checking if the number of rooms was modified
@@ -313,7 +379,7 @@ class Step9 extends React.Component {
       for (let i = 0; i < bedrooms; i++) {
         rooms.push(
           <UploadItem
-            key={i}
+            key={"bedroom" + i}
             name={"Bedroom " + (i + 1)}
             id={i.toString()}
             category={"bedrooms"}
@@ -332,10 +398,46 @@ class Step9 extends React.Component {
         let number = bathrooms - i > 0.5 ? i + 1 : 0.5;
         baths.push(
           <UploadItem
-            key={i}
+            key={"bathroom" + i}
             name={"Bathroom " + number}
             id={i.toString()}
             category={"bathrooms"}
+            onChange={this.setDescription}
+            processing={this.handleProcessing}
+            revert={this.handleRemove}
+            files={this.state.files ? this.state.files : []}
+          />
+        );
+      }
+    }
+    if (suiteAmenities) {
+      // checking if the number of bathrooms was modified
+      suite.length = 0;
+      for (let i = 0; i < suiteAmenities.length; i++) {
+        suite.push(
+          <UploadItem
+            key={"suiteAmenities" + i}
+            name={suiteAmenities[i] + " (In-Suite)"}
+            id={suiteAmenities[i]}
+            category={"suiteAmenities"}
+            onChange={this.setDescription}
+            processing={this.handleProcessing}
+            revert={this.handleRemove}
+            files={this.state.files ? this.state.files : []}
+          />
+        );
+      }
+    }
+    if (buildingAmenities) {
+      // checking if the number of bathrooms was modified
+      building.length = 0;
+      for (let i = 0; i < buildingAmenities.length; i++) {
+        suite.push(
+          <UploadItem
+            key={"buildingAmenities" + i}
+            name={buildingAmenities[i] + " (In-Building)"}
+            id={buildingAmenities[i]}
+            category={"buildingAmenities"}
             onChange={this.setDescription}
             processing={this.handleProcessing}
             revert={this.handleRemove}
@@ -417,6 +519,8 @@ class Step9 extends React.Component {
             {main}
             {rooms}
             {baths}
+            {suite}
+            {building}
           </div>
         </GridItem>
       </GridContainer>

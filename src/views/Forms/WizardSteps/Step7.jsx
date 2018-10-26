@@ -32,7 +32,7 @@ const style = {
 };
 
 var amenities = {
-  "In-suite": [
+  "In-Suite": [
     "Heating",
     "Air Conditioning",
     "Furnished",
