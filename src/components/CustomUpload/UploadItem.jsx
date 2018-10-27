@@ -22,29 +22,46 @@ let UploadItem = props => (
       allowMultiple={true}
       maxFiles={4}
       ref={ref => (this.pond = ref)}
-      server={{ process: props.processing, revert: props.revert }}
-    />
-    <CustomInput
-      urbanshelter
-      style={{ margin: "-20px 0 35px 0" }}
-      id={props.id}
-      formControlProps={{
-        fullWidth: true
-      }}
-      inputProps={{
-        placeholder: "Describe Room Elements",
-        multiline: true,
-        onChange: event => props.onChange(props.category, event)
+      server={{
+        process: props.processing && props.processing,
+        revert: props.revert && props.revert
       }}
     />
+    {props.description && (
+      <CustomInput
+        urbanshelter
+        style={{ margin: "-20px 0 35px 0" }}
+        id={props.id}
+        formControlProps={{
+          fullWidth: true
+        }}
+        inputProps={{
+          placeholder: "Describe Room Elements",
+          multiline: true,
+          onChange: event =>
+            props.onChange && props.onChange(props.category || "default", event)
+        }}
+      />
+    )}
   </div>
 );
 
+// Specifies the default values for props:
+UploadItem.defaultProps = {
+  maxFiles: 4,
+  name: "Upload",
+  id: "default",
+  category: "default",
+  description: false
+};
+
 UploadItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  category: PropTypes.string,
+  maxFiles: PropTypes.number,
+  description: PropTypes.bool,
+  onChange: PropTypes.func,
   processing: PropTypes.func.isRequired,
   revert: PropTypes.func.isRequired
 };

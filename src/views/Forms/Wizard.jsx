@@ -16,6 +16,8 @@ import Step8 from "./WizardSteps/Step8.jsx";
 import Step9 from "./WizardSteps/Step9.jsx";
 import Step10 from "./WizardSteps/Step10.jsx";
 import Step11 from "./WizardSteps/Step11.jsx";
+import Step12 from "./WizardSteps/Step12.jsx";
+import Step13 from "./WizardSteps/Step13.jsx";
 
 // firebase
 import { user } from "firebase/index.js";
@@ -28,6 +30,7 @@ class WizardView extends React.Component {
     };
 
     this.saveDraft = this.saveDraft.bind(this);
+    this.saveDocs = this.saveDocs.bind(this);
   }
 
   saveDraft(data) {
@@ -39,6 +42,11 @@ class WizardView extends React.Component {
       : data && user.uploadData(data, this.state.reference);
   }
 
+  saveDocs() {
+    this.state.reference === null &&
+      this.setState({ reference: user.generatePropertyDoc() });
+  }
+
   render() {
     return (
       <GridContainer justify="center">
@@ -46,6 +54,7 @@ class WizardView extends React.Component {
           <Wizard
             mainsteps
             validate
+            callback={this.saveDocs}
             data={{ reference: this.state.reference }}
             color="urbanshelter"
             steps={[
@@ -91,6 +100,16 @@ class WizardView extends React.Component {
                 stepComponent: Step11,
                 stepId: "address-info",
                 mainstep: true
+              },
+              {
+                stepName: "Legal",
+                stepComponent: Step12,
+                stepId: "address-legal"
+              },
+              {
+                stepName: "Additional Docs",
+                stepComponent: Step13,
+                stepId: "address-additional"
               }
             ]}
             title="Listing your home!"

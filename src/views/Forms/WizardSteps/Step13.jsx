@@ -7,10 +7,13 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
+import UploadItem from "components/CustomUpload/UploadItem.jsx";
+
+// firebase
+import { storage } from "firebase/index.js";
 
 import { urbanShelterColor } from "assets/jss/material-dashboard-pro-react.jsx";
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
@@ -29,13 +32,13 @@ const style = {
   },
   ...customSelectStyle
 };
-
-class Step10 extends React.Component {
+class Step13 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       descriptions: []
     };
+    this.handleProcessing = this.handleProcessing.bind(this);
   }
   sendState() {
     return this.state;
@@ -91,11 +94,78 @@ class Step10 extends React.Component {
     }
     this.setState({ [stateName]: event.target.value });
   }
-  setDescription(event) {
-    // const descriptions = event.target.value;
-    var descriptions = this.state.descriptions;
-    descriptions[event.target.id] = event.target.value;
-    this.setState({ descriptions: descriptions });
+  handleProcessing(fieldName, file, metadata, load, error, progress, abort) {
+    if (this.props.data.reference) {
+      let reference = this.props.data.reference;
+      // handle file upload here
+      const fileUpload = file;
+
+      const upload = storage.uploadTest(
+        `${reference}/${file.name}`,
+        fileUpload
+      );
+
+      upload.on(
+        `state_changed`,
+        snapshot => {
+          progress(true, snapshot.bytesTransferred, snapshot.totalBytes);
+        },
+        err => {
+          error(err.message);
+        },
+        () => {
+          load(upload.snapshot.ref.location.path);
+          // upload.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          //   load(downloadURL);
+          // });
+        }
+      );
+      return {
+        abort: () => {
+          upload.cancel();
+          abort();
+        }
+      };
+    } else {
+      error("Could not reach server");
+    }
+
+    // storageRef
+    //   .getMetadata()
+    //   .then(metadata => {
+    //     // Metadata now contains the metadata for 'filepond/${file.name}'
+    //     let metadataFile = {
+    //       name: metadata.name,
+    //       size: metadata.size,
+    //       contentType: metadata.contentType,
+    //       fullPath: metadata.fullPath,
+    //       downloadURLs: metadata.downloadURLs[0]
+    //     };
+
+    //     const databaseRef = firebase.database().ref("/filepond");
+
+    //     databaseRef.push({
+    //       metadataFile
+    //     });
+    //   })
+    //   .catch(function(error) {
+    //     this.setState({
+    //       message: `Upload error : ${error.message}`
+    //     });
+    //   });
+  }
+  handleRemove(ref, load, error) {
+    storage
+      .deleteTest(ref)
+      .then(function() {
+        // File deleted successfully
+      })
+      .catch(function(err) {
+        error(err.message);
+      });
+
+    // Should call the load method when done, no parameters required
+    load();
   }
   // isValidated() {
   //   if (
@@ -131,26 +201,21 @@ class Step10 extends React.Component {
             </CardHeader>
             <CardBody>
               <p style={{ color: "#3C4858", fontWeight: 400 }}>
-                When mentioning Other Amenities please add a comma to separate
-                the amenities.
+                Upload other documents you’d like the tenant to sign. These may
+                include documents from your property management firm if you have
+                one.
               </p>
             </CardBody>
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={5}>
-          <h5>Describe Your Home</h5>
-          <CustomInput
-            urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
-            id={"home-description"}
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              placeholder: "Enter Description",
-              multiline: true,
-              onChange: event => this.setDescription(event)
-            }}
+          <UploadItem
+            name={"Upload Other Documents"}
+            id={"additional-docs"}
+            category={"docs"}
+            processing={this.handleProcessing}
+            revert={this.handleRemove}
+            files={this.state.files ? this.state.files : []}
           />
         </GridItem>
       </GridContainer>
@@ -158,9 +223,10 @@ class Step10 extends React.Component {
   }
 }
 
-Step10.propTypes = {
+Step13.propTypes = {
   classes: PropTypes.object.isRequired,
+  data: PropTypes.object,
   allStates: PropTypes.object.isRequired
 };
 
-export default withStyles(style)(Step10);
+export default withStyles(style)(Step13);
