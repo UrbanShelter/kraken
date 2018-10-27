@@ -20,6 +20,7 @@ import Step12 from "./WizardSteps/Step12.jsx";
 import Step13 from "./WizardSteps/Step13.jsx";
 import Step14 from "./WizardSteps/Step14.jsx";
 import Step15 from "./WizardSteps/Step15.jsx";
+import Step16 from "./WizardSteps/Step16.jsx";
 
 // firebase
 import { user } from "firebase/index.js";
@@ -122,6 +123,11 @@ class WizardView extends React.Component {
                 stepName: "Agreement",
                 stepComponent: Step15,
                 stepId: "address-agreement"
+              },
+              {
+                stepName: "Start Date",
+                stepComponent: Step16,
+                stepId: "address-start"
               }
             ]}
             title="Listing your home!"
