@@ -121,7 +121,6 @@ class Step15 extends React.Component {
   // }
   render() {
     const { classes } = this.props;
-    console.log(this.props.allStates);
 
     return (
       <GridContainer justify="space-evenly">

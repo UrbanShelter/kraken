@@ -38,7 +38,7 @@ class Step6 extends React.Component {
     super(props);
     this.state = {
       offering: "entire",
-      bedroomNumber: 1,
+      bedroomNumber: "rooms",
       descriptions: []
     };
   }
