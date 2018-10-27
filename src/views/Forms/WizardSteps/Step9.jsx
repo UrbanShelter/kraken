@@ -7,25 +7,16 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
+import UploadItem from "components/CustomUpload/UploadItem.jsx";
 
 // firebase
 import { storage } from "firebase/index.js";
 
-// image upload
-import { FilePond, registerPlugin } from "react-filepond";
-
 import { urbanShelterColor } from "assets/jss/material-dashboard-pro-react.jsx";
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import "filepond/dist/filepond.min.css";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-
-// Register the plugins
-registerPlugin(FilePondPluginImagePreview);
 
 const style = {
   infoText: {
@@ -40,41 +31,6 @@ const style = {
     position: "relative"
   },
   ...customSelectStyle
-};
-
-let UploadItem = props => (
-  <div>
-    <h5 style={{ margin: "30px 0 20px 0" }}>{props.name}</h5>
-    <FilePond
-      style={{ minHeight: "200px" }}
-      allowMultiple={true}
-      maxFiles={4}
-      ref={ref => (this.pond = ref)}
-      server={{ process: props.processing, revert: props.revert }}
-    />
-    <CustomInput
-      urbanshelter
-      style={{ margin: "-20px 0 35px 0" }}
-      id={props.id}
-      formControlProps={{
-        fullWidth: true
-      }}
-      inputProps={{
-        placeholder: "Describe Room Elements",
-        multiline: true,
-        onChange: event => props.onChange(props.category, event)
-      }}
-    />
-  </div>
-);
-
-UploadItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  processing: PropTypes.func.isRequired,
-  revert: PropTypes.func.isRequired
 };
 class Step9 extends React.Component {
   constructor(props) {

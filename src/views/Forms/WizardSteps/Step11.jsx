@@ -7,7 +7,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
@@ -29,6 +28,32 @@ const style = {
   },
   ...customSelectStyle
 };
+
+const ListItem = props => (
+  <span>
+    <i
+      className={"fas fa-check"}
+      style={{ fontSize: "16px", color: urbanShelterColor }}
+    />
+    {`  `}
+    {props.text}
+  </span>
+);
+
+ListItem.propTypes = {
+  text: PropTypes.string.isRequired
+};
+
+let information = [
+  "Email Address",
+  "Confirmed Phone Number",
+  "Previous Landlord References",
+  "Proof of Identity",
+  "Credit Score",
+  "Proof of Income",
+  "Other Supporting Documents",
+  "Personalized Message"
+];
 
 class Step10 extends React.Component {
   constructor(props) {
@@ -138,20 +163,17 @@ class Step10 extends React.Component {
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={5}>
-          <h5>Describe Your Home</h5>
-          <CustomInput
-            urbanshelter
-            style={{ margin: "-20px 0 35px 0" }}
-            id={"home-description"}
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              placeholder: "Enter Description",
-              multiline: true,
-              onChange: event => this.setDescription(event)
-            }}
-          />
+          <h5>Review the information the tenants will provide you</h5>
+          <p style={{ color: urbanShelterColor }}>
+            All tenants will provide the following information
+          </p>
+          <GridContainer>
+            {information.map(value => (
+              <GridItem xs={12} key={value}>
+                <ListItem text={value} />
+              </GridItem>
+            ))}
+          </GridContainer>
         </GridItem>
       </GridContainer>
     );

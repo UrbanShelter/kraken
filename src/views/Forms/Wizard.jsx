@@ -15,6 +15,7 @@ import Step7 from "./WizardSteps/Step7.jsx";
 import Step8 from "./WizardSteps/Step8.jsx";
 import Step9 from "./WizardSteps/Step9.jsx";
 import Step10 from "./WizardSteps/Step10.jsx";
+import Step11 from "./WizardSteps/Step11.jsx";
 
 // firebase
 import { user } from "firebase/index.js";
@@ -45,7 +46,6 @@ class WizardView extends React.Component {
           <Wizard
             mainsteps
             validate
-            callback={this.saveDraft}
             data={{ reference: this.state.reference }}
             color="urbanshelter"
             steps={[
@@ -85,6 +85,12 @@ class WizardView extends React.Component {
                 stepName: "Description",
                 stepComponent: Step10,
                 stepId: "media2"
+              },
+              {
+                stepName: "Address",
+                stepComponent: Step11,
+                stepId: "address-info",
+                mainstep: true
               }
             ]}
             title="Listing your home!"
