@@ -38,8 +38,7 @@ class Step17 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      minLease: "minLease",
-      maxLease: "maxLease"
+      notice: "notice"
     };
   }
   sendState() {
@@ -113,61 +112,32 @@ class Step17 extends React.Component {
   render() {
     const { classes } = this.props;
 
-    const minLeaseItems = [];
-    const maxLeaseItems = [];
-    for (let i = 4; i <= 48; i++) {
-      if (i <= 12) {
-        minLeaseItems.push(
-          <MenuItem
-            classes={{
-              root: classes.selectMenuItem,
-              selected: classes.selectMenuItemSelected
-            }}
-            value={i + 1}
-            key={i}
-          >
-            {i + " months"}
-          </MenuItem>
-        );
-      }
-      if (i >= 12) {
-        maxLeaseItems.push(
-          <MenuItem
-            classes={{
-              root: classes.selectMenuItem,
-              selected: classes.selectMenuItemSelected
-            }}
-            value={i + 1}
-            key={i}
-          >
-            {i + " months"}
-          </MenuItem>
-        );
-      }
+    const notice = [];
+
+    for (let i = 2; i <= 4; i++) {
+      notice.push(
+        <MenuItem
+          classes={{
+            root: classes.selectMenuItem,
+            selected: classes.selectMenuItemSelected
+          }}
+          value={i + 1}
+          key={i}
+        >
+          {i + " months"}
+        </MenuItem>
+      );
     }
 
     return (
       <GridContainer justify="space-evenly" direction="row-reverse">
         <GridItem xs={12} sm={4}>
-          <Card infographic>
-            <CardHeader style={{ margin: "10px 0 -15px" }}>
-              {/* <i className={"fal fa-lightbulb"} /> */}
-              <i
-                className={"far fa-lightbulb"}
-                style={{ fontSize: "25px", color: urbanShelterColor }}
-              />
-            </CardHeader>
-            <CardBody>
-              <p style={{ color: "#3C4858", fontWeight: 400 }}>
-                Tip: Shorter min rental periods can mean lower vacancy periods,
-                but more often turnovers.
-              </p>
-            </CardBody>
-          </Card>
+          <div />
         </GridItem>
         <GridItem xs={12} sm={6} md={5}>
           <h5 style={{ marginBottom: "35px" }}>
-            What is the minimum length of a tenant lease period?
+            What is the minimum notice you need from your future tenant before
+            they wish to move out your home?
           </h5>
           <FormControl fullWidth className={classes.selectFormControl}>
             <Select
@@ -177,11 +147,11 @@ class Step17 extends React.Component {
               classes={{
                 select: classes.select
               }}
-              value={this.state.minLease}
+              value={this.state.notice}
               onChange={this.handleSimple}
               inputProps={{
-                name: "minLease",
-                id: "minLease-select"
+                name: "notice",
+                id: "notice-select"
               }}
             >
               <MenuItem
@@ -189,48 +159,16 @@ class Step17 extends React.Component {
                 classes={{
                   root: classes.selectMenuItem
                 }}
-                value="minLease"
+                value="notice"
               >
-                Choose Minimum Lease Period
+                Choose Notice Period
               </MenuItem>
-              {minLeaseItems}
+              {notice}
             </Select>
           </FormControl>
           <p style={{ margin: "-20px 0 60px 0", fontSize: "12px" }}>
-            Minimum Lease periods can range between 4 - 12 months
-          </p>
-          <h5 style={{ marginBottom: "35px" }}>
-            How about maximum length of leasing period? (Optional)
-          </h5>
-          <FormControl fullWidth className={classes.selectFormControl}>
-            <Select
-              MenuProps={{
-                className: classes.selectMenu
-              }}
-              classes={{
-                select: classes.select
-              }}
-              value={this.state.maxLease}
-              onChange={this.handleSimple}
-              inputProps={{
-                name: "maxLease",
-                id: "maxLease-select"
-              }}
-            >
-              <MenuItem
-                disabled
-                classes={{
-                  root: classes.selectMenuItem
-                }}
-                value="maxLease"
-              >
-                Choose Maximum Lease Period
-              </MenuItem>
-              {maxLeaseItems}
-            </Select>
-          </FormControl>
-          <p style={{ margin: "-20px 0 60px 0", fontSize: "12px" }}>
-            Maximum Lease periods can range between 12 - 48 months
+            Anywhere between 2-4 months is taken to be a suitable time period
+            for finding a new tenant.
           </p>
         </GridItem>
       </GridContainer>
