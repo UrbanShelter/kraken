@@ -18,6 +18,7 @@ class Wizard extends React.Component {
     super(props);
     var width;
     var mainstepsArray = [];
+    var conditionalSteps = [];
 
     // fire callback on each step change
     // this is necessary should the callback require initialization
@@ -29,7 +30,16 @@ class Wizard extends React.Component {
       } else {
         mainstepsArray.push(mainstepsArray[key - 1]);
       }
+      // checking for conditional steps
+      if (
+        (!(this.props.mainsteps && prop.mainstep) || key !== 0) &&
+        prop.conditional === true
+      ) {
+        conditionalSteps.push(key);
+      }
     });
+
+    console.log(conditionalSteps);
 
     const unique = (value, index, self) => {
       return index === 0 ? true : self.indexOf(value) === index;
@@ -81,6 +91,8 @@ class Wizard extends React.Component {
       mainstepIdKey: 0,
       mainstepsArray: mainstepsArray,
       uniqueMainsteps: uniqueMainsteps,
+      conditionalSteps: conditionalSteps,
+      conditionalPassed: [],
       skip: 0,
       color: this.props.color,
       nextButton: this.props.steps.length > 1 ? true : false,
@@ -359,8 +371,32 @@ class Wizard extends React.Component {
       });
     });
   }
+  passCondition(steps) {
+    if (Array.isArray(steps) && this.state.conditionalSteps) {
+      let passedSteps = this.state.conditionalSteps.filter(
+        index => !steps.includes(index)
+      );
+      console.log(passedSteps);
+    }
+
+    // this.setState({ conditionalPassed: passedSteps }, () => {
+    //   // for conditional steps
+    //   let skip = this.state.skip ? this.state.skip : 0;
+    //   var key = this.state.currentStep + skip + 1;
+    //   if (key >= this.props.steps.length) {
+    //     // skip out of bounds correction
+    //     key = this.props.steps.length - skip - 1;
+    //   }
+    //   this.setState({
+    //     currentStep: key,
+    //     nextButton: this.props.steps.length > key + skip + 1 ? true : false,
+    //     previousButton: key > 0 ? true : false,
+    //     finishButton: this.props.steps.length <= key + skip + 1 ? true : false
+    //   });
+    // });
+  }
   callbacks(data) {
-    data && this.conditionalSkip(data);
+    data && this.passCondition(data);
   }
   render() {
     const {

@@ -48,7 +48,7 @@ class Step17 extends React.Component {
   handleSimple = event => {
     this.setState({ [event.target.name]: event.target.value });
     if (this.props && this.props.callback) {
-      this.props.callback(1);
+      this.props.callback([14]);
     }
   };
   // function that returns true if value is email, false otherwise

@@ -139,7 +139,8 @@ class WizardView extends React.Component {
               {
                 stepName: "Notice",
                 stepComponent: Step18,
-                stepId: "address-notice"
+                stepId: "address-notice",
+                conditional: true
               },
               {
                 stepName: "Notice",
