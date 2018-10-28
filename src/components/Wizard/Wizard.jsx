@@ -46,8 +46,6 @@ class Wizard extends React.Component {
       }
     });
 
-    console.log(conditionalSteps);
-
     const unique = (value, index, self) => {
       return index === 0 ? true : self.indexOf(value) === index;
     };
@@ -100,7 +98,6 @@ class Wizard extends React.Component {
       uniqueMainsteps: uniqueMainsteps,
       conditionalSteps: conditionalSteps,
       conditionalPassed: conditionalPassed,
-      skip: 0,
       color: this.props.color,
       nextButton: this.props.steps.length > 1 ? true : false,
       previousButton: false,
@@ -117,8 +114,7 @@ class Wizard extends React.Component {
     this.previousButtonClick = this.previousButtonClick.bind(this);
     this.finishButtonClick = this.finishButtonClick.bind(this);
     this.updateWidth = this.updateWidth.bind(this);
-    this.callbacks = this.callbacks.bind(this);
-    this.conditionalSkip = this.conditionalSkip.bind(this);
+    this.passCondition = this.passCondition.bind(this);
     this.wizard = React.createRef();
   }
   componentDidMount() {
@@ -200,18 +196,21 @@ class Wizard extends React.Component {
           }
         });
       }
-      // for conditional steps
-      let skip = this.state.skip ? this.state.skip : 0;
-      var key = this.state.currentStep + skip + 1;
-      if (key >= this.props.steps.length) {
-        // skip out of bounds correction
-        key = this.props.steps.length - skip - 1;
+      // finding the next conditionally passed index
+      let key = this.state.conditionalPassed.find(
+        index => index > this.state.currentStep
+      );
+      if (key === undefined) {
+        // the case where the current step is the last valid step
+        key = this.state.currentStep + 1;
       }
+      // finding the last conditionally valid step
+      let lastValidStep = Math.max(...this.state.conditionalPassed);
       this.setState({
         currentStep: key,
-        nextButton: this.props.steps.length > key + skip + 1 ? true : false,
+        nextButton: lastValidStep > key ? true : false,
         previousButton: key > 0 ? true : false,
-        finishButton: this.props.steps.length <= key + skip + 1 ? true : false
+        finishButton: lastValidStep === key ? true : false
       });
 
       if (this.props.mainsteps) {
@@ -247,19 +246,26 @@ class Wizard extends React.Component {
         }
       });
     }
-    // for conditional steps
-    let skip = this.state.skip ? this.state.skip : 0;
-    var key = this.state.currentStep - skip - 1;
-    if (key < 0) {
-      // skip out of bounds correction
+    // finding the previous conditionally passed index
+    // the array is reverse to essentially traverse
+    // in the opposite direction for previous step back
+    let conditionalPassed = [...this.state.conditionalPassed];
+    let key = conditionalPassed
+      .reverse()
+      .find(index => index < this.state.currentStep);
+    if (key < 0 || key === undefined) {
+      // out of bounds or undefined correction
       key = 0;
     }
+    // finding the last conditionally valid step
+    let lastValidStep = Math.max(...this.state.conditionalPassed);
+
     if (key >= 0) {
       this.setState({
         currentStep: key,
-        nextButton: this.props.steps.length > key + skip + 1 ? true : false,
+        nextButton: lastValidStep > key ? true : false,
         previousButton: key > 0 ? true : false,
-        finishButton: this.props.steps.length <= key + skip + 1 ? true : false
+        finishButton: lastValidStep === key ? true : false
       });
 
       if (this.props.mainsteps) {
@@ -361,27 +367,11 @@ class Wizard extends React.Component {
       this.setState({ movingTabStyle: movingTabStyle });
     }
   }
-  conditionalSkip(skip) {
-    this.setState({ skip: skip }, () => {
-      // for conditional steps
-      let skip = this.state.skip ? this.state.skip : 0;
-      var key = this.state.currentStep + skip + 1;
-      if (key >= this.props.steps.length) {
-        // skip out of bounds correction
-        key = this.props.steps.length - skip - 1;
-      }
-      this.setState({
-        currentStep: key,
-        nextButton: this.props.steps.length > key + skip + 1 ? true : false,
-        previousButton: key > 0 ? true : false,
-        finishButton: this.props.steps.length <= key + skip + 1 ? true : false
-      });
-    });
-  }
-  passCondition(steps) {
+  passCondition(steps, opType) {
     if (Array.isArray(steps) && this.state.conditionalSteps) {
       let passedSteps = this.state.conditionalSteps.filter(
-        index => !steps.includes(index)
+        index =>
+          opType === "add" ? steps.includes(index) : !steps.includes(index)
       );
 
       let allPassed = this.state.conditionalPassed;
@@ -395,25 +385,21 @@ class Wizard extends React.Component {
         let key = this.state.conditionalPassed.find(
           index => index > this.state.currentStep
         );
-        let lastValidStep = Math.max(...this.state.conditionalPassed)
+        if (key === undefined) {
+          // the case where the current step is the last valid step
+          key = this.state.currentStep + 1;
+        }
+        // finding the last conditionally valid step
+        let lastValidStep = Math.max(...this.state.conditionalPassed);
         this.setState({
           nextButton: lastValidStep > key ? true : false,
-          previousButton: key > 0 ? true : false,
-          finishButton: lastValidStep <= key ? true : false
+          previousButton: this.state.currentStep > 0 ? true : false,
+          finishButton: lastValidStep === key ? true : false
         });
-        console.log(this.state.conditionalPassed);
-        console.log(this.state.currentStep);
-        console.log(
-          this.state.conditionalPassed.find(
-            index => index > this.state.currentStep
-          )
-        );
       });
     }
   }
-  callbacks(data) {
-    data && this.passCondition(data);
-  }
+
   render() {
     const {
       classes,
@@ -424,6 +410,7 @@ class Wizard extends React.Component {
       mainsteps,
       data
     } = this.props;
+
     return (
       <div className={classes.wizardContainer} ref={ref => (this.wizard = ref)}>
         <Card className={classes.card}>
@@ -498,7 +485,7 @@ class Wizard extends React.Component {
                   <prop.stepComponent
                     innerRef={node => (this[prop.stepId] = node)}
                     allStates={this.state.allStates}
-                    callback={this.callbacks}
+                    callback={this.passCondition}
                     data={data}
                   />
                 </div>

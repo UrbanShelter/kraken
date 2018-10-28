@@ -41,19 +41,26 @@ class Step17 extends React.Component {
       minLease: "minLease",
       maxLease: "maxLease"
     };
+
+    // setting the inital callback for no max lease specified
+    if (this.props && this.props.callback) {
+      this.props.callback([14, 15, 16], "add");
+    }
   }
   sendState() {
     return this.state;
   }
+  handleCallback(condition, value) {
+    if (this.props && this.props.callback) {
+      let opType = condition !== value ? "sub" : "add";
+
+      this.props.callback([14, 15, 16], opType);
+    }
+  }
   handleSimple = event => {
     this.setState({ [event.target.name]: event.target.value });
-    if (
-      this.props &&
-      this.props.callback &&
-      event.target.value !== "maxLease"
-    ) {
-      this.props.callback([14, 16, 17]);
-    }
+    // setting conditional parameters
+    this.handleCallback(event.target.value, "maxLease");
   };
   // function that returns true if value is email, false otherwise
   verifyEmail(value) {
