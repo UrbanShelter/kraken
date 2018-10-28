@@ -160,7 +160,7 @@ class Step15 extends React.Component {
             {this.state.checked[0] !== "expedite" && (
               <GridItem xs={12} sm={10} md={8}>
                 <GridContainer>
-                  <GridItem xs={8}>
+                  <GridItem xs={12} md={8}>
                     <GridContainer justify="center" alignItems="center">
                       <GridItem xs={5}>
                         <ColoredLine
@@ -183,7 +183,7 @@ class Step15 extends React.Component {
                       </GridItem>
                     </GridContainer>
                   </GridItem>
-                  <GridItem xs={8}>
+                  <GridItem xs={12} md={8}>
                     <FormControl fullWidth>
                       <Datetime
                         utc

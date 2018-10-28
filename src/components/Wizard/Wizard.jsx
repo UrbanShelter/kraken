@@ -81,6 +81,7 @@ class Wizard extends React.Component {
       mainstepIdKey: 0,
       mainstepsArray: mainstepsArray,
       uniqueMainsteps: uniqueMainsteps,
+      skip: 0,
       color: this.props.color,
       nextButton: this.props.steps.length > 1 ? true : false,
       previousButton: false,
@@ -97,6 +98,8 @@ class Wizard extends React.Component {
     this.previousButtonClick = this.previousButtonClick.bind(this);
     this.finishButtonClick = this.finishButtonClick.bind(this);
     this.updateWidth = this.updateWidth.bind(this);
+    this.callbacks = this.callbacks.bind(this);
+    this.conditionalSkip = this.conditionalSkip.bind(this);
     this.wizard = React.createRef();
   }
   componentDidMount() {
@@ -178,12 +181,18 @@ class Wizard extends React.Component {
           }
         });
       }
-      var key = this.state.currentStep + 1;
+      // for conditional steps
+      let skip = this.state.skip ? this.state.skip : 0;
+      var key = this.state.currentStep + skip + 1;
+      if (key >= this.props.steps.length) {
+        // skip out of bounds correction
+        key = this.props.steps.length - skip - 1;
+      }
       this.setState({
         currentStep: key,
-        nextButton: this.props.steps.length > key + 1 ? true : false,
+        nextButton: this.props.steps.length > key + skip + 1 ? true : false,
         previousButton: key > 0 ? true : false,
-        finishButton: this.props.steps.length === key + 1 ? true : false
+        finishButton: this.props.steps.length <= key + skip + 1 ? true : false
       });
 
       if (this.props.mainsteps) {
@@ -201,6 +210,8 @@ class Wizard extends React.Component {
           this.state.allStates &&
           this.props.callback(this.state.allStates);
       }
+      // reset skip after button click
+      this.setState({ skip: 0 });
     }
   }
   previousButtonClick() {
@@ -217,13 +228,19 @@ class Wizard extends React.Component {
         }
       });
     }
-    var key = this.state.currentStep - 1;
+    // for conditional steps
+    let skip = this.state.skip ? this.state.skip : 0;
+    var key = this.state.currentStep - skip - 1;
+    if (key < 0) {
+      // skip out of bounds correction
+      key = 0;
+    }
     if (key >= 0) {
       this.setState({
         currentStep: key,
-        nextButton: this.props.steps.length > key + 1 ? true : false,
+        nextButton: this.props.steps.length > key + skip + 1 ? true : false,
         previousButton: key > 0 ? true : false,
-        finishButton: this.props.steps.length === key + 1 ? true : false
+        finishButton: this.props.steps.length <= key + skip + 1 ? true : false
       });
 
       if (this.props.mainsteps) {
@@ -325,6 +342,26 @@ class Wizard extends React.Component {
       this.setState({ movingTabStyle: movingTabStyle });
     }
   }
+  conditionalSkip(skip) {
+    this.setState({ skip: skip }, () => {
+      // for conditional steps
+      let skip = this.state.skip ? this.state.skip : 0;
+      var key = this.state.currentStep + skip + 1;
+      if (key >= this.props.steps.length) {
+        // skip out of bounds correction
+        key = this.props.steps.length - skip - 1;
+      }
+      this.setState({
+        currentStep: key,
+        nextButton: this.props.steps.length > key + skip + 1 ? true : false,
+        previousButton: key > 0 ? true : false,
+        finishButton: this.props.steps.length <= key + skip + 1 ? true : false
+      });
+    });
+  }
+  callbacks(data) {
+    data && this.conditionalSkip(data);
+  }
   render() {
     const {
       classes,
@@ -409,6 +446,7 @@ class Wizard extends React.Component {
                   <prop.stepComponent
                     innerRef={node => (this[prop.stepId] = node)}
                     allStates={this.state.allStates}
+                    callback={this.callbacks}
                     data={data}
                   />
                 </div>

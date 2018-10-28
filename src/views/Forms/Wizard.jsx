@@ -59,7 +59,7 @@ class WizardView extends React.Component {
           <Wizard
             mainsteps
             validate
-            callback={this.saveDocs}
+            callback={this.callbacks}
             data={{ reference: this.state.reference }}
             color="urbanshelter"
             steps={[
@@ -140,6 +140,11 @@ class WizardView extends React.Component {
                 stepName: "Notice",
                 stepComponent: Step18,
                 stepId: "address-notice"
+              },
+              {
+                stepName: "Notice",
+                stepComponent: Step18,
+                stepId: "address-notice1"
               }
             ]}
             title="Listing your home!"
