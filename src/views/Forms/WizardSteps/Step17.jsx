@@ -47,7 +47,11 @@ class Step17 extends React.Component {
   }
   handleSimple = event => {
     this.setState({ [event.target.name]: event.target.value });
-    if (this.props && this.props.callback) {
+    if (
+      this.props &&
+      this.props.callback &&
+      event.target.value !== "maxLease"
+    ) {
       this.props.callback([14]);
     }
   };
@@ -244,6 +248,7 @@ class Step17 extends React.Component {
 Step17.propTypes = {
   classes: PropTypes.object.isRequired,
   data: PropTypes.object,
+  callback: PropTypes.func,
   allStates: PropTypes.object.isRequired
 };
 

@@ -376,7 +376,15 @@ class Wizard extends React.Component {
       let passedSteps = this.state.conditionalSteps.filter(
         index => !steps.includes(index)
       );
-      console.log(passedSteps);
+
+      let allPassed = this.state.conditionalPassed;
+
+      const unique = (value, index, self) => {
+        return index === 0 ? true : self.indexOf(value) === index;
+      };
+      this.setState({ conditionalPassed: allPassed.filter(unique) }, () =>
+        console.log(this.state.conditionalPassed)
+      );
     }
 
     // this.setState({ conditionalPassed: passedSteps }, () => {
