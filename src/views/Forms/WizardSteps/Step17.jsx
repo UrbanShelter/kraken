@@ -52,7 +52,7 @@ class Step17 extends React.Component {
       this.props.callback &&
       event.target.value !== "maxLease"
     ) {
-      this.props.callback([14]);
+      this.props.callback([14, 17]);
     }
   };
   // function that returns true if value is email, false otherwise

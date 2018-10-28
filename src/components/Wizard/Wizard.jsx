@@ -378,6 +378,7 @@ class Wizard extends React.Component {
       );
 
       let allPassed = this.state.conditionalPassed;
+      allPassed = [...allPassed, ...passedSteps];
 
       const unique = (value, index, self) => {
         return index === 0 ? true : self.indexOf(value) === index;
