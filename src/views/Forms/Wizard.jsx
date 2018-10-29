@@ -23,6 +23,7 @@ import Step15 from "./WizardSteps/Step15.jsx";
 import Step16 from "./WizardSteps/Step16.jsx";
 import Step17 from "./WizardSteps/Step17.jsx";
 import Step18 from "./WizardSteps/Step18.jsx";
+import Step19 from "./WizardSteps/Step19.jsx";
 
 // firebase
 import { user } from "firebase/index.js";
@@ -144,18 +145,12 @@ class WizardView extends React.Component {
               },
               {
                 stepName: "Notice",
-                stepComponent: Step7,
-                stepId: "address-notice2",
-                conditional: true
-              },
-              {
-                stepName: "Notice",
-                stepComponent: Step18,
-                stepId: "address-notice3",
+                stepComponent: Step19,
+                stepId: "address-pricing",
                 conditional: true
               }
             ]}
-            title="Listing your home!"
+            title="Let's get your home ready"
           />
         </GridItem>
       </GridContainer>
