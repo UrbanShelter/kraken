@@ -372,42 +372,41 @@ class Wizard extends React.Component {
     if (Array.isArray(steps) && this.state.conditionalSteps) {
       // this initial check ensures that the step provided is
       // conditional so as to avoid overrides on regualr steps
-      let passedSteps = this.state.conditionalSteps.filter(
+      let verifiedPassedSteps = this.state.conditionalSteps.filter(
         index =>
           opType === "add" ? steps.includes(index) : !steps.includes(index)
       );
 
+      // this step uses the verified passed steps to add or remove the
+      // conditional steps
       let allPassed = [...this.state.conditionalPassed];
-      let passedStepsAlt = [];
+      let passedSteps = [];
       opType === "add"
-        ? (passedStepsAlt = [...allPassed, ...passedSteps])
-        : (passedStepsAlt = this.state.conditionalPassed.filter(
+        ? (passedSteps = [...allPassed, ...verifiedPassedSteps])
+        : (passedSteps = this.state.conditionalPassed.filter(
             index => !steps.includes(index)
           ));
 
       const unique = (value, index, self) => {
         return index === 0 ? true : self.indexOf(value) === index;
       };
-      this.setState(
-        { conditionalPassed: passedStepsAlt.filter(unique) },
-        () => {
-          // finding the next conditionally passed index
-          let key = this.state.conditionalPassed.find(
-            index => index > this.state.currentStep
-          );
-          if (key === undefined) {
-            // the case where the current step is the last valid step
-            key = this.state.currentStep;
-          }
-          // finding the last conditionally valid step
-          let lastValidStep = Math.max(...this.state.conditionalPassed);
-          this.setState({
-            nextButton: lastValidStep > key ? true : false,
-            previousButton: this.state.currentStep > 0 ? true : false,
-            finishButton: lastValidStep === key ? true : false
-          });
+      this.setState({ conditionalPassed: passedSteps.filter(unique) }, () => {
+        // finding the next conditionally passed index
+        let key = this.state.conditionalPassed.find(
+          index => index > this.state.currentStep
+        );
+        if (key === undefined) {
+          // the case where the current step is the last valid step
+          key = this.state.currentStep;
         }
-      );
+        // finding the last conditionally valid step
+        let lastValidStep = Math.max(...this.state.conditionalPassed);
+        this.setState({
+          nextButton: lastValidStep > key ? true : false,
+          previousButton: this.state.currentStep > 0 ? true : false,
+          finishButton: lastValidStep === key ? true : false
+        });
+      });
     }
   }
 
