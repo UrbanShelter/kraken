@@ -120,8 +120,10 @@ class Step17 extends React.Component {
     return (
       <GridContainer justify="center">
         <GridItem xs={12} sm={6} md={5}>
-          <h2 style={{ marginBottom: "35px" }}>{`You're Done!`}</h2>
-          <p style={{ color: "#3C4858", fontWeight: 400 }}>
+          <h2
+            style={{ marginBottom: "35px", textAlign: "center" }}
+          >{`You're Done!`}</h2>
+          <p style={{ color: "#3C4858", fontWeight: 400, textAlign: "center" }}>
             Your listing will be listed available from 2nd November, 2018 for 12
             months.
           </p>
