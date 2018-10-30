@@ -3,11 +3,6 @@ import PropTypes from "prop-types";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import Radio from "@material-ui/core/Radio";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-
-// @material-ui/icons
-import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
 
 // react component plugin for creating a beautiful datetime dropdown picker
 import Datetime from "react-datetime";
@@ -15,13 +10,16 @@ import Datetime from "react-datetime";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
+import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
+import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
 
 import { urbanShelterColor } from "assets/jss/material-dashboard-pro-react.jsx";
-import customCheckboxRadioSwitch from "assets/jss/material-dashboard-pro-react/customCheckboxRadioSwitch.jsx";
+import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
 const style = {
   infoText: {
@@ -35,22 +33,21 @@ const style = {
   inputAdornment: {
     position: "relative"
   },
-  ...customCheckboxRadioSwitch
+  ...customSelectStyle
 };
 class Step17 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      specialOffer: "none"
+      discounts: []
     };
-    this.handleChange = this.handleChange.bind(this);
   }
   sendState() {
     return this.state;
   }
-  handleChange(event) {
-    this.setState({ specialOffer: event.target.value });
-  }
+  handleSimple = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
   // function that returns true if value is email, false otherwise
   verifyEmail(value) {
     var emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -93,11 +90,11 @@ class Step17 extends React.Component {
     const yesterday = Datetime.moment().subtract(1, "day");
     return current.isAfter(yesterday);
   }
-  setPricing(event) {
+  setDiscount(event) {
     // const descriptions = event.target.value;
-    var pricing = [...this.state.smartPricing];
-    pricing[event.target.id] = event.target.value;
-    this.setState({ smartPricing: pricing });
+    var discounts = [...this.state.discounts];
+    discounts[event.target.id] = event.target.value;
+    this.setState({ discounts: discounts });
   }
   // isValidated() {
   //   if (
@@ -120,8 +117,6 @@ class Step17 extends React.Component {
   //   return false;
   // }
   render() {
-    const { classes } = this.props;
-
     return (
       <GridContainer justify="space-evenly" direction="row-reverse">
         <GridItem xs={12} sm={4}>
@@ -142,69 +137,39 @@ class Step17 extends React.Component {
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={5}>
-          <h5>Something special for your first tenant</h5>
-          <div
-            className={
-              classes.checkboxAndRadio +
-              " " +
-              classes.checkboxAndRadioHorizontal
-            }
-          >
-            <FormControlLabel
-              control={
-                <Radio
-                  checked={this.state.specialOffer === "special"}
-                  onChange={this.handleChange}
-                  value="special"
-                  name="special-offer"
-                  aria-label="B"
-                  icon={
-                    <FiberManualRecord className={classes.radioUnchecked} />
-                  }
-                  checkedIcon={
-                    <FiberManualRecord className={classes.radioChecked} />
-                  }
-                  classes={{
-                    checked: classes.radio
-                  }}
-                />
-              }
-              classes={{
-                label: classes.label
-              }}
-              label="First Month's Rent Off"
-            />
-            <p>
-              Your first tenant(s) will get the first month’s rent off. This
-              will help attract new tenants for your property and allow you to
-              get the initial set of reviews to get a rating.
-            </p>
-            <FormControlLabel
-              control={
-                <Radio
-                  checked={this.state.specialOffer !== "special"}
-                  onChange={this.handleChange}
-                  value="none"
-                  name="no-offer"
-                  aria-label="B"
-                  icon={
-                    <FiberManualRecord className={classes.radioUnchecked} />
-                  }
-                  checkedIcon={
-                    <FiberManualRecord className={classes.radioChecked} />
-                  }
-                  classes={{
-                    checked: classes.radio
-                  }}
-                />
-              }
-              classes={{
-                label: classes.label
-              }}
-              label="Don't add special offer"
-            />
-            <p>Once you publish the listing you will not have this option.</p>
-          </div>
+          <h5 style={{ marginBottom: "35px" }}>Length of Stay Discounts</h5>
+          <h5>2-Year Lease Discount</h5>
+          <CustomInput
+            urbanshelter
+            style={{ margin: "-20px 0 35px 0" }}
+            id={"discounts-2year"}
+            formControlProps={{
+              fullWidth: true
+            }}
+            inputProps={{
+              placeholder: "% off",
+              onChange: event => this.setDiscount(event)
+            }}
+          />
+          <p style={{ margin: "-20px 0 60px 0", fontSize: "12px" }}>
+            Usually ranges between 4-8%
+          </p>
+          <h5>4-Year Lease Discount</h5>
+          <CustomInput
+            urbanshelter
+            style={{ margin: "-20px 0 35px 0" }}
+            id={"discounts-4year"}
+            formControlProps={{
+              fullWidth: true
+            }}
+            inputProps={{
+              placeholder: "% off",
+              onChange: event => this.setDiscount(event)
+            }}
+          />
+          <p style={{ margin: "-20px 0 60px 0", fontSize: "12px" }}>
+            Usually ranges between 8-16%
+          </p>
         </GridItem>
       </GridContainer>
     );
