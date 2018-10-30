@@ -372,24 +372,29 @@ class Wizard extends React.Component {
     if (Array.isArray(steps) && this.state.conditionalSteps) {
       // this initial check ensures that the step provided is
       // conditional so as to avoid overrides on regualr steps
-      let verifiedPassedSteps = this.state.conditionalSteps.filter(
-        index =>
-          opType === "add" ? steps.includes(index) : !steps.includes(index)
+      let verifiedPassedSteps = this.state.conditionalSteps.filter(index =>
+        steps.includes(index)
       );
 
       // this step uses the verified passed steps to add or remove the
       // conditional steps
       let allPassed = [...this.state.conditionalPassed];
+
       let passedSteps = [];
       opType === "add"
         ? (passedSteps = [...allPassed, ...verifiedPassedSteps])
         : (passedSteps = this.state.conditionalPassed.filter(
-            index => !steps.includes(index)
+            index => !verifiedPassedSteps.includes(index)
           ));
 
+      // if the callback initiated false conditional steps
+      // it ends up messing up the order of the passedSteps array
+      // this function sorts the array in ascending order
+      passedSteps.sort((a, b) => a - b);
       const unique = (value, index, self) => {
         return index === 0 ? true : self.indexOf(value) === index;
       };
+
       this.setState({ conditionalPassed: passedSteps.filter(unique) }, () => {
         // finding the next conditionally passed index
         let key = this.state.conditionalPassed.find(

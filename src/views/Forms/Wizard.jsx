@@ -24,6 +24,7 @@ import Step16 from "./WizardSteps/Step16.jsx";
 import Step17 from "./WizardSteps/Step17.jsx";
 import Step18 from "./WizardSteps/Step18.jsx";
 import Step19 from "./WizardSteps/Step19.jsx";
+import Step20 from "./WizardSteps/Step20.jsx";
 
 // firebase
 import { user } from "firebase/index.js";
@@ -37,6 +38,7 @@ class WizardView extends React.Component {
 
     this.saveDraft = this.saveDraft.bind(this);
     this.saveDocs = this.saveDocs.bind(this);
+    this.callbacks = this.callbacks.bind(this);
   }
 
   saveDraft(data) {
@@ -51,6 +53,10 @@ class WizardView extends React.Component {
   saveDocs() {
     this.state.reference === null &&
       this.setState({ reference: user.generatePropertyDoc() });
+  }
+
+  callbacks(data) {
+    // this.saveDraft(data);
   }
 
   render() {
@@ -146,8 +152,12 @@ class WizardView extends React.Component {
               {
                 stepName: "Notice",
                 stepComponent: Step19,
-                stepId: "address-pricing",
-                conditional: true
+                stepId: "address-pricing"
+              },
+              {
+                stepName: "Specials",
+                stepComponent: Step20,
+                stepId: "address-specials"
               }
             ]}
             title="Let's get your home ready"
