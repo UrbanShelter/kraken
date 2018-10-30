@@ -93,7 +93,7 @@ class Step10 extends React.Component {
   }
   setDescription(event) {
     // const descriptions = event.target.value;
-    var descriptions = this.state.descriptions;
+    var descriptions = [...this.state.descriptions];
     descriptions[event.target.id] = event.target.value;
     this.setState({ descriptions: descriptions });
   }

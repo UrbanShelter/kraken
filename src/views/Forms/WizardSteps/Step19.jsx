@@ -10,6 +10,7 @@ import Datetime from "react-datetime";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
+import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
@@ -40,7 +41,8 @@ class Step17 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currency: "CAD"
+      currency: "CAD",
+      smartPricing: []
     };
   }
   sendState() {
@@ -90,6 +92,12 @@ class Step17 extends React.Component {
     // Static moment reference in the Datetime component
     const yesterday = Datetime.moment().subtract(1, "day");
     return current.isAfter(yesterday);
+  }
+  setPricing(event) {
+    // const descriptions = event.target.value;
+    var pricing = [...this.state.smartPricing];
+    pricing[event.target.id] = event.target.value;
+    this.setState({ smartPricing: pricing });
   }
   // isValidated() {
   //   if (
@@ -179,10 +187,61 @@ class Step17 extends React.Component {
               {currency}
             </Select>
           </FormControl>
-          <p style={{ margin: "-20px 0 60px 0", fontSize: "12px" }}>
-            Anywhere between 2-4 months is taken to be a suitable time period
-            for finding a new tenant.
+          <h3 style={{ color: urbanShelterColor }}>Smart Pricing</h3>
+          <h5>Base Price</h5>
+          <p>
+            This will be the default price for when you turn off smart pricing.
           </p>
+          <CustomInput
+            urbanshelter
+            style={{ margin: "-20px 0 35px 0" }}
+            id={"smartPricing-base"}
+            formControlProps={{
+              fullWidth: true
+            }}
+            inputProps={{
+              placeholder: "Enter Price",
+              multiline: true,
+              onChange: event => this.setPricing(event)
+            }}
+          />
+          <h5>Minimum Price</h5>
+          <p>
+            When housing demand is low your price will drop to attract more
+            tenants.
+          </p>
+          <CustomInput
+            urbanshelter
+            style={{ margin: "-20px 0 35px 0" }}
+            id={"smartPricing-min"}
+            formControlProps={{
+              fullWidth: true
+            }}
+            inputProps={{
+              placeholder: "Enter Price",
+              multiline: true,
+              onChange: event => this.setPricing(event)
+            }}
+          />
+          <h5>Maximum Price</h5>
+          <p>
+            If demand is high the rental price will increase to help optimize
+            your earnings. What is the maximum price you’d like to charge your
+            tenants?
+          </p>
+          <CustomInput
+            urbanshelter
+            style={{ margin: "-20px 0 35px 0" }}
+            id={"smartPricing-max"}
+            formControlProps={{
+              fullWidth: true
+            }}
+            inputProps={{
+              placeholder: "Enter Price",
+              multiline: true,
+              onChange: event => this.setPricing(event)
+            }}
+          />
         </GridItem>
       </GridContainer>
     );
