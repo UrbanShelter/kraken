@@ -44,16 +44,16 @@ class Step17 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currency: "CAD",
-      smartPricing: []
+      specialOffer: "none"
     };
+    this.handleChange = this.handleChange.bind(this);
   }
   sendState() {
     return this.state;
   }
-  handleSimple = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+  handleChange(event) {
+    this.setState({ specialOffer: event.target.value });
+  }
   // function that returns true if value is email, false otherwise
   verifyEmail(value) {
     var emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -173,10 +173,10 @@ class Step17 extends React.Component {
             <FormControlLabel
               control={
                 <Radio
-                  checked={this.state.selectedValue === "b"}
+                  checked={this.state.specialOffer === "special"}
                   onChange={this.handleChange}
-                  value="b"
-                  name="radio button demo"
+                  value="special"
+                  name="special-offer"
                   aria-label="B"
                   icon={
                     <FiberManualRecord className={classes.radioUnchecked} />
@@ -202,10 +202,10 @@ class Step17 extends React.Component {
             <FormControlLabel
               control={
                 <Radio
-                  checked={this.state.selectedValue === "b"}
+                  checked={this.state.specialOffer !== "special"}
                   onChange={this.handleChange}
-                  value="b"
-                  name="radio button demo"
+                  value="none"
+                  name="no-offer"
                   aria-label="B"
                   icon={
                     <FiberManualRecord className={classes.radioUnchecked} />
