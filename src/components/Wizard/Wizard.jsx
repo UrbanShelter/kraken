@@ -379,7 +379,6 @@ class Wizard extends React.Component {
       // this step uses the verified passed steps to add or remove the
       // conditional steps
       let allPassed = [...this.state.conditionalPassed];
-
       let passedSteps = [];
       opType === "add"
         ? (passedSteps = [...allPassed, ...verifiedPassedSteps])
@@ -397,18 +396,12 @@ class Wizard extends React.Component {
 
       this.setState({ conditionalPassed: passedSteps.filter(unique) }, () => {
         // finding the next conditionally passed index
-        let key = this.state.conditionalPassed.find(
-          index => index > this.state.currentStep
-        );
-        if (key === undefined) {
-          // the case where the current step is the last valid step
-          key = this.state.currentStep;
-        }
+        let key = this.state.currentStep;
         // finding the last conditionally valid step
         let lastValidStep = Math.max(...this.state.conditionalPassed);
         this.setState({
           nextButton: lastValidStep > key ? true : false,
-          previousButton: this.state.currentStep > 0 ? true : false,
+          previousButton: key > 0 ? true : false,
           finishButton: lastValidStep === key ? true : false
         });
       });
