@@ -59,6 +59,7 @@ class WizardView extends React.Component {
 
   callbacks(data) {
     // this.saveDraft(data);
+    // this.saveDocs(data);
   }
 
   render() {
