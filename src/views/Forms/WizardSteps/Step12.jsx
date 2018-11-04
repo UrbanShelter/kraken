@@ -182,27 +182,33 @@ class Step10 extends React.Component {
     // <PDFViewer style={{ width: "100%", height: "100%" }}>
     //       <Content />
     //     </PDFViewer>
+
     return (
-      <BlobProvider document={<Content />}>
-        {({ blob, url, loading, error }) => {
-          // Do whatever you need with blob here
-          console.log(error);
-          return loading ? (
-            <h3>Loading...</h3>
-          ) : (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center"
-              }}
-            >
-              <Document file={file}>
-                <Page pageNumber={1} renderTextLayer={false} scale={0.8} width={300} />
-              </Document>
-            </div>
-          );
-        }}
-      </BlobProvider>
+      <div id="pdfWrapper" ref={ref => (this.pdfWrapper = ref)}>
+        <BlobProvider document={<Content />}>
+          {({ blob, url, loading, error }) => {
+            // Do whatever you need with blob here
+            return loading ? (
+              <h3>Loading...</h3>
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center"
+                }}
+              >
+                <Document file={file}>
+                  <Page
+                    pageNumber={1}
+                    renderTextLayer={false}
+                    width={this.pdfWrapper.getBoundingClientRect().width}
+                  />
+                </Document>
+              </div>
+            );
+          }}
+        </BlobProvider>
+      </div>
     );
   }
 }
