@@ -5,7 +5,8 @@ const styles = StyleSheet.create({
   body: {
     paddingTop: 35,
     paddingBottom: 65,
-    paddingHorizontal: 35
+    paddingHorizontal: 35,
+    fontFamily: "Helvetica"
   },
   title: {
     fontSize: 24,
@@ -23,8 +24,7 @@ const styles = StyleSheet.create({
   text: {
     margin: 12,
     fontSize: 14,
-    textAlign: "justify",
-    fontFamily: "Times-Roman"
+    textAlign: "justify"
   },
   image: {
     marginVertical: 15,
