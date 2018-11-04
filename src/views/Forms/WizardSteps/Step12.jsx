@@ -57,8 +57,9 @@ class Step10 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      descriptions: []
+      width: 300
     };
+    this.updateWidth = this.updateWidth.bind(this);
   }
   sendState() {
     return this.state;
@@ -146,6 +147,15 @@ class Step10 extends React.Component {
   //   }
   //   return false;
   // }
+  componentDidMount() {
+    window.addEventListener("resize", this.updateWidth);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWidth);
+  }
+  updateWidth() {
+    this.setState({ width: this.pdfWrapper.getBoundingClientRect().width });
+  }
   render() {
     // const test = ReactDOMServer.renderToStaticMarkup(<Content />);
     // const fileURL = URL.createObjectURL(file);
@@ -201,7 +211,7 @@ class Step10 extends React.Component {
                   <Page
                     pageNumber={1}
                     renderTextLayer={false}
-                    width={this.pdfWrapper.getBoundingClientRect().width}
+                    width={this.state.width}
                   />
                 </Document>
               </div>
