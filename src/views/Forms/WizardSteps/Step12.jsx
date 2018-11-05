@@ -22,7 +22,7 @@ import ReactDOMServer from "react-dom/server";
 import { storage } from "firebase/index.js";
 import Content from "./content.jsx";
 import file from "./document.pdf";
-
+import ContainerDimensions from "react-container-dimensions";
 // const styles = StyleSheet.create({
 //   page: {
 //     flexDirection: "row",
@@ -56,10 +56,6 @@ import file from "./document.pdf";
 class Step10 extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      width: 300
-    };
-    this.updateWidth = this.updateWidth.bind(this);
   }
   sendState() {
     return this.state;
@@ -147,15 +143,7 @@ class Step10 extends React.Component {
   //   }
   //   return false;
   // }
-  componentDidMount() {
-    window.addEventListener("resize", this.updateWidth);
-  }
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateWidth);
-  }
-  updateWidth() {
-    this.setState({ width: this.pdfWrapper.getBoundingClientRect().width });
-  }
+
   render() {
     // const test = ReactDOMServer.renderToStaticMarkup(<Content />);
     // const fileURL = URL.createObjectURL(file);
@@ -194,30 +182,34 @@ class Step10 extends React.Component {
     //     </PDFViewer>
 
     return (
-      <div id="pdfWrapper" ref={ref => (this.pdfWrapper = ref)}>
-        <BlobProvider document={<Content />}>
-          {({ blob, url, loading, error }) => {
-            // Do whatever you need with blob here
-            return loading ? (
-              <h3>Loading...</h3>
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center"
-                }}
-              >
-                <Document file={file}>
-                  <Page
-                    pageNumber={1}
-                    renderTextLayer={false}
-                    width={this.state.width}
-                  />
-                </Document>
-              </div>
-            );
-          }}
-        </BlobProvider>
+      <div ref={ref => (this.pdfWrapper = ref)}>
+        <ContainerDimensions>
+          {({ width }) => (
+            <BlobProvider document={<Content />}>
+              {({ blob, url, loading, error }) => {
+                // Do whatever you need with blob here
+                return loading ? (
+                  <h3>Loading...</h3>
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center"
+                    }}
+                  >
+                    <Document file={file}>
+                      <Page
+                        pageNumber={1}
+                        renderTextLayer={false}
+                        width={width}
+                      />
+                    </Document>
+                  </div>
+                );
+              }}
+            </BlobProvider>
+          )}
+        </ContainerDimensions>
       </div>
     );
   }
