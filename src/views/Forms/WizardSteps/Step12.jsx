@@ -197,7 +197,7 @@ class Step10 extends React.Component {
                       justifyContent: "center"
                     }}
                   >
-                    <Document file={file}>
+                    <Document file={blob}>
                       <Page
                         pageNumber={1}
                         renderTextLayer={false}
