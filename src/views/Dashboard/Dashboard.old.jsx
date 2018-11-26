@@ -435,88 +435,42 @@ class Dashboard extends React.Component {
             </Card>
           </GridItem>
         </GridContainer>
+        <h3>Manage Listings</h3>
+        <br />
         <GridContainer>
-          <GridItem xs={12} xl={6}>
-            <GridContainer>
-              <GridItem xs={12} sm={10} md={6} xl={5}>
-                <h3>Preview</h3>
-                <br />
-                <GridContainer>
-                  {listings &&
-                    listings.map((prop, key) => {
-                      let component = null;
-                      if (prop.location && prop.location.address) {
-                        component = (
-                          <GridItem xs={12} key={key}>
-                            <ListingCard title={prop.location.address} />
-                          </GridItem>
-                        );
-                      }
-                      return key === 0 ? component : null;
-                    })}
-                </GridContainer>
-              </GridItem>
-              <GridItem xs={12} md={6} xl={7}>
-                <GridContainer>
-                  <GridItem xs={6}>
-                    <h3>Posted</h3>
-                    <br />
-                    <GridContainer>
-                      {listings &&
-                        listings.map((prop, key) => {
-                          let component = null;
-                          if (prop.location && prop.location.address) {
-                            component = (
-                              <GridItem xs={12} key={key}>
-                                <ListingCard title={prop.location.address} />
-                              </GridItem>
-                            );
-                          }
-                          return component;
-                        })}
-                    </GridContainer>
+          {listings &&
+            listings.map((prop, key) => {
+              let component = null;
+              if (prop.location && prop.location.address) {
+                component = (
+                  <GridItem xs={12} sm={6} md={6} lg={4} xl={2} key={key}>
+                    <ListingCard title={prop.location.address} />
                   </GridItem>
-                  <GridItem xs={6}>
-                    <h3>Unposted</h3>
-                    <br />
-                    <GridContainer>
-                      {listings &&
-                        listings.map((prop, key) => {
-                          let component = null;
-                          if (prop.location && prop.location.address) {
-                            component = (
-                              <GridItem xs={12} key={key}>
-                                <ListingCard title={prop.location.address} />
-                              </GridItem>
-                            );
-                          }
-                          return component;
-                        })}
-                    </GridContainer>
-                  </GridItem>
-                </GridContainer>
-              </GridItem>
-            </GridContainer>
+                );
+              }
+              return component;
+            })}
+          {/* <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
+            <ListingCard />
           </GridItem>
-
-          <GridItem xs={12} xl={6}>
-            <h3>Tenants</h3>
-            <br />
-            <GridContainer>
-              {listings &&
-                listings.map((prop, key) => {
-                  let component = null;
-                  if (prop.location && prop.location.address) {
-                    component = (
-                      <GridItem xs={12} lg={4} key={key}>
-                        <ListingCard title={prop.location.address} />
-                      </GridItem>
-                    );
-                  }
-                  return component;
-                })}
-            </GridContainer>
+          <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
+            <ListingCard />
           </GridItem>
+          <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
+            <ListingCard />
+          </GridItem>
+          <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
+            <ListingCard />
+          </GridItem>
+          <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
+            <ListingCard />
+          </GridItem>
+          <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
+            <ListingCard />
+          </GridItem>
+          <GridItem xs={12} sm={6} md={6} lg={4} xl={3}>
+            <ListingCard />
+          </GridItem> */}
         </GridContainer>
       </div>
     );
