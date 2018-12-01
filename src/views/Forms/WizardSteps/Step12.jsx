@@ -4,25 +4,6 @@ import PropTypes from "prop-types";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 
-// core components
-import GridContainer from "components/Grid/GridContainer.jsx";
-import GridItem from "components/Grid/GridItem.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
-import Card from "components/Card/Card.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import { BlobProvider } from "@react-pdf/renderer";
-import { Document, Page } from "react-pdf/dist/entry.webpack";
-
-import { urbanShelterColor } from "assets/jss/material-dashboard-pro-react.jsx";
-import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
-import { Button } from "@material-ui/core";
-import ReactDOMServer from "react-dom/server";
-// firebase
-import { storage } from "firebase/index.js";
-import Content from "./content.jsx";
-import file from "./document.pdf";
-import ContainerDimensions from "react-container-dimensions";
 // const styles = StyleSheet.create({
 //   page: {
 //     flexDirection: "row",
@@ -181,37 +162,7 @@ class Step10 extends React.Component {
     //       <Content />
     //     </PDFViewer>
 
-    return (
-      <div ref={ref => (this.pdfWrapper = ref)}>
-        <ContainerDimensions>
-          {({ width }) => (
-            <BlobProvider document={<Content />}>
-              {({ blob, url, loading, error }) => {
-                // Do whatever you need with blob here
-                return loading ? (
-                  <h3>Loading...</h3>
-                ) : (
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center"
-                    }}
-                  >
-                    <Document file={blob}>
-                      <Page
-                        pageNumber={1}
-                        renderTextLayer={false}
-                        width={width}
-                      />
-                    </Document>
-                  </div>
-                );
-              }}
-            </BlobProvider>
-          )}
-        </ContainerDimensions>
-      </div>
-    );
+    return <p>Useless Page</p>;
   }
 }
 
