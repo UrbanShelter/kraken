@@ -79,7 +79,7 @@ class Dashboard extends React.Component {
     return (
       <div>
         <GridContainer>
-          <GridItem xs={3}>
+          <GridItem xs={12} md={6} lg={4} xl={2}>
             <h3>Applicants</h3>
             <br />
             <GridContainer>
@@ -88,7 +88,7 @@ class Dashboard extends React.Component {
                   let component = null;
                   if (prop.location && prop.location.address) {
                     component = (
-                      <GridItem xs={10} key={key}>
+                      <GridItem xs={12} sm={6} md={10} key={key}>
                         <Card profile>
                           <CardAvatar profile>
                             <a href="#pablo" onClick={e => e.preventDefault()}>
@@ -140,68 +140,7 @@ class Dashboard extends React.Component {
             </GridContainer>
           </GridItem>
 
-          <GridItem xs={3}>
-            <h3>Pinned</h3>
-            <br />
-            <GridContainer>
-              {listings &&
-                listings.map((prop, key) => {
-                  let component = null;
-                  if (prop.location && prop.location.address) {
-                    component = (
-                      <GridItem xs={10} key={key}>
-                        <Card profile>
-                          <CardAvatar profile>
-                            <a href="#pablo" onClick={e => e.preventDefault()}>
-                              <img src={avatar} alt="..." />
-                            </a>
-                          </CardAvatar>
-                          <CardBody profile>
-                            <h6 className={classes.cardCategory}>
-                              CEO / CO-FOUNDER
-                            </h6>
-                            <h4 className={classes.cardTitle}>Alec Thompson</h4>
-                            <p className={classes.description}>
-                              Don't be scared of the truth because we need to
-                              restart the human foundation in truth And I love
-                              you like Kanye loves Kanye I love Rick Owens’ bed
-                              design but the back is...
-                            </p>
-                            <Button color="urbanshelter" round>
-                              Details
-                            </Button>
-                          </CardBody>
-                        </Card>
-                        <div style={{ marginTop: -20, marginBottom: 50 }}>
-                          <GridContainer>
-                            <GridItem xs={6}>
-                              <Button
-                                variant="outlined"
-                                color="transparent"
-                                style={{ width: "100%" }}
-                              >
-                                Decline
-                              </Button>
-                            </GridItem>
-                            <GridItem xs={6}>
-                              <Button
-                                color="urbanshelter"
-                                style={{ width: "100%" }}
-                              >
-                                Accept
-                              </Button>
-                            </GridItem>
-                          </GridContainer>
-                        </div>
-                      </GridItem>
-                    );
-                  }
-                  return component;
-                })}
-            </GridContainer>
-          </GridItem>
-
-          <GridItem xs={3}>
+          <GridItem xs={12} md={6} lg={4} xl={2}>
             <h3>Pending</h3>
             <br />
             <GridContainer>
@@ -210,7 +149,7 @@ class Dashboard extends React.Component {
                   let component = null;
                   if (prop.location && prop.location.address) {
                     component = (
-                      <GridItem xs={10} key={key}>
+                      <GridItem xs={12} sm={6} md={10} key={key}>
                         <Card profile>
                           <CardAvatar profile>
                             <a href="#pablo" onClick={e => e.preventDefault()}>
@@ -262,7 +201,7 @@ class Dashboard extends React.Component {
             </GridContainer>
           </GridItem>
 
-          <GridItem xs={3}>
+          <GridItem xs={12} md={6} lg={4} xl={2}>
             <h3>Approved</h3>
             <br />
             <GridContainer>
@@ -271,7 +210,7 @@ class Dashboard extends React.Component {
                   let component = null;
                   if (prop.location && prop.location.address) {
                     component = (
-                      <GridItem xs={10} key={key}>
+                      <GridItem xs={12} sm={6} md={10} key={key}>
                         <Card profile>
                           <CardAvatar profile>
                             <a href="#pablo" onClick={e => e.preventDefault()}>
