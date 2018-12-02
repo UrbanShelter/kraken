@@ -440,7 +440,7 @@ class Dashboard extends React.Component {
         <GridContainer>
           <GridItem xs={12} xl={6}>
             <GridContainer>
-              <GridItem xs={12} sm={10} md={6} xl={5}>
+              <GridItem xs={12} md={6} xl={5}>
                 <h3>Preview</h3>
                 <br />
                 <GridContainer>
@@ -460,7 +460,7 @@ class Dashboard extends React.Component {
               </GridItem>
               <GridItem xs={12} md={6} xl={7}>
                 <GridContainer>
-                  <GridItem xs={6}>
+                  <GridItem xs={12} sm={6}>
                     <h3>Posted</h3>
                     <br />
                     <GridContainer>
@@ -496,7 +496,7 @@ class Dashboard extends React.Component {
                         })}
                     </GridContainer>
                   </GridItem>
-                  <GridItem xs={6}>
+                  <GridItem xs={12} sm={6}>
                     <h3>Unposted</h3>
                     <br />
                     <GridContainer>
